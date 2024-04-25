@@ -1,0 +1,69 @@
+.loginImage{
+    padding: 0%;
+    height: 42rem;
+    width: 50rem;
+}
+
+.maincontainerlogin {
+    flex: 1;
+  }
+  
+  .secondcontainer {
+    flex: 1;
+    padding-top: 4rem;
+    text-align: center;
+    align-items: center;
+   
+  }
+  
+  .container {
+    display: flex;
+    
+  }
+  .nameofacadamy{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  .nameofwelcome{
+    padding-top: 2rem;
+    padding: 2rem;
+  }
+  .btnLogin{
+    height: 2rem;
+    width: 4rem;
+    font-size: 1rem;
+    font-weight: bold;
+    font-style: inherit;
+    font-family: sans-serif;
+    color: #475be8;
+    background-color: #E1F6FB ;
+    border-radius: 0.5rem;
+    border: none;
+  }
+  
+.btnLogin:hover{
+ background-color:#475be8;
+ color: white;
+}
+
+.btn_log{
+  text-align: center;
+  align-items: center;
+  background-color: #475be8;
+  color: #E1F6FB;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+}
+.btn_log:hover{
+  background-color: #92cbf9;
+  color: black;
+}
+.Register{
+  font-size: 2rem;
+  padding: 0;
+  margin-top: 0;
+  font-weight: bold;
+}

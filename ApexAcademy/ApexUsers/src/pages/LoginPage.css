@@ -1,0 +1,45 @@
+
+.maincontainer{
+    height: 100vh; /* Full viewport height */
+    display: flex; /* Enables flexbox */
+    justify-content: center; /* Horizontally centers the content */
+    align-items: center; /* Vertically centers the content */
+    margin: 0; /* Removes default margin */
+    justify-content: center;
+    align-items: center;
+}
+.teacher{
+    flex: 1;
+    padding: 0;
+    padding: 20px;
+}
+.student{
+    flex: 1;
+    padding: 0;
+    padding: 20px;
+}
+.btnname{
+    font-weight: bold;
+    font-size: 2rem;
+    padding-top: 1rem;
+}
+.btndecription{
+    font-size: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.btnicon{
+    font-size: 2rem;
+}
+.btn{
+    padding-top: 1rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    border: none;
+    color: #E5F8EC;
+    background-color: #475be8 ;
+}
+.btn:hover{
+    background-color: #EEF6B8;
+}
+
