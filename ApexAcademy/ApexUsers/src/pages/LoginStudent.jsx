@@ -23,6 +23,13 @@ let navigate = useNavigate();
     navigate(path);
   }
 
+  const handleRegister = () =>{ 
+    let path = `/LoginPage/student/register`; 
+    navigate(path);
+  }
+
+  
+
   return (
     <div className="container">
       <div className='maincontainerlogin'>
@@ -71,6 +78,10 @@ let navigate = useNavigate();
       
       <button className ='btn_log' onClick={handleLogin}>
         LogIn
+      </button>
+      
+      <button className ='btn_log' onClick={handleRegister}>
+        Register
       </button>
  
       </div>

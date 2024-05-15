@@ -1,0 +1,21 @@
+.clssregister{
+  padding: 5% 20%;
+}
+.headerOfregister{
+  text-align: center;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+  }
+
+  
+  @media (max-width: 767px) {
+    .checkbox-container {
+      flex-direction: column;
+    }
+  }
+
+  

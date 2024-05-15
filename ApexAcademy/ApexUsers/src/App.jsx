@@ -13,6 +13,7 @@ import LoginTeacher from "./pages/LoginTeacher";
 import LoginStudent from "./pages/LoginStudent";
 import StudentBaseLayout from "./layout/BaseLayoutStudent";
 import { Myclass, StudentsClass, StudentsMyProfile } from "./studentscreen";
+import StudentForm from "./pages/studentsForm";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/LoginPage/teacher" element={<LoginTeacher />} />
         <Route path="/LoginPage/student" element={<LoginStudent />}/>
+        <Route path="/LoginPage/student/register" element={<StudentForm />}/>
           <Route element={<BaseLayout />}>
             <Route path="/teacher/dashboard" element={<Dashboard />} />
             <Route path="/teacher/myclass" element={<TeachersClass />} />
