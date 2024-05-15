@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import './form.css'
 import { useState } from 'react';
+import PaymentGuidance from './paymentGuidance';
 
 function StudentForm() {
   const [additionalFields, setAdditionalFields] = useState([]);
@@ -18,7 +19,8 @@ function StudentForm() {
     medium: '',
     grade: '',
     registrationdate: new Date().toISOString().split('T')[0], 
-    password: ''
+    password: '',
+    paymentReceipt: null,
   });
   const [gradeOptions, setGradeOptions] = useState([]);
   const currentYear = new Date().getFullYear();
@@ -93,9 +95,30 @@ function StudentForm() {
 
       const response = await axios.post('http://localhost:8085/api/v1/student/add', dataToSend);
       console.log(response.data);
+      resetForm();
     } catch (error) {
       console.error('Error submitting form:', error);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      studentname: '',
+      address: '',
+      school: '',
+      dob: '',
+      parentsname: '',
+      parentsoccupation: '',
+      email: '',
+      phonenumber: '',
+      medium: '',
+      exam: '',
+      grade: '',
+      registrationdate: new Date().toISOString().split('T')[0],
+      examYear: '',
+      password: ''
+    });
+    setGradeOptions([]);
   };
 
 
@@ -106,6 +129,9 @@ function StudentForm() {
       <div className="headerOfregister">
       <h2>Student Online Self Registration</h2>
       <h3>APEX Business Acadamy(pvt) LTD</h3>
+      </div>
+      <div>
+      <PaymentGuidance />
       </div>
       <Form onSubmit={handleSubmit}>
       <fieldset>
