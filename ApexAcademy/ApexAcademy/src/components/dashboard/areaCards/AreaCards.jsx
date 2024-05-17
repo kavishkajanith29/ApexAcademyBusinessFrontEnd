@@ -1,15 +1,35 @@
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
+import { useEffect, useState } from "react";
 
 const AreaCards = () => {
+  const [studentCount, setStudent] = useState(null);
+
+  useEffect(() => {
+    const fetchStudentCount = async () => {
+      try {
+        const response = await fetch("http://localhost:8085/api/v1/student/count");
+        if (response.ok) {
+          const data = await response.json();
+          setStudent(data);
+        } else {
+          console.error("Failed to fetch user count");
+        }
+      } catch (error) {
+        console.error("Error fetching user count:", error);
+      }
+    };
+
+    fetchStudentCount();
+  }, []);
+
   return (
     <section className="content-area-cards">
       <AreaCard
         colors={["#e4e8ef", "#475be8"]}
-        //percentFillValue={80}
         cardInfo={{
           title: "Total Number of Students Registered",
-          value: "12654",
+          value: `${studentCount ? studentCount.toLocaleString() : "Loading..."}`,
           text: "",
         }}
       />

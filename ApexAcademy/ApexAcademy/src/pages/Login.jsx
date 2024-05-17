@@ -2,30 +2,42 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import Img1 from '../assets/images/img1.jpg'
 import './LoginPage.css'
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-
-import { MdAccountCircle } from "react-icons/md";
-import { RiLockPasswordLine } from "react-icons/ri";
+import axios from 'axios';
+import { Button, Form } from 'react-bootstrap';
 
 
-import { IoSend } from "react-icons/io5";
+function Login() {
 
+  const [formData, setFormData] = useState({
+    userId: '',
+    password: '',
+  });
 
-const Login = () => {
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value
+    });
+  };
+  
+  let navigate = useNavigate(); 
 
-let navigate = useNavigate(); 
-
-  const handleLogin = () =>{ 
-    let path = `dashboard`; 
-    localStorage.setItem('isAuthenticated',true);
-    navigate(path);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post('http://localhost:8085/api/v1/staff/login', formData);
+      if(response.data.message === "Login Success"){
+        let path = `dashboard`; 
+        localStorage.setItem('isAuthenticated', true);
+        navigate(path);
+      }
+    } catch (error) {
+      console.error('Error submitting loggin', error);
+    }
   }
+  
 
   return (
     <div className="container">
@@ -35,51 +47,25 @@ let navigate = useNavigate();
       <div className='secondcontainer'>
         <div className='nameofacadamy'>APEX Business Acadamy <br/> (pvt) LTD</div>
         <div className='nameofwelcome'>This is a APEX Business Acadamy Offical Website. All of Student,Teachers can used this site</div>
-      
-        <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <FormControl variant="standard">
-        <InputLabel htmlFor="input-with-icon-adornment">
-          Staff ID
-        </InputLabel>
-        <Input
-          id="input-with-icon-adornment"
-          value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-          startAdornment={
-            <InputAdornment position="start">
-              <MdAccountCircle />
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-      <br/>
-      <FormControl variant="standard">
-        <InputLabel htmlFor="input-with-icon-adornment">
-          Password
-        </InputLabel>
-        <Input
-          id="input-with-icon-adornment"
-          value={password}
-              onChange={(e) => setPassword(e.target.value)}
-          startAdornment={
-            <InputAdornment position="start">
-              <RiLockPasswordLine />
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-   
-    </Box>
-    <br/>
-
-      
-      <button className ='btn_log' endIcon={<IoSend />} onClick={handleLogin}>
-        LogIn
-      </button>
- 
+        <div className="formdiv">
+        <Form onSubmit={handleLogin}>
+          <fieldset>
+            <Form.Group className="mb-3">
+              <Form.Control id="userId" type="text" placeholder="Enter Staff ID" onChange={handleChange} value={formData.userId}/>
+              </Form.Group>
+              
+              <Form.Group className="mb-3">
+                <Form.Control id="password" type="password" placeholder="Enter Password" onChange={handleChange} value={formData.password}/>
+                </Form.Group>
+                
+                <Button type="submit">Login</Button>
+                
+                </fieldset>
+                </Form>
+                </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Login

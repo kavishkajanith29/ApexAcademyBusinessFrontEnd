@@ -11,6 +11,7 @@ function PaymentGuidance() {
       </ol>
       <p>
         Bank Name: Bank of Ceylon <br />
+        Branch :Matara<br/>
         Account Name: Apex Business Academy<br />
         Account Number: 123456<br />
         Institute Number: 0123456789

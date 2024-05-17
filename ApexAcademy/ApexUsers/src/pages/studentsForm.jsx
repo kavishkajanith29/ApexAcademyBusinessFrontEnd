@@ -18,7 +18,7 @@ function StudentForm() {
     phonenumber: '',
     medium: '',
     grade: '',
-    registrationdate: new Date().toISOString().split('T')[0], 
+    registrationdate: new Date().toLocaleString("sv-SE", { timeZone: "Asia/Colombo", hour12: false }).slice(0, 16),
     password: '',
     paymentReceipt: null,
   });
@@ -114,7 +114,7 @@ function StudentForm() {
       medium: '',
       exam: '',
       grade: '',
-      registrationdate: new Date().toISOString().split('T')[0],
+      registrationdate: new Date().toLocaleString("sv-SE", { timeZone: "Asia/Colombo", hour12: false }).slice(0, 16),
       examYear: '',
       password: ''
     });
@@ -244,7 +244,7 @@ function StudentForm() {
 
         <Form.Group className="mb-3">
             <Form.Label htmlFor="registrationdate">Registration Date</Form.Label>
-            <Form.Control id="registrationdate" type="date" value={formData.registrationdate} readOnly />
+            <Form.Control id="registrationdate" type="datetime-local" value={formData.registrationdate} readOnly />
           </Form.Group>
 
         <Form.Group className="mb-3">

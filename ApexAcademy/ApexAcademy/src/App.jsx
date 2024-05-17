@@ -11,6 +11,8 @@ import Teachers from "./screens/teachers/TeachersScreen";
 import Students from "./screens/students/StudentsScreen";
 import Classes from "./screens/classes/ClassesScreen";
 import Login from "./pages/Login"
+import PrivateRoutes from "./PrivateRoutes";
+import StudentDetails from "./pages/StudentDetails";
 
 
 function App() {
@@ -30,16 +32,19 @@ function App() {
       <Router>
         <Routes>
           <Route path = "/" element = {<Login/>}/>
-          <Route element={<BaseLayout />}>
+          <Route element={<PrivateRoutes/>}>
+            <Route element={<BaseLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/student/:id" element={<StudentDetails />} />
             <Route path="/classes" element={<Classes />} />
             <Route path="/message" element={<MessageScreen/>} />
             <Route path="/payment" element={<Payments/>} />
             <Route path="/attendance" element={<GetStudentsAttendance/>} />
             <Route path="/qrgenerate" element={<GenerateQR/>} />
             <Route path="*" element={<PageNotFound />} />
+            </Route>
           </Route>
         </Routes>
 

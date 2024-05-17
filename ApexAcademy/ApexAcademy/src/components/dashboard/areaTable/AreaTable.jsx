@@ -1,74 +1,64 @@
-import AreaTableAction from "./AreaTableAction";
 import "./AreaTable.scss";
+import { Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TABLE_HEADS = [
   "Student ID",
   "Student Name",
   "Grade",
-  "Gender",
+  "Medium",
   "Email",
   "Phone Number",
-  "Action",
-];
-
-const TABLE_DATA = [
-  {
-    id: 100,
-    student_id: "OL-2029-003",
-    student_name: "Kasun Kumara",
-    grade: "Grade 06",
-    gender: "M",
-    email: "kasunkumara@gmail.com",
-    phone_number: "071-5687903",
-  },
-  {
-    id: 101,
-    student_id: "OL-2027-056",
-    student_name:"Dilshan kumara",
-    grade: "Grade 08",
-    gender: "M",
-    email: "dilshan@gmail.com",
-    phone_number: "071-5687903",
-  },
-  {
-    id: 102,
-    student_id: "OL-2028-096",
-    student_name: "Pasindu Kumara",
-    grade: "Grade 09",
-    gender: "M",
-    email: "pasindu@gmail.com",
-    phone_number: "071-5687903",
-  },
-  {
-    id: 103,
-    student_id: "OL-2025-156",
-    student_name: "Amaya Githmi",
-    grade: "Grade 10",
-    gender: "F",
-    email: "amaya@gmail.com",
-    phone_number: "071-5687903",
-  },
-  {
-    id: 104,
-    student_id: "AL-2026-042",
-    student_name: "Kasunu Kumari",
-    grade: "Grade 12",
-    gender: "F",
-    email: "kasunkumarai@gmail.com",
-    phone_number: "071-5687903",
-  },
-  {
-    id: 105,
-    student_id: "AL-2025-129",
-    student_name: "Sugath kumara",
-    grade: "Grade 13",
-    gender: "M",
-    email: "sugathkumara@gmail.com",
-    phone_number: "071-5687903",
-  },
+  "View",
 ];
 
 const AreaTable = () => {
+  const [students, setStudents] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
+  const itemsPerPage = 5; // Number of students per page
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get("http://localhost:8085/api/v1/student/students/recent");
+        setStudents(response.data);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
+  const totalPages = Math.ceil(students.length / itemsPerPage); // Calculate total pages
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  const getVisibleStudents = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, students.length);
+    return students.slice(startIndex, endIndex);
+  };
+
   return (
     <section className="content-area-table">
       <div className="data-table-info">
@@ -84,30 +74,62 @@ const AreaTable = () => {
             </tr>
           </thead>
           <tbody>
-            {TABLE_DATA?.map((dataItem) => {
-              return (
-                <tr key={dataItem.id}>
-                  <td>{dataItem.student_id}</td>
-                  <td>{dataItem.student_name}</td>
-                  <td>{dataItem.grade}</td>
-                  <td>{dataItem.gender}</td>
-                  <td>
-                    <div className="dt-status">
-                      {/* <span
-                        className={`dt-status-dot dot-${dataItem.email}`}
-                      ></span> */}
-                      <span className="dt-status-text">{dataItem.email}</span>
-                    </div>
-                  </td>
-                  <td>{dataItem.phone_number}</td>
-                  <td className="dt-cell-action">
-                    <AreaTableAction />
-                  </td>
-                </tr>
-              );
-            })}
+            {getVisibleStudents().map((dataItem) => (
+              <tr key={dataItem.id}>
+                <td>{dataItem.studentid}</td>
+                <td>{dataItem.studentname}</td>
+                <td>{dataItem.grade}</td>
+                <td>{dataItem.medium}</td>
+                <td>
+                  <div className="dt-status">
+                    <span className="dt-status-text">{dataItem.email}</span>
+                  </div>
+                </td>
+                <td>{dataItem.phonenumber}</td>
+                <td className="dt-cell-action">
+                  <Button onClick={() => navigate(`/student/${dataItem.studentid}`)}>
+                    View
+                  </Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+        {totalPages > 1 && (
+          <div className="data-table-navigation">
+            <Button variant="secondary" size="sm" disabled={currentPage === 1} onClick={handlePrev}>
+              Prev
+            </Button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <Button variant="secondary" size="sm" disabled={currentPage === totalPages} onClick={handleNext}>
+              Next
+            </Button>
+            <span className="dropnavigation">
+            <select
+              value={currentPage}
+              onChange={(e) => goToPage(parseInt(e.target.value))}
+              style={{                                 
+                fontSize: '16px',    
+                marginLeft:'10px',                
+                paddingRight: '10px',
+                paddingBottom:'5px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                backgroundColor: '#fff',
+                color: '#333'
+              }}
+            >
+              {Array.from({ length: totalPages }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            </span>
+          </div>
+        )}
       </div>
     </section>
   );
