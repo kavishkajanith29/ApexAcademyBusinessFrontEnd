@@ -28,47 +28,47 @@ function StudentForm() {
     <Form>
       <fieldset>
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Student Name</Form.Label>
+          <Form.Label htmlFor="disabledTextInput" className="form-label">Student Name</Form.Label>
           <Form.Control id="disabledTextInput" placeholder="Enter Student Name" />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Address</Form.Label>
+          <Form.Label htmlFor="disabledTextInput" className="form-label">Address</Form.Label>
           <Form.Control id="disabledTextInput" placeholder="Enter Student Address" />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">School</Form.Label>
+          <Form.Label htmlFor="disabledTextInput" className="form-label">School</Form.Label>
           <Form.Control id="disabledTextInput" placeholder="Enter School Name" />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="dobInput">Date of Birth</Form.Label>
+          <Form.Label htmlFor="dobInput" className="form-label">Date of Birth</Form.Label>
           <Form.Control id="dobInput"type="date"/>
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Parents/ Legal Guardian Name</Form.Label>
+          <Form.Label htmlFor="disabledTextInput" className="form-label">Parents/ Legal Guardian Name</Form.Label>
           <Form.Control id="disabledTextInput" placeholder="Enter Name" />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Parents/ Legal Guardian Occupation</Form.Label>
+          <Form.Label htmlFor="disabledTextInput" className="form-label">Parents/ Legal Guardian Occupation</Form.Label>
           <Form.Control id="disabledTextInput" placeholder="Enter Occupation" />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="emailInput">Email Address</Form.Label>
+          <Form.Label htmlFor="emailInput" className="form-label">Email Address</Form.Label>
           <Form.Control id="emailInput"type="email"placeholder="Enter Email Address"/>
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="phoneNumberInput">Phone Number</Form.Label>
+          <Form.Label htmlFor="phoneNumberInput" className="form-label">Phone Number</Form.Label>
           <Form.Control id="phoneNumberInput" type="tel" placeholder="Enter Phone Number"/>
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Medium</Form.Label>
+          <Form.Label htmlFor="disabledSelect" className="form-label">Medium</Form.Label>
           <Form.Select aria-label="Default select example">
             <option>Select the medium</option>
             <option value="sinhala">Sinhala</option>
@@ -77,7 +77,7 @@ function StudentForm() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Select Grade</Form.Label>
+          <Form.Label htmlFor="disabledSelect" className="form-label">Select Grade</Form.Label>
           <Form.Select aria-label="Default select example">
             <option>Select the Grade</option>
             <option value="6">Grade 06</option>
@@ -90,7 +90,7 @@ function StudentForm() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Select Subjects</Form.Label>
+          <Form.Label htmlFor="disabledSelect" className="form-label">Select Subjects</Form.Label>
           <div className="checkbox-container">
             <Form.Check type="checkbox" label="Maths" />
             <Form.Check type="checkbox" label="Science" />
@@ -125,7 +125,7 @@ function StudentForm() {
         
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="dobInput">Registration Date</Form.Label>
+          <Form.Label htmlFor="dobInput" className="form-label">Registration Date</Form.Label>
           <Form.Control id="dobInput"type="date"/>
         </Form.Group>
 

@@ -17,6 +17,7 @@ const TABLE_HEADS = [
 const AreaTable = () => {
   const [students, setStudents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track current page
+  const [filter, setFilter] = useState("all"); // Track filter selection
   const itemsPerPage = 5; // Number of students per page
   const navigate = useNavigate();
 
@@ -33,7 +34,15 @@ const AreaTable = () => {
     fetchStudents();
   }, []);
 
-  const totalPages = Math.ceil(students.length / itemsPerPage); // Calculate total pages
+  const getFilteredStudents = () => {
+    return students.filter((student) => {
+      if (filter === "all") return true;
+      return filter === "approved" ? student.approved : !student.approved;
+    });
+  };
+
+  const filteredStudents = getFilteredStudents();
+  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage); // Calculate total pages
 
   const handleNext = () => {
     if (currentPage < totalPages) {
@@ -55,14 +64,38 @@ const AreaTable = () => {
 
   const getVisibleStudents = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, students.length);
-    return students.slice(startIndex, endIndex);
+    const endIndex = Math.min(startIndex + itemsPerPage, filteredStudents.length);
+    return filteredStudents.slice(startIndex, endIndex);
   };
 
   return (
     <section className="content-area-table">
       <div className="data-table-info">
         <h4 className="data-table-title">Recently Registered Students</h4>
+        <div className="filter-options">
+          <label htmlFor="filter">Filter by :</label>
+          <select
+            id="filter"
+            value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value);
+              setCurrentPage(1); // Reset to the first page when filter changes
+            }}
+            style={{                                 
+              fontSize: '16px',    
+              marginLeft:'10px',       
+              marginBottom:'10px',          
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+              backgroundColor: '#fff',
+              color: '#333'
+            }}
+          >
+            <option value="all">All</option>
+            <option value="approved">Approved</option>
+            <option value="not_approved">Not Approved</option>
+          </select>
+        </div>
       </div>
       <div className="data-table-diagram">
         <table>
@@ -100,7 +133,10 @@ const AreaTable = () => {
             <Button variant="secondary" size="sm" disabled={currentPage === 1} onClick={handlePrev}>
               Prev
             </Button>
-            <span>
+            <span  style={{                                    
+              marginLeft:'10px',       
+              marginRight:'10px'         
+            }}>
               Page {currentPage} of {totalPages}
             </span>
             <Button variant="secondary" size="sm" disabled={currentPage === totalPages} onClick={handleNext}>

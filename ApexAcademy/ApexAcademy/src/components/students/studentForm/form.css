@@ -2,6 +2,11 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px; 
+    color: var(--xl-text-color);
+  }
+
+  .form-label {
+    color: var(--xl-text-color);
   }
   
   @media (max-width: 767px) {

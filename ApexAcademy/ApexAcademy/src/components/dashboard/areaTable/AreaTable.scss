@@ -13,6 +13,9 @@
     color: var(--xl-text-color);
     margin-bottom: 12px;
   }
+  .filter-options label{
+    color: var(--xl-text-color);
+  }
 
   .data-table-diagram {
     border-radius: 6px;
@@ -93,6 +96,10 @@
         }
       }
     }
+  }
+
+  .data-table-navigation{
+    color: var(--xl-text-color);
   }
 
   .action-dropdown-btn {

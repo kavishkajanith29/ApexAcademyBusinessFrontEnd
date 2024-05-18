@@ -1,121 +1,139 @@
-/* styles.css */
-
 .student-details-container {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .student-details-card {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.student-details-container h2 {
+  color: var(--heading-text-color); 
+  margin-bottom: 20px;
+}
+
+.student-details-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.detail-item {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--border-color-inverted);
+  border-radius: 5px;
+  padding: 10px;
+  flex: 1 1 calc(50% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: var(--base-text-color);
+}
+
+.detail-value {
+  margin-left: 10px;
+  color: var(--base-text-color);
+}
+
+.approve-button {
+  background-color: #475be8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button{
+  margin-left: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.approve-button:hover {
+  background-color: #3b4dc9;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .detail-item {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    flex: 1 1 calc(50% - 20px);
-    box-sizing: border-box;
-    margin-bottom: 10px;
+    flex: 1 1 100%;
   }
-  
-  .detail-label {
-    font-weight: bold;
-  }
-  
-  .detail-value {
-    margin-left: 10px;
-  }
-  
-  .approve-button {
-    background-color: #475be8;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .approve-button:hover {
-    background-color: #3b4dc9;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .detail-item {
-      flex: 1 1 100%;
-    }
-  }
-  
+}
+
+.content-area-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 12px;
+  gap: 16px;
+}
+
+@media (max-width: 992px) {
   .content-area-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 12px;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (max-width: 992px) {
-    .content-area-cards {
-      grid-template-columns: repeat(2, 1fr);
-    }
+}
+
+@media (max-width: 576px) {
+  .content-area-cards {
+    grid-template-columns: 100%;
   }
-  
-  @media (max-width: 576px) {
-    .content-area-cards {
-      grid-template-columns: 100%;
-    }
-  }
-  
+}
+
+.area-card {
+  background-color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 20px 16px;
+  justify-content: space-between;
+  box-shadow: var(--light-shadow1);
+}
+
+@media (max-width: 768px) {
   .area-card {
-    background-color: var(--secondary-color);
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    padding: 20px 16px;
-    justify-content: space-between;
-    box-shadow: var(--light-shadow1);
+    padding: 12px;
   }
-  
-  @media (max-width: 768px) {
-    .area-card {
-      padding: 12px;
-    }
-  }
-  
-  .info-title {
-    color: var(--lg-text-color);
-    font-size: 18px;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .info-value {
-    color: var(--xl-text-color);
-    font-weight: 700;
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
-  
-  .info-text {
-    color: var(--base-text-color);
-    font-weight: 500;
-  }
-  
-  .recharts-default-tooltip {
-    padding: 4px 8px !important;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 12px;
-    border-radius: 4px;
-    background-color: var(--secondary-color) !important;
-    border: 1px solid var(--border-color-inverted) !important;
-  }
-  
-  .recharts-tooltip-item-list * {
-    color: var(--text-color-inverted) !important;
-    font-size: 14px;
-    font-family: inherit !important;
-    opacity: 0.9;
-  }
-  
+}
+
+.info-title {
+  color: var(--lg-text-color);
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.info-value {
+  color: var(--xl-text-color);
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.info-text {
+  color: var(--base-text-color);
+  font-weight: 500;
+}
+
+.recharts-default-tooltip {
+  padding: 4px 8px !important;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 12px;
+  border-radius: 4px;
+  background-color: var(--secondary-color) !important;
+  border: 1px solid var(--border-color-inverted) !important;
+}
+
+.recharts-tooltip-item-list * {
+  color: var(--text-color-inverted) !important;
+  font-size: 14px;
+  font-family: inherit !important;
+  opacity: 0.9;
+}

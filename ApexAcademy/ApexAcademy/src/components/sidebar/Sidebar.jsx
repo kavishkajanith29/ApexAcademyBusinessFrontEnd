@@ -25,7 +25,7 @@ const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
-  const [action,setAction] = useState("dashboard")
+  const [action, setActionState] = useState("dashboard");
 
   const handleClickOutside = (event) => {
     if (
@@ -38,15 +38,30 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.setItem('isAuthenticated',false);
+    localStorage.setItem('isAuthenticated', false);
   };
 
   useEffect(() => {
+    const storedAction = localStorage.getItem('activeMenuItem');
+  if (storedAction) {
+    setAction(storedAction);
+  } else {
+    setAction("dashboard"); // Default to dashboard if no stored action
+  }
+
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const setAction = (action) => {
+    localStorage.setItem('activeMenuItem', action);
+    setActionState(action);
+  };
+
+  
 
   return (
     <nav

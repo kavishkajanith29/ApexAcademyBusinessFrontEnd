@@ -1,36 +1,84 @@
+import React, { useState, useEffect } from "react";
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
+import axios from "axios";
 
 const ClassesAreaCards = () => {
+  const [cards, setCards] = useState([
+    { id: 1, title: "Total Number of Classes Registered", value: "24" },
+    { id: 2, title: "English Medium Class Fees", value: "" },
+    { id: 3, title: "Sinhala Medium Class Fees", value: "" },
+  ]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSave = (id, newValue) => {
+    const updatedCards = cards.map((card) =>
+      card.id === id ? { ...card, value: newValue } : card
+    );
+    setCards(updatedCards);
+    updateValueInDatabase(id, newValue);
+  };
+
+  const fetchData = () => {
+    axios
+      .get("http://localhost:8085/classfee/all")
+      .then((response) => {
+        const updatedCards = cards.map((card) => {
+          if (
+            card.title === "English Medium Class Fees" ||
+            card.title === "Sinhala Medium Class Fees"
+          ) {
+            const updatedCard = response.data.find(
+              (data) =>
+                data.medium.toUpperCase() ===
+                card.title.split(" ")[0].toUpperCase()
+            );
+            if (updatedCard) {
+              return { ...card, value: updatedCard.fee };
+            }
+          }
+          return card;
+        });
+        setCards(updatedCards);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  const updateValueInDatabase = (id, newFee) => {
+    let endpoint = "";
+    if (id === 2) {
+      endpoint = `ENGLISH`;
+    } else if (id === 3) {
+      endpoint = `SINHALA`;
+    } else {
+      console.error(`Invalid id: ${id}`);
+      return;
+    }
+
+    axios
+      .put(`http://localhost:8085/classfee/update/${endpoint}?newFee=${newFee}`)
+      .then((response) => {
+        console.log("Value updated successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating value:", error);
+      });
+  };
+
   return (
     <section className="content-area-cards">
-      <AreaCard
-        colors={["#e4e8ef", "#475be8"]}
-        //percentFillValue={80}
-        cardInfo={{
-          title: "Total Number of Classes Registered",
-          value: "24",
-          text: " ",
-        }}
-      />
-      <AreaCard
-        colors={["#e4e8ef", "#4ce13f"]}
-        //percentFillValue={50}
-        cardInfo={{
-          title: "English Medium Class Fees",
-          value: "Rs. 1500.00",
-          //text: "Available to payout",
-        }}
-      />
-      <AreaCard
-        colors={["#e4e8ef", "#4ce13f"]}
-        //percentFillValue={50}
-        cardInfo={{
-          title: "Sinhala Medium Class Fees",
-          value: "Rs. 1200.00",
-          //text: "Available to payout",
-        }}
-      />
+      {cards.map((card) => (
+        <AreaCard
+          key={card.id}
+          cardInfo={card}
+          onSave={(newValue) => handleSave(card.id, newValue)}
+        />
+      ))}
     </section>
   );
 };

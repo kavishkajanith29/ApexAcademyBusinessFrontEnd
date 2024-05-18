@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; 
+import { useNavigate, useParams } from "react-router-dom"; 
 import axios from "axios";
 import Swal from "sweetalert2";
 import './StudentDetailsStyles.css';
@@ -7,6 +7,7 @@ import './StudentDetailsStyles.css';
 const StudentDetails = () => {
   const [studentDetails, setStudentDetails] = useState({});
   const { id } = useParams(); 
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
@@ -51,7 +52,38 @@ const StudentDetails = () => {
     });
   };
 
+  const handleDelete = async () => {
+    Swal.fire({
+      title: 'Delete Student',
+      text: "Do you want to delete this student?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://localhost:8085/api/v1/student/${id}`);
+          Swal.fire(
+            'Deleted!',
+            'The student has been deleted.',
+            'success'
+          );
+          navigate("/students"); 
+        } catch (error) {
+          console.error("Error deleting student:", error);
+          Swal.fire(
+            'Error!',
+            'There was an error deleting the student.',
+            'error'
+          );
+        }
+      }
+    });
+  };
+
   return (
+    <>
     <div className="student-details-container">
       <h2>Student Details</h2>
       <div className="student-details-card">
@@ -109,13 +141,19 @@ const StudentDetails = () => {
             {studentDetails.approved ? "Yes" : "No"}
           </span>
         </div>
+      </div>
+      <div>
         {!studentDetails.approved && (
-          <div>
+          <span>
             <button className="approve-button" onClick={handleApprove}>Approve</button>
-          </div>
+          </span>
         )}
+        <span>
+            <button className="delete-button" onClick={handleDelete}>Delete</button>
+        </span>
       </div>
     </div>
+    </>
   );
 };
 

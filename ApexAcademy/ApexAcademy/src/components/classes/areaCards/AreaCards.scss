@@ -39,10 +39,67 @@
       margin-bottom: 8px;
     }
 
-    .info-text {
-      color: var(--base-text-color);
-      font-weight: 500;
+    .info-value-input {
+      width: 60px;
+      font-size: 24px;
+      margin-left: 5px;
+      border: 0px solid var(--border-color);
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: black;
+      font-weight: 700;
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
     }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+
+      .btn {
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &.btn-update {
+          background-color: green;
+          color: white;
+          border: none;
+
+          &:hover {
+            background-color: darkgreen;
+          }
+        }
+
+        &.btn-cancel {
+          background-color: red;
+          color: white;
+          border: none;
+
+          &:hover {
+            background-color: darkred;
+          }
+        }
+      }
+    }
+  }
+}
+
+.btn-edit {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: darkblue;
   }
 }
 
