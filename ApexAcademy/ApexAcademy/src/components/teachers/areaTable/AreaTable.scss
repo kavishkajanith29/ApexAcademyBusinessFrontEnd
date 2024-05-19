@@ -14,6 +14,21 @@
     margin-bottom: 12px;
   }
 
+  .filter-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    input,
+    select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid var(--tbl-border-color);
+      background-color: #fff;
+      color: #333;
+    }
+  }
+
   .data-table-diagram {
     border-radius: 6px;
     border: 1px solid var(--tbl-border-color) !important;
@@ -94,38 +109,18 @@
     }
   }
 
-  .action-dropdown-btn {
-    color: var(--text-color-inverted);
-    position: relative;
+  .data-table-navigation {
+    color: var(--xl-text-color);
   }
 
-  .action-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 50%;
-    transform: translateX(50%);
-    height: auto;
-    min-width: 80px;
-    box-shadow: rgba(100, 100, 111, 0.1) 0px 1px 4px 0px;
-    background-color: var(--secondary-color);
-    padding: 6px 10px;
-    z-index: 1;
-    border-radius: 8px;
-    border: 1px solid var(--border-color-inverted);
-    text-align: left;
-  }
-
-  .dropdown-menu-item {
-    margin: 8px 0;
-  }
-
-  .dropdown-menu-link {
-    color: var(--text-color-inverted);
-    font-weight: 600;
-    transition: var(--default-transition);
-
-    &:hover {
-      opacity: 0.9;
-    }
+  .dropnavigation select {
+    font-size: 16px;
+    margin-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
   }
 }

@@ -13,6 +13,7 @@ import Classes from "./screens/classes/ClassesScreen";
 import Login from "./pages/Login"
 import PrivateRoutes from "./PrivateRoutes";
 import StudentDetails from "./pages/StudentDetails";
+import TeacherDetails from "./pages/TeacherDetails";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route element={<BaseLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/teachers" element={<Teachers />} />
+            <Route path="/teachers/:id" element={<TeacherDetails />} />
             <Route path="/students" element={<Students />} />
             <Route path="/student/:id" element={<StudentDetails />} />
             <Route path="/classes" element={<Classes />} />

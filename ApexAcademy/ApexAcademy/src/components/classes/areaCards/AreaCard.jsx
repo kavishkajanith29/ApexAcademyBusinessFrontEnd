@@ -45,7 +45,7 @@ const AreaCard = ({ cardInfo, onSave }) => {
         <h5 className="info-title">{cardInfo.title}</h5>
         {isEditing ? (
           <div className="info-value">
-            Rs.{" "}
+            Rs.
             <input
               type="text"
               className="info-value-input"
