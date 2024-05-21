@@ -1,71 +1,125 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Img1 from '../assets/images/img1.jpg'
-import './LoginPage.css'
+import './LoginPage.css';
 import axios from 'axios';
-import { Button, Form } from 'react-bootstrap';
-
+import Swal from 'sweetalert2';
+import Img1 from '../assets/images/img1.jpg';
+import user_icon from "../assets/person.png";
+import password_icon from "../assets/password.png";
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md'; // Import visibility icons
 
 function Login() {
+  const [password, setPassword] = useState('');
+  const [userId, setUserId] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const [formData, setFormData] = useState({
-    userId: '',
-    password: '',
-  });
+  const isEmpty = (value) => value.trim() === '';
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: value
-    });
-  };
-  
   let navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+    if (isEmpty(userId) || isEmpty(password)) {
+      Swal.fire({
+        title: 'Fields Missing',
+        text: 'Please Enter User ID and Password',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
   
     try {
-      const response = await axios.post('http://localhost:8085/api/v1/staff/login', formData);
-      if(response.data.message === "Login Success"){
+      const response = await axios.post('http://localhost:8085/api/v1/staff/login', { userId, password });
+      if (response.status === 200 && response.data.message === "Login Success") {
         let path = `dashboard`; 
         localStorage.setItem('isAuthenticated', true);
         navigate(path);
+      } else {
+        Swal.fire({
+          title: 'Login Failed',
+          text: 'Invalid user ID or password',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
     } catch (error) {
-      console.error('Error submitting loggin', error);
+      console.error('Error submitting login', error);
+      Swal.fire({
+        title: 'Login Failed',
+        text: 'An error occurred during login. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   }
-  
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  }
 
   return (
-    <div className="container">
-      <div className='maincontainerlogin'>
-        <img src={Img1} alt='Image' className='loginImage'/>
-      </div>
-      <div className='secondcontainer'>
-        <div className='nameofacadamy'>APEX Business Acadamy <br/> (pvt) LTD</div>
-        <div className='nameofwelcome'>This is a APEX Business Acadamy Offical Website. All of Student,Teachers can used this site</div>
-        <div className="formdiv">
-        <Form onSubmit={handleLogin}>
-          <fieldset>
-            <Form.Group className="mb-3">
-              <Form.Control id="userId" type="text" placeholder="Enter Staff ID" onChange={handleChange} value={formData.userId}/>
-              </Form.Group>
-              
-              <Form.Group className="mb-3">
-                <Form.Control id="password" type="password" placeholder="Enter Password" onChange={handleChange} value={formData.password}/>
-                </Form.Group>
-                
-                <Button type="submit">Login</Button>
-                
-                </fieldset>
-                </Form>
+    <>
+      <div className="logingBack">
+        <div className="logandreg">
+          <div className='maincontainerlogin'>
+            <img src={Img1} alt='Image' className='loginImage' />
+          </div>
+          <div className="Logincontainer">
+            <div className="Signheader">
+              <div className="Signtext">Staff Login</div>
+              <div className="Signunderline"></div>
+              <div className="Signinputs">
+                <div className="Signinput">
+                  <img src={user_icon} alt="User Icon" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter Staff ID" 
+                    value={userId} 
+                    onChange={e => setUserId(e.target.value)} 
+                  />
                 </div>
+
+                <div className="Signinput">
+                  <img src={password_icon} alt="Password Icon" />
+                  <input 
+                    type={passwordVisible ? "text" : "password"} 
+                    placeholder="Password" 
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                  {passwordVisible ? (
+                    <MdVisibilityOff
+                      onClick={togglePasswordVisibility}
+                      className="password-toggle-icon"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  ) : (
+                    <MdVisibility
+                      onClick={togglePasswordVisibility}
+                      className="password-toggle-icon"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="Signsubmit-container">
+                <button 
+                  className="Signsubmit" 
+                  onClick={handleLogin} 
+                  style={{ width: '500px' }} 
+                >
+                  Login
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default Login
+export default Login;

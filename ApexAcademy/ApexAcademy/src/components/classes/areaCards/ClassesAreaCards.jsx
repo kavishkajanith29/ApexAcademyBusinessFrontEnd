@@ -68,6 +68,15 @@ const ClassesAreaCards = () => {
       .catch((error) => {
         console.error("Error updating value:", error);
       });
+      
+      axios
+      .put(`http://localhost:8085/api/v1/subject/update-fees?medium=${endpoint}&newClassFee=${newFee}`)
+      .then((response) => {
+        console.log("Additional value updated successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating additional value:", error);
+      });
   };
 
   return (
