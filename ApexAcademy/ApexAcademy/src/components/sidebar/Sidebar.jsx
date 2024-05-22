@@ -39,6 +39,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.setItem('isAuthenticated', false);
+    setAction("dashboard");
   };
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Sidebar = () => {
   if (storedAction) {
     setAction(storedAction);
   } else {
-    setAction("dashboard"); // Default to dashboard if no stored action
+    setAction("dashboard"); 
   }
 
 

@@ -1,12 +1,48 @@
+.headerOfregister{
+  text-align: center;
+}
+
 .checkbox-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px; 
   }
+
   
   @media (max-width: 767px) {
     .checkbox-container {
       flex-direction: column;
     }
   }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .column {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+  }
+  
+  .years {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .years label {
+    flex: 1;
+    min-width: 100px;
+    margin: 5px;
+  }
+  
+  @media (max-width: 600px) {
+    .column {
+      flex-basis: 100%;
+    }
+  }
+  
+
   
