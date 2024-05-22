@@ -18,7 +18,6 @@ function Login() {
   let navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
     
     if (isEmpty(userId) || isEmpty(password)) {
       Swal.fire({
