@@ -5,7 +5,7 @@ import axios from "axios";
 
 const ClassesAreaCards = () => {
   const [cards, setCards] = useState([
-    { id: 1, title: "Total Number of Classes Registered", value: "24" },
+    { id: 1, title: "Total Number of Classes Registered", value: "Loading" },
     { id: 2, title: "English Medium Class Fees", value: "" },
     { id: 3, title: "Sinhala Medium Class Fees", value: "" },
   ]);
@@ -24,37 +24,44 @@ const ClassesAreaCards = () => {
 
   const fetchData = () => {
     axios
-      .get("http://localhost:8085/classfee/all")
-      .then((response) => {
-        const updatedCards = cards.map((card) => {
-          if (
-            card.title === "English Medium Class Fees" ||
-            card.title === "Sinhala Medium Class Fees"
-          ) {
-            const updatedCard = response.data.find(
-              (data) =>
-                data.medium.toUpperCase() ===
-                card.title.split(" ")[0].toUpperCase()
-            );
-            if (updatedCard) {
-              return { ...card, value: updatedCard.fee };
+      .all([
+        axios.get("http://localhost:8085/classfee/all"),
+        axios.get("http://localhost:8085/api/v1/subject/count"),
+      ])
+      .then(
+        axios.spread((classFeesResponse, numberOfClassesResponse) => {
+          const updatedCards = cards.map((card) => {
+            if (
+              card.title === "English Medium Class Fees" ||
+              card.title === "Sinhala Medium Class Fees"
+            ) {
+              const updatedCard = classFeesResponse.data.find(
+                (data) =>
+                  data.medium.toUpperCase() ===
+                  card.title.split(" ")[0].toUpperCase()
+              );
+              if (updatedCard) {
+                return { ...card, value: updatedCard.fee };
+              }
+            } else if (card.title === "Total Number of Classes Registered") {
+              return { ...card, value: numberOfClassesResponse.data };
             }
-          }
-          return card;
-        });
-        setCards(updatedCards);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
+            return card;
+          });
+          setCards(updatedCards);
+        })
+      )
+      .catch((errors) => {
+        console.error("Error fetching data:", errors);
       });
   };
 
   const updateValueInDatabase = (id, newFee) => {
     let endpoint = "";
     if (id === 2) {
-      endpoint = `ENGLISH`;
+      endpoint = "ENGLISH";
     } else if (id === 3) {
-      endpoint = `SINHALA`;
+      endpoint = "SINHALA";
     } else {
       console.error(`Invalid id: ${id}`);
       return;
@@ -68,11 +75,16 @@ const ClassesAreaCards = () => {
       .catch((error) => {
         console.error("Error updating value:", error);
       });
-      
-      axios
-      .put(`http://localhost:8085/api/v1/subject/update-fees?medium=${endpoint}&newClassFee=${newFee}`)
+
+    axios
+      .put(
+        `http://localhost:8085/api/v1/subject/update-fees?medium=${endpoint}&newClassFee=${newFee}`
+      )
       .then((response) => {
-        console.log("Additional value updated successfully:", response.data);
+        console.log(
+          "Additional value updated successfully:",
+          response.data
+        );
       })
       .catch((error) => {
         console.error("Error updating additional value:", error);

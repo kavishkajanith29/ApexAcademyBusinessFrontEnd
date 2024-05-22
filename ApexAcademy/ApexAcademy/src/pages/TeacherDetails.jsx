@@ -70,6 +70,10 @@ const TeacherDetails = () => {
             <span className="detail-value">{teacherDetails.address}</span>
           </div>
           <div className="detail-item">
+            <span className="detail-label">Subject:</span>
+            <span className="detail-value">{teacherDetails.subject}</span>
+          </div>
+          <div className="detail-item">
             <span className="detail-label">Date of Birth:</span>
             <span className="detail-value">{teacherDetails.dob}</span>
           </div>
@@ -77,29 +81,38 @@ const TeacherDetails = () => {
             <span className="detail-label">Email:</span>
             <span className="detail-value">{teacherDetails.email}</span>
           </div>
-          <div className="detail-item">
-            <span className="detail-label">Phone Numbers:</span>
-            <ul className="phone-numbers-list">
+          <div className="detail-item" style={{ display: 'flex', alignItems: 'center' }}>
+            <span className="detail-label" style={{ marginRight: '10px' }}>Phone Numbers:</span>
+            <ul className="phone-numbers-list" style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 ,}}>
               {teacherDetails.phoneNumbers && teacherDetails.phoneNumbers.map((number, index) => (
-                <li key={index}>{number}</li>
+              <li key={index} style={{ marginRight: '10px' }}>{number}</li>
               ))}
-            </ul>
+              </ul>
           </div>
+
           <div className="detail-item">
             <span className="detail-label">Medium:</span>
             <span className="detail-value">{teacherDetails.medium}</span>
           </div>
-          <div className="detail-item">
-            <span className="detail-label">Grades:</span>
-            <ul className="grades-list">
+          <div className="detail-item" style={{ display: 'flex', alignItems: 'center' }}>
+            <span className="detail-label" style={{ marginRight: '10px' }}>Grades:</span>
+            <ul className="grades-list" style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
               {teacherDetails.grade && teacherDetails.grade.map((grade, index) => (
-                <li key={index}>{grade}</li>
+              <li key={index} style={{ marginRight: '10px' }}>{grade}</li>
               ))}
-            </ul>
-          </div>
+              </ul>
+              </div>
+              <div className="detail-item" style={{ display: 'flex', alignItems: 'center' }}>
+                <span className="detail-label" style={{ marginRight: '10px' }}>Working Places:</span>
+                <ul className="working-places-list" style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
+                  {teacherDetails.workingPlaces && teacherDetails.workingPlaces.map((place, index) => (
+                  <li key={index} style={{ marginRight: '10px' }}>{place}</li>
+                  ))}
+                  </ul>
+                  </div>
           <div className="detail-item">
             <span className="detail-label">Registration Date:</span>
-            <span className="detail-value">{teacherDetails.registrationdate}</span>
+            <span className="detail-value">{new Date(teacherDetails.registrationdate).toLocaleString()}</span>
           </div>
         </div>
         <div>

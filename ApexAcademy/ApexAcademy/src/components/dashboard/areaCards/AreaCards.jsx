@@ -3,7 +3,9 @@ import "./AreaCards.scss";
 import { useEffect, useState } from "react";
 
 const AreaCards = () => {
-  const [studentCount, setStudent] = useState(null);
+  const [studentCount, setStudentCount] = useState(null);
+  const [teacherCount, setTeacherCount] = useState(null);
+  const [classCount, setClassCount] = useState(null);
 
   useEffect(() => {
     const fetchStudentCount = async () => {
@@ -11,22 +13,51 @@ const AreaCards = () => {
         const response = await fetch("http://localhost:8085/api/v1/student/count");
         if (response.ok) {
           const data = await response.json();
-          setStudent(data);
+          setStudentCount(data);
         } else {
-          console.error("Failed to fetch user count");
+          console.error("Failed to fetch student count");
         }
       } catch (error) {
-        console.error("Error fetching user count:", error);
+        console.error("Error fetching student count:", error);
+      }
+    };
+
+    const fetchTeacherCount = async () => {
+      try {
+        const response = await fetch("http://localhost:8085/api/v1/teacher/count");
+        if (response.ok) {
+          const data = await response.json();
+          setTeacherCount(data);
+        } else {
+          console.error("Failed to fetch teacher count");
+        }
+      } catch (error) {
+        console.error("Error fetching teacher count:", error);
+      }
+    };
+
+    const fetchClassCount = async () => {
+      try {
+        const response = await fetch("http://localhost:8085/api/v1/subject/count");
+        if (response.ok) {
+          const data = await response.json();
+          setClassCount(data);
+        } else {
+          console.error("Failed to fetch class count");
+        }
+      } catch (error) {
+        console.error("Error fetching class count:", error);
       }
     };
 
     fetchStudentCount();
+    fetchTeacherCount();
+    fetchClassCount();
   }, []);
 
   return (
     <section className="content-area-cards">
       <AreaCard
-        colors={["#e4e8ef", "#475be8"]}
         cardInfo={{
           title: "Total Number of Students Registered",
           value: `${studentCount ? studentCount.toLocaleString() : "Loading..."}`,
@@ -34,21 +65,17 @@ const AreaCards = () => {
         }}
       />
       <AreaCard
-        colors={["#e4e8ef", "#4ce13f"]}
-        //percentFillValue={50}
         cardInfo={{
           title: "Total Number of Teachers Registered",
-          value: "24",
-          //text: "Available to payout",
+          value: `${teacherCount ? teacherCount.toLocaleString() : "Loading..."}`,
+          text: "",
         }}
       />
       <AreaCard
-        colors={["#e4e8ef", "#f29a2e"]}
-        //percentFillValue={40}
         cardInfo={{
-          title: "Total Number of Class Registered",
-          value: "41",
-          //text: "Available to payout",
+          title: "Total Number of Classes Registered",
+          value: `${classCount ? classCount.toLocaleString() : "Loading..."}`,
+          text: "",
         }}
       />
     </section>

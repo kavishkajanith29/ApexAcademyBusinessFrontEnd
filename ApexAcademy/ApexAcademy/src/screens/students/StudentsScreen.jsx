@@ -4,7 +4,6 @@ const Students = () => {
   return (
     <div className="content-area">
       <StudentTop/>
-      <StudentsRegistrationForm/>
       <AreaTable/>
       <StudentForm/>
     </div>

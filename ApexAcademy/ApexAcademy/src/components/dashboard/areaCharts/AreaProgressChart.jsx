@@ -1,50 +1,55 @@
-const data = [
-  {
-    id: 1,
-    name: "OL-EN-EN-01-2026",
-    percentValues: "08.00-10.00",
-  },
-  {
-    id: 2,
-    name: "OL-EN-EN-01-2027",
-    percentValues: "10.00-12.00",
-  },
-  {
-    id: 3,
-    name: "OL-SCI-SIN-03-2028",
-    percentValues: "08.00-10.00",
-  },
-  {
-    id: 4,
-    name: "AL-CHE-SIN-02-2026",
-    percentValues: "13.00-15.00",
-  },
-  {
-    id: 5,
-    name: "AL-MATH-SIN-04-2026",
-    percentValues: "13.00-15.00",
-  },
-];
+import React, { useState, useEffect } from 'react';
 
 const AreaProgressChart = () => {
+  const [classesData, setClassesData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8085/api/v1/subject/all');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setClassesData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const getCurrentDayOfWeek = () => {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const currentDate = new Date();
+    const dayOfWeek = daysOfWeek[currentDate.getDay()];
+
+    return dayOfWeek;
+  };
+
+  const currentDay = getCurrentDayOfWeek();
+
+  const filteredClasses = classesData.filter((item) => {
+    return item.day === currentDay;
+  });
+
   return (
     <div className="progress-bar">
       <div className="progress-bar-info">
-        <h4 className="progress-bar-title">Today Classes</h4>
+        <h4 className="progress-bar-title">Today's Classes</h4>
       </div>
       <div className="progress-bar-list">
-        {data?.map((progressbar) => {
-          return (
-            <div className="progress-bar-item" key={progressbar.id}>
-              <div className="bar-item-info">
-                <p className="bar-item-info-name">{progressbar.name}</p>
-                <p className="bar-item-info-value light-green">
-                  {progressbar.percentValues }
-                </p>
-              </div>
+        {filteredClasses?.map((Classes) => (
+          <div className="progress-bar-item" key={Classes.subjectid}>
+            <div className="bar-item-info">
+              <p className="bar-item-info-name">{Classes.subjectid}</p>
+              <p className="bar-item-info-value light-green">
+                {Classes.timeRange}
+              </p>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

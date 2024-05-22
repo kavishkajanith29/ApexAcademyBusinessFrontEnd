@@ -128,7 +128,7 @@ const StudentDetails = () => {
           <span className="detail-value">{studentDetails.medium}</span>
         </div>
         <div className="detail-item">
-          <span className="detail-label">Grade:</span>
+          <span className="detail-label">Registered Grade:</span>
           <span className="detail-value">{studentDetails.grade}</span>
         </div>
         <div className="detail-item">

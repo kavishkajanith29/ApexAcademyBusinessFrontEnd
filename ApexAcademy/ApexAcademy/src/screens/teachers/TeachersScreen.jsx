@@ -4,7 +4,6 @@ const Teachers = () => {
   return (
     <div className="content-area">
       <TeacherTop />
-      <RegistrationForm/>
       <TeacherTable/>
       <TeachersForm/>
       
