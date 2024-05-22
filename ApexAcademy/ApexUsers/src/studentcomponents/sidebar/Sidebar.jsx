@@ -57,7 +57,7 @@ const Sidebar = () => {
       <div className="sidebar-menu">
         <ul className="menu-list">
           <li className="menu-item">
-            <Link to="/student/dashboard" className={action==="myclass"?"menu-link active":"menu-link"} onClick={ () => setAction("myclass")}>
+            <Link to="LoginPage/student/dashboard" className={action==="myclass"?"menu-link active":"menu-link"} onClick={ () => setAction("myclass")}>
               <span className="menu-link-icon">
                 <LiaChalkboardTeacherSolid size={20} />
               </span>
