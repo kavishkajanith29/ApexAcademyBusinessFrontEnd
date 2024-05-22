@@ -38,14 +38,14 @@ function App() {
         <Route path="/LoginPage/student" element={<LoginStudent />}/>
         <Route path="/LoginPage/student/register" element={<StudentForm />}/>
           <Route element={<BaseLayout />}>
-            <Route path="/teacher/dashboard" element={<Dashboard />} />
+            <Route path="/LoginPage/teacher/dashboard" element={<Dashboard />} />
             <Route path="/teacher/myclass" element={<TeachersClass />} />
             <Route path="/teacher/class" element={<Class />} />
             <Route path="/teacher/examUpdate" element={<ExamUpdate />} />
             <Route path="/teacher/message" element={<MessageUpdate />} />
           </Route>
           <Route element={<StudentBaseLayout />}>
-            <Route path="/student/dashboard" element={<Myclass/>} />
+            <Route path="/LoginPage/student/dashboard" element={<Myclass/>} />
             <Route path="/student/pfofile" element={<StudentsMyProfile/>} />
             <Route path="/student/class" element={<StudentsClass/>} />
           </Route>
