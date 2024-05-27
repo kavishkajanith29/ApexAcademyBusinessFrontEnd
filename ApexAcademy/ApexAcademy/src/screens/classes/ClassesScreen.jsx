@@ -1,4 +1,4 @@
-import {TeacherTop, TeacherTable,TeachersForm, RegistrationForm, ClassesAreaCard, ClassesAreaTable, ClassesForm } from "../../components";
+import { ClassesAreaCard, ClassesAreaTable, ClassesForm } from "../../components";
 import ClassesAreaTop from "../../components/classes/areaTop/ClassesAreaTop";
 
 const Classes = () => {

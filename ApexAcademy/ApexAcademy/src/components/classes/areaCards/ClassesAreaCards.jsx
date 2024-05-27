@@ -44,7 +44,7 @@ const ClassesAreaCards = () => {
                 return { ...card, value: updatedCard.fee };
               }
             } else if (card.title === "Total Number of Classes Registered") {
-              return { ...card, value: numberOfClassesResponse.data };
+              return { ...card, value: numberOfClassesResponse.data.toString() };
             }
             return card;
           });

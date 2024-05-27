@@ -1,28 +1,84 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import QrScanner from 'qr-scanner';
 import axios from 'axios';
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
-import { useParams } from 'react-router-dom';  // Import useParams
+import Swal from 'sweetalert2';
 import './QRScanner.css';
 QrScanner.WORKER_PATH = '/qr-scanner-worker.min.js';
+import StudentsEnrollTable  from "../studentEnroll/areaTable/AreaTable";
 
 const Attendance = () => {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const videoRef = useRef(null);
+    const [error, setError] = useState('');
+    const [scannerActive, setScannerActive] = useState(false);
+    const initialFormData = {
+        subjectId: '',
+        studentId: '',
+        date: new Date().toISOString().split('T')[0],
+    };
+    const [formData, setFormData] = useState(initialFormData);
     const [qrScanner, setQrScanner] = useState(null);
-    const [animal, setAnimal] = useState(null);
-    const { animalId } = useParams();
-    const [showPopup, setShowPopup] = useState(false);
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({
+            ...formData,
+            [id]: value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try 
+        {
+            const dataToSend = {
+                subjectId: formData.subjectId,
+                studentId: formData.studentId,
+                date: formData.date,
+                status: true,
+            };
+            
+            const response = await axios.post('http://localhost:8085/api/v1/attendance/mark', dataToSend);
+
+            if (response.data.statusCodeValue === 200) {
+            // Show success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Attendance Marked Successfully',
+                text: 'Student attendance has been marked successfully!',
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to mark Attendance.',
+                text: response.data.body,
+            });
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        // Show error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Failed to Mark Attendance',
+            text: 'Failed to mark attendance. Please try again later.',
+        });
+    }
+};
+
+    const handleQrResult = (result) => {
+        const [studentId, subjectId] = result.data.split('-');
+        setFormData((prevData) => ({
+            ...prevData,
+            studentId,
+            subjectId,
+        }));
+    };
+
+    const startScanner = () => {
         if (videoRef.current) {
-            const scanner = new QrScanner(videoRef.current, (result) => {
-                console.log(result);
-                //fetchAnimalDetails(result);
-                scanner.stop();
-            }, (error) => {
+            const scanner = new QrScanner(videoRef.current, handleQrResult, (error) => {
                 console.error(error);
                 setError('Failed to scan QR code');
             });
@@ -34,63 +90,84 @@ const Attendance = () => {
                 setError('Unable to access the camera.');
             });
 
-            return () => scanner.destroy();
+            setScannerActive(true);
         }
-    }, []);
-
-    // const fetchAnimalDetails = (animalId) => {
-    //     axios.get(`${baseUrl}animal/${animalId}`)
-    //         .then(response => {
-    //             setAnimal(response.data);
-    //             setShowPopup(true);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching animal details:', error);
-    //             setError('Animal not found or server error');
-    //             setShowPopup(true);
-    //         });
-    // };
-
-    const handleClose = () => {
-        setShowPopup(false);
-        qrScanner.start().catch(err => console.error('Error restarting scanner:', err)); // Restart scanning
     };
 
-    
+    const stopScanner = () => {
+        if (qrScanner) {
+            qrScanner.stop();
+            setScannerActive(false);
+        }
+    };
 
+    useEffect(() => {
+        return () => {
+            if (qrScanner) {
+                qrScanner.destroy();
+            }
+        };
+    }, [qrScanner]);
 
     return (
-        <div className="qr-scanner-container">
-            <h2>Scan QR Code</h2>
-            <video ref={videoRef} className="qr-video" />
-            {error && <p className="error-message">{error}</p>}
-            <Dialog visible={showPopup} onHide={handleClose} className="qr-popup-container">
-                <h3>Animal Details</h3>
-                {animal ? (
-                    <>
-                        <p>Name: {animal.name}</p>
-                        {/* <img src={getImageForSpecies(animal.name)} alt={animal.animalSpeciesName} className="animal-image" /> */}
-                        {/* <p>ID: {animal.id}</p> */}
-                        {/* <p>Animal ID: {animal.animalId}</p> */}
-                        {/* <p>Species ID: {animal.animalSpeciesId}</p> */}
-                        {/* <p>Species Name: {animal.animalSpeciesName}</p>
-                        
-                        <p>Enclosure ID: {animal.enclosureId}</p>
-                        <p>Birth Date: {animal.birthDate}</p>
-                        <p>Birth Country: {animal.birthCountry}</p>
-                        <p>Description: {animal.description}</p> */}
-                    </>
-                ) : (
-                    <p className="qr-popup">{error}</p>
-                )}
-                {/* <Button label="Close" onClick={handleClose} /> */}
-            </Dialog>
-            <div className="qr-popup-backdrop" style={{
-                display: showPopup ? 'block' : 'none'
-            }}></div>
-        </div>
-    );
+        <>
+        <StudentsEnrollTable/>
+        <div className="attendance-container">
+            <div className="form-container">
+                <h2>Mark Attendance</h2>
+                <Form onSubmit={handleSubmit}>
+                    <fieldset>
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="subjectId">Subject ID</Form.Label>
+                            <Form.Control
+                                id="subjectId"
+                                placeholder="Enter Subject ID"
+                                onChange={handleChange}
+                                value={formData.subjectId}
+                                required
+                            />
+                        </Form.Group>
 
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="date">Attendance Date</Form.Label>
+                            <Form.Control
+                                id="date"
+                                type="date"
+                                onChange={handleChange}
+                                value={formData.date}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="studentId">Student ID</Form.Label>
+                            <Form.Control
+                                id="studentId"
+                                placeholder="Enter Student ID"
+                                onChange={handleChange}
+                                value={formData.studentId}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Button type="submit">Mark Attendance</Button>
+                    </fieldset>
+                </Form>
+            </div>
+
+            <div className="qr-scanner-container">
+                <h2>Scan QR Code</h2>
+                <video ref={videoRef} className="qr-video" />
+                {scannerActive ? (
+                    <Button variant="danger" onClick={stopScanner}>Stop Scanner</Button>
+                ) : (
+                    <Button variant="primary" onClick={startScanner}>Start Scanner</Button>
+                )}
+                {error && <p className="error">{error}</p>}
+            </div>
+        </div>
+        </>
+    );
 };
 
 export default Attendance;

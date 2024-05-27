@@ -13,8 +13,7 @@ const TABLE_HEADS = [
   " ",
   " ",
 ];
-
-const ClassesAreaTable = () => {
+const AreaTable = () => {
   const [subjects, setSubjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -196,4 +195,5 @@ const ClassesAreaTable = () => {
   );
 };
 
-export default ClassesAreaTable;
+
+export default AreaTable;

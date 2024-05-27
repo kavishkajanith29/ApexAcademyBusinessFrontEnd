@@ -121,6 +121,15 @@ const Sidebar = () => {
                 <span className="menu-link-text">Classes</span>
               </Link>
             </li>
+
+            <li className="menu-item">
+              <Link to="/enroll" className={action==="enroll"?"menu-link active":"menu-link"} onClick={ () => setAction("enroll")}>
+                <span className="menu-link-icon">
+                  <SiGoogleclassroom size={20} />
+                </span>
+                <span className="menu-link-text">Enroll Students</span>
+              </Link>
+            </li>
             
             <li className="menu-item">
               <Link to="/message" className={action==="message"?"menu-link active":"menu-link"} onClick={ () => setAction("message")}>

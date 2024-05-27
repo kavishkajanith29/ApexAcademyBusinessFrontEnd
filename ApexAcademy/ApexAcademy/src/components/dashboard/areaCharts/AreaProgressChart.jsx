@@ -28,11 +28,17 @@ const AreaProgressChart = () => {
     return dayOfWeek;
   };
 
+  const parseTimeRange = (timeRange) => {
+    const [startTime] = timeRange.split('-').map(time => time.trim());
+    const [hours, minutes] = startTime.split(':').map(Number);
+    return hours * 60 + minutes;
+  };
+
   const currentDay = getCurrentDayOfWeek();
 
-  const filteredClasses = classesData.filter((item) => {
-    return item.day === currentDay;
-  });
+  const filteredClasses = classesData
+    .filter(item => item.day === currentDay)
+    .sort((a, b) => parseTimeRange(a.timeRange) - parseTimeRange(b.timeRange));
 
   return (
     <div className="progress-bar">
@@ -40,7 +46,7 @@ const AreaProgressChart = () => {
         <h4 className="progress-bar-title">Today's Classes</h4>
       </div>
       <div className="progress-bar-list">
-        {filteredClasses?.map((Classes) => (
+        {filteredClasses?.map(Classes => (
           <div className="progress-bar-item" key={Classes.subjectid}>
             <div className="bar-item-info">
               <p className="bar-item-info-name">{Classes.subjectid}</p>

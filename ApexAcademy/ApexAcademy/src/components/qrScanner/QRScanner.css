@@ -1,4 +1,40 @@
-.qr-video{
+/* .qr-video{
     height: 30rem;
     width: 30rem;
+} */
+
+.attendance-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.form-container,
+.qr-scanner-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.qr-scanner-container {
+    text-align: center;
+}
+
+.qr-video {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .attendance-container {
+        grid-template-columns: 1fr;
+    }
 }

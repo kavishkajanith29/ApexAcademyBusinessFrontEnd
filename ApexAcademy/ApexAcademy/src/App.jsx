@@ -4,7 +4,7 @@ import { ThemeContext } from "./context/ThemeContext";
 import { DARK_THEME, LIGHT_THEME } from "./constants/themeConstants";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BaseLayout from "./layout/BaseLayout";
-import { Dashboard, GenerateQR, GetStudentsAttendance, MessageScreen, PageNotFound, Payments } from "./screens";
+import { Dashboard, GenerateQR, GetStudentsAttendance, MessageScreen, PageNotFound, Payments, StudentEnroll } from "./screens";
 import Teachers from "./screens/teachers/TeachersScreen";
 import Students from "./screens/students/StudentsScreen";
 import Classes from "./screens/classes/ClassesScreen";
@@ -36,6 +36,7 @@ function App() {
             <Route path="/students" element={<Students />} />
             <Route path="/student/:id" element={<StudentDetails />} />
             <Route path="/classes" element={<Classes />} />
+            <Route path="/enroll" element={<StudentEnroll />} />
             <Route path="/message" element={<MessageScreen />} />
             <Route path="/payment" element={<Payments />} />
             <Route path="/attendance" element={<GetStudentsAttendance />} />
