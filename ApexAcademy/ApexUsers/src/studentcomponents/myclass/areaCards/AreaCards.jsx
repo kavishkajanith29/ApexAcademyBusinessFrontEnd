@@ -1,41 +1,46 @@
 import { Link } from "react-router-dom";
 import AreaCard from "./AreaCard";
 import "./AreaCard.scss";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const AreaCards = () => {
+
+  const [enrollments, setEnrollments] = useState([]);
+  const studentId = localStorage.getItem('studentId');
+
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8085/api/v1/enrollment/student/${studentId}`);
+        setEnrollments(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error('Error fetching enrollments', error);
+      }
+    };
+
+    fetchEnrollments();
+  }, [studentId]);
+
+
   return (
     <section className="content-area-cards">
+    {enrollments.map((enrollment) => (
       <Link to="/student/class">
-      <AreaCard
-        colors={["#e4e8ef", "#475be8"]}
-        //percentFillValue={80}
-        cardInfo={{
-          title: "Grade 6 - English",
-          value: " ",
-          text: "Mr: Suranga ",
-        }}
-      /> </Link>
-      <AreaCard
-        colors={["#e4e8ef", "#4ce13f"]}
-        //percentFillValue={50}
-        cardInfo={{
-          title: "Grade 6 - Science",
-          value: "",
-          text: "Mr: Kamal",
-        }}
-      />
-
-    <AreaCard
-        colors={["#e4e8ef", "#4ce13f"]}
-        //percentFillValue={50}
-        cardInfo={{
-          title: "Grade 6 - Tamil",
-          value: "",
-          text: "Mr: Kasun",
-        }}
-      />
-      
-    </section>
+        
+        <AreaCard
+          colors={["#e4e8ef", "#475be8"]} // You can customize colors based on the class or status
+          //percentFillValue={Math.random() * 100} // Replace with actual data if available
+          cardInfo={{
+            title: `${enrollment.subject.subjectname}`,
+            //value: "N/A",
+            text: `Mr: ${enrollment.subject.teacher.teachername}`,
+          }}
+        />
+      </Link>
+    ))}
+  </section>
   );
 };
 
