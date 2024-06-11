@@ -18,7 +18,7 @@ const AreaTop = () => {
         >
           <MdOutlineMenu size={24} />
         </button>
-        <h2 className="area-top-title">Received Payment</h2>
+        <h2 className="area-top-title">Class Fee Payments</h2>
       </div>
     </section>
   );

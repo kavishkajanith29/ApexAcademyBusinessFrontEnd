@@ -148,7 +148,7 @@ const ClassesAreaTable = () => {
                   </div>
                 </td>
                 <td className="dt-cell-action">
-                  <Button onClick={() => navigate(`/teachers/${dataItem.subjectid}`)}>
+                  <Button onClick={() => navigate(`/classes/${dataItem.subjectid}`)}>
                     View
                   </Button>
                 </td>

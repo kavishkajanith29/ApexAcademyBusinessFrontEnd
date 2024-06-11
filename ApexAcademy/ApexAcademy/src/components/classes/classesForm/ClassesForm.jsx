@@ -2,7 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import './form.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
@@ -31,17 +31,22 @@ function ClassesForm() {
       ...formData,
       [id]: value,
     });
-
-    if (id === 'medium') {
-      fetchClassFee(value);
-    }
   };
 
-  const fetchClassFee = async (medium) => {
+  useEffect(() => {
+    if (formData.medium && formData.exam) {
+      fetchClassFee(formData.medium, formData.exam);
+    }
+  }, [formData.medium, formData.exam]);
+
+
+
+  const fetchClassFee = async (medium, exam) => {
     try {
+      const grade = exam === "OL" ? "O/L" : "A/L";
       const response = await axios.get('http://localhost:8085/classfee/all');
       const fees = response.data;
-      const fee = fees.find(fee => fee.medium === medium)?.fee || '';
+      const fee = fees.find(fee => fee.medium === medium  && fee.grade === grade)?.fee || '';
       setFormData((prevFormData) => ({
         ...prevFormData,
         classfee: fee,
@@ -131,7 +136,7 @@ function ClassesForm() {
       <Form onSubmit={handleSubmit}>
         <fieldset>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="teacherId">Teacher ID *</Form.Label>
+            <Form.Label htmlFor="teacherId" >Teacher ID *</Form.Label>
             <Form.Control
               id="teacherId"
               placeholder="Enter Teacher ID"

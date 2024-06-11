@@ -5,29 +5,26 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const TABLE_HEADS = [
-  "Subject ID",
+  "Student ID",
+  "Student Name",
   "Subject",
   "Teacher Name",
-  "Medium",
-  "Schedule Time",
-  " ",
+  "Enrollment Date",
   " ",
 ];
-const AreaTable = () => {
+const EnrollTable = () => {
   const [subjects, setSubjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
   const [subjectFilter, setSubjectFilter] = useState("");
-  const [mediumFilter, setMediumFilter] = useState("");
-  const [gradeFilter, setGradeFilter] = useState("");
   const [teacherFilter, setTeacherFilter] = useState("");
 
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await axios.get("http://localhost:8085/api/v1/subject/all");
+        const response = await axios.get("http://localhost:8085/api/v1/enrollment/recent");
         setSubjects(response.data);
       } catch (error) {
         console.error("Error fetching subjects:", error);
@@ -67,15 +64,11 @@ const AreaTable = () => {
 
   const getFilteredSubjects = () => {
     return subjects.filter((subject) => {
-      const normalizedSubjectName = subject.subjectname ? subject.subjectname.toLowerCase() : '';
-      const normalizedTeacherName = subject.teacher ? subject.teacher.teachername.toLowerCase() : '';
+      const normalizedSubjectName = subject.student.studentid ? subject.student.studentid.toLowerCase() : '';
+      const normalizedTeacherName = subject.subject.teacher.teachername ? subject.subject.teacher.teachername.toLowerCase() : '';
       return (
         (subjectFilter === "" || normalizedSubjectName.includes(subjectFilter.toLowerCase())) &&
-        (teacherFilter === "" || normalizedTeacherName.includes(teacherFilter.toLowerCase())) &&
-        (mediumFilter === "" || subject.medium.includes(mediumFilter)) &&
-        (gradeFilter === "" || 
-          (gradeFilter === "A/L" && subject.subjectid.startsWith("AL")) ||
-          (gradeFilter === "O/L" && subject.subjectid.startsWith("OL")))
+        (teacherFilter === "" || normalizedTeacherName.includes(teacherFilter.toLowerCase()))
       );
     });
   };
@@ -94,14 +87,14 @@ const AreaTable = () => {
   };
 
   return (
-    <section className="content-area-table">
+    <section className="content-area-table" style={{ marginTop: '20px' }}>
       <div className="data-table-info">
-        <h4 className="data-table-title">Registered Classes</h4>
+        <h4 className="data-table-title">Students Enrollments</h4>
       </div>
       <div className="filter-container">
         <input
           type="text"
-          placeholder="Filter by subject"
+          placeholder="Filter by Student"
           value={subjectFilter}
           onChange={handleSubjectFilterChange}
         />
@@ -111,19 +104,6 @@ const AreaTable = () => {
           value={teacherFilter}
           onChange={handleTeacherFilterChange}
         />
-        <select value={mediumFilter} onChange={(e) => setMediumFilter(e.target.value)}>
-          <option value="">All Mediums</option>
-          {getUniqueValues('medium').map((medium) => (
-            <option key={medium} value={medium}>
-              {medium}
-            </option>
-          ))}
-        </select>
-        <select value={gradeFilter} onChange={(e) => setGradeFilter(e.target.value)}>
-          <option value="">All Grades</option>
-          <option value="A/L">A/L</option>
-          <option value="O/L">O/L</option>
-        </select>
       </div>
       <div className="data-table-diagram">
         <table>
@@ -136,19 +116,19 @@ const AreaTable = () => {
           </thead>
           <tbody>
             {getVisibleSubjects().map((dataItem) => (
-              <tr key={dataItem.subjectid}>
-                <td>{dataItem.subjectid}</td>
-                <td>{dataItem.subjectname}</td>
-                <td>{dataItem.teacher ? dataItem.teacher.teachername : ''}</td>
-                <td>{dataItem.medium}</td>
+              <tr key={dataItem.enrollmentId}>
+                <td>{dataItem.student ? dataItem.student.studentid : ''}</td>
+                <td>{dataItem.student ? dataItem.student.studentname : ''}</td>
+                <td>{dataItem.subject ? dataItem.subject.subjectname : ''}</td>
+                <td>{dataItem.subject.teacher ? dataItem.subject.teacher.teachername : ''}</td>
                 <td>
                   <div className="dt-status">
-                    <span className="dt-status-text">{dataItem.day}  {dataItem.timeRange}</span>
+                    <span className="dt-status-text">{dataItem.enrollmentDate}</span>
                   </div>
                 </td>
                 <td className="dt-cell-action">
                   <Button onClick={() => navigate(`/classes/${dataItem.subjectid}`)}>
-                    View
+                    UnEnroll
                   </Button>
                 </td>
               </tr>
@@ -196,4 +176,4 @@ const AreaTable = () => {
 };
 
 
-export default AreaTable;
+export default EnrollTable;

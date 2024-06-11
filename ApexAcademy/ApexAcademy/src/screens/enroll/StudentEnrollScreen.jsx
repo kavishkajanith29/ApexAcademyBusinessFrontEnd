@@ -1,4 +1,4 @@
-import { StudentEnrollForm, StudentEnrollTop, StudentsEnrollTable } from "../../components";
+import { EnrollTable, StudentEnrollForm, StudentEnrollTop, StudentsEnrollTable } from "../../components";
 
 const Enroll = () => {
   return (
@@ -6,6 +6,7 @@ const Enroll = () => {
         <StudentEnrollTop/>
         <StudentsEnrollTable/>
         <StudentEnrollForm/>
+        <EnrollTable/>
     </div>
   );
 };

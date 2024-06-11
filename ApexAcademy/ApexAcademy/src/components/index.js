@@ -34,3 +34,4 @@ export { default as StudentAttendance } from "./qrScanner/QRScanner";
 export { default as StudentEnrollTop } from "./studentEnroll/areaTop/AreaTop";
 export { default as StudentsEnrollTable } from "./studentEnroll/areaTable/AreaTable";
 export { default as StudentEnrollForm } from "./studentEnroll/studentForm/studentsEnrollForm";
+export { default as EnrollTable } from "./studentEnroll/areaTable/EnrollTable";

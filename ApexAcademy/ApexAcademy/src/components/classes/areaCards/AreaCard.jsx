@@ -40,7 +40,7 @@ const AreaCard = ({ cardInfo, onSave }) => {
   };
 
   return (
-    <div className="area-card">
+    <div className="area-cards">
       <div className="area-card-info">
         <h5 className="info-title">{cardInfo.title}</h5>
         {isEditing ? (

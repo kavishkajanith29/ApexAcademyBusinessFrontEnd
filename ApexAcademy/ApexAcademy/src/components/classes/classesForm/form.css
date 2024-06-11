@@ -44,5 +44,7 @@
     }
   }
   
-
+  label {
+    color: var(--xl-text-color);
+  }
   

@@ -1,6 +1,6 @@
-.content-area-cards {
+.content-area-card {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   margin-top: 12px;
   gap: 16px;
 
@@ -12,10 +12,11 @@
     grid-template-columns: 100%;
   }
 
-  .area-card {
+  .area-cards {
     background-color: var(--secondary-color);
     display: flex;
     align-items: center;
+    width: 272px;
     border-radius: 5px;
     padding: 20px 16px;
     justify-content: space-between;

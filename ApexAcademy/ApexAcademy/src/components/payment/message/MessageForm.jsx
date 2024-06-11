@@ -1,84 +1,180 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form ,Table } from 'react-bootstrap';
+import "./AreaTable.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import { useState,useEffect } from 'react';
 
+const TABLE_HEADS = [
+  "Subject ID",
+  "Subject",
+  "Teacher Name",
+  "Medium",
+  "Schedule Time",
+  " ",
+  " ",
+];
 
 function MessageForm() {
+  const initialFormData = {
+    studentId: '',  
+  };
+  const [formData, setFormData] = useState(initialFormData);
+  const [enrollments, setEnrollments] = useState([]);
+  const [selectedEnrollments, setSelectedEnrollments] = useState({});
+  const [paymentFormVisible, setPaymentFormVisible] = useState(false);
+  const [paymentData, setPaymentData] = useState({
+    month: '',
+    amount: 0,
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value,
+    });
+  };
+
+  const handleCheckboxChange = (e, enrollment) => {
+    const { checked } = e.target;
+    const updatedSelectedEnrollments = { ...selectedEnrollments };
+
+    if (checked) {
+      updatedSelectedEnrollments[enrollment.enrollmentId] = enrollment;
+    } else {
+      delete updatedSelectedEnrollments[enrollment.enrollmentId];
+    }
+
+    setSelectedEnrollments(updatedSelectedEnrollments);
+
+    if (Object.keys(updatedSelectedEnrollments).length > 0) {
+      setPaymentFormVisible(true);
+      const totalAmount = Object.values(updatedSelectedEnrollments).reduce(
+        (sum, item) => sum + parseFloat(item.subject.classfee),
+        0
+      );
+      setPaymentData({ ...paymentData, amount: totalAmount });
+    } else {
+      setPaymentFormVisible(false);
+    }
+  };
+
+  const handlePaymentChange = (e) => {
+    const { id, value } = e.target;
+    setPaymentData({
+      ...paymentData,
+      [id]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(`http://localhost:8085/api/v1/enrollment/student/${formData.studentId}`);
+      setEnrollments(response.data);
+    } catch (error) {
+      console.error('Error fetching enrollments:', error);
+    }
+  };
+
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const promises = Object.values(selectedEnrollments).map((enrollment) =>
+        axios.post('http://localhost:8085/api/v1/fees/pay', {
+          enrollmentId: enrollment.enrollmentId,
+          month: paymentData.month,
+          amount: enrollment.subject.classfee,
+        })
+      );
+      console.log(promises);
+      await Promise.all(promises);
+      
+    } catch (error) {
+      console.error('Error processing payments:', error);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setEnrollments([]);
+    setSelectedEnrollments({});
+    setPaymentFormVisible(false);
+    setPaymentData({ month: '', amount: 0 });
+  };
 
   return (
-    <Form>
-      <fieldset>
-      <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Student ID</Form.Label>
-          <Form.Control id="disabledTextInput" placeholder="Enter Student ID" />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="dobInput">Date of Payment</Form.Label>
-          <Form.Control id="dobInput"type="date"/>
-        </Form.Group>
-
-        <div class="form-group">
-           <label for="exampleInputEmail1">Email address</label>
-           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
-           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-
-        <br/>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextNumber">Class Fee (Rs:)</Form.Label>
-          <Form.Control id="disabledTextNumber" placeholder="Enter Class Fee" />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Enter Message</Form.Label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </Form.Group>
-
-
-       
-
-        {/* <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Select Grade</Form.Label>
-          <Form.Select aria-label="Default select example">
-              <option>None</option>
-              <option>All Grade</option>
-              <option value="1">Grade 06 - English</option>
-              <option value="2">Grade 07 - English</option>
-              <option value="3">Grade 08 - English</option>
-              <option value="4">Grade 09 - English</option>
-              <option value="5">Grade 10 - English</option>
-              <option value="6">Grade 11 - English</option>
-          </Form.Select>
-        </Form.Group> */}
-
-
-        <br/>
-
-       
-        
-        {/* <br/>
-        <div class="form-group">
-           <label for="exampleInputEmail1">Email address</label>
-           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
-           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div> */}
-
-        {/* <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="typeNumber">Do You Want to Send Message for the Institiute</label>
-        
-        <Form.Group className="mb-3">
-          <Form.Check
-            type="checkbox"
-            id="disabledFieldsetCheck"
-            label="Yes"
-          />
-        </Form.Group>
-        </div> */}
-      
-        <Button type="submit">Save Payment</Button>
-      </fieldset>
-    </Form>
+    <div className="classregister">
+      <Form onSubmit={handleSubmit}>
+        <fieldset>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Form.Group className="mb-3" style={{ marginBottom: 0, marginRight: '10px' }}>
+              <Form.Control
+                id="studentId"
+                placeholder="Enter Student ID"
+                onChange={handleChange}
+                value={formData.studentId}
+                required
+              />
+            </Form.Group>
+            <Button type="submit" className="mb-3" style={{ marginTop: 0, marginRight: '10px' }}>Search</Button>
+            <Button type="button" className="mb-3" onClick={resetForm} style={{ marginTop: 0 }}>Reset</Button>
+          </div>
+        </fieldset>
+      </Form>
+      {enrollments.length > 0 && (
+        <Table striped bordered hover responsive>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Subject ID</th>
+            <th>Subject Name</th>
+            <th>Teacher Name</th>
+            <th>Class Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          {enrollments.map((enrollment) => (
+            <tr key={enrollment.enrollmentId}>
+              <td>
+                <Form.Check 
+                  type="checkbox"
+                  onChange={(e) => handleCheckboxChange(e, enrollment)}
+                />
+              </td>
+              <td>{enrollment.subject.subjectid}</td>
+              <td>{enrollment.subject.subjectname}</td>
+              <td>{enrollment.subject.teacher.teachername}</td>
+              <td>{"Rs."}{enrollment.subject.classfee}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      )}
+      {paymentFormVisible && (
+        <Form onSubmit={handlePaymentSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Month</Form.Label>
+            <Form.Control
+              id="month"
+              type="month"
+              onChange={handlePaymentChange}
+              value={paymentData.month}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Total Amount Rs.</Form.Label>
+            <Form.Control
+              id="amount"
+              value={paymentData.amount}
+              readOnly
+            />
+          </Form.Group>
+          <Button type="submit" className="mb-3">Pay Fee</Button>
+        </Form>
+      )}
+    </div>
   );
 }
 

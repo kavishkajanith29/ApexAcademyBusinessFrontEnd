@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import PrivateRoutes from "./PrivateRoutes";
 import StudentDetails from "./pages/StudentDetails";
 import TeacherDetails from "./pages/TeacherDetails";
+import ClassesDetails from "./pages/ClassesDetails";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -36,6 +37,7 @@ function App() {
             <Route path="/students" element={<Students />} />
             <Route path="/student/:id" element={<StudentDetails />} />
             <Route path="/classes" element={<Classes />} />
+            <Route path="/classes/:id" element={<ClassesDetails />} />
             <Route path="/enroll" element={<StudentEnroll />} />
             <Route path="/message" element={<MessageScreen />} />
             <Route path="/payment" element={<Payments />} />
