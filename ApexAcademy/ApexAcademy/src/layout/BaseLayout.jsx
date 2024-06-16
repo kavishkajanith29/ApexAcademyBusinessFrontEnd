@@ -16,7 +16,7 @@ const BaseLayout = () => {
       <Sidebar />
       {/* Right side/content of the page */}
       <div className="content-wrapper">
-        <button
+        {/* <button
           type="button"
           className="theme-toggle-btn"
           onClick={toggleTheme}
@@ -26,7 +26,7 @@ const BaseLayout = () => {
             src={theme === LIGHT_THEME ? SunIcon : MoonIcon}
             alt="theme icon"
           />
-        </button>
+        </button> */}
         <Outlet />
       </div>
     </main>

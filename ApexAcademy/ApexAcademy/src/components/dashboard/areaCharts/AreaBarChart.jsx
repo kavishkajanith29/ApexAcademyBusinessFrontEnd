@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -9,79 +9,87 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ThemeContext } from "../../../context/ThemeContext";
-import { FaArrowUpLong } from "react-icons/fa6";
 import { LIGHT_THEME } from "../../../constants/themeConstants";
+import axios from "axios";
 import "./AreaCharts.scss";
 
-const data = [
-  {
-    month: "Jan",
-    loss: 70,
-    profit: 100,
-  },
-  {
-    month: "Feb",
-    loss: 55,
-    profit: 85,
-  },
-  {
-    month: "Mar",
-    loss: 35,
-    profit: 90,
-  },
-  {
-    month: "April",
-    loss: 90,
-    profit: 70,
-  },
-  {
-    month: "May",
-    loss: 55,
-    profit: 80,
-  },
-  {
-    month: "Jun",
-    loss: 30,
-    profit: 50,
-  },
-  {
-    month: "Jul",
-    loss: 32,
-    profit: 75,
-  },
-  {
-    month: "Aug",
-    loss: 62,
-    profit: 86,
-  },
-  {
-    month: "Sep",
-    loss: 55,
-    profit: 78,
-  },
-];
+// Function to preprocess data and calculate total amount for the current year
+const preprocessData = (fees) => {
+  const currentYear = new Date().getFullYear();
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  
+  // Initialize an array to hold the aggregated data
+  const aggregatedData = months.map(month => ({ month, amount: 0 }));
+
+  // Aggregate data by month for the current year
+  let totalAmount = 0;
+  fees.forEach(fee => {
+    const feeDate = new Date(fee.month);
+    if (feeDate.getFullYear() === currentYear) {
+      const monthIndex = feeDate.getMonth();
+      const feeAmount = parseFloat(fee.amount);
+      aggregatedData[monthIndex].amount += feeAmount;
+      totalAmount += feeAmount;
+    }
+  });
+
+  return { aggregatedData, totalAmount };
+};
 
 const AreaBarChart = () => {
   const { theme } = useContext(ThemeContext);
+  const [fees, setFees] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  // Fetch data from the API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8085/api/v1/fees/all");
+        setFees(response.data);
+      } catch (error) {
+        console.error("Error fetching the fees data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Memoize the processed data to avoid recalculating on every render
+  const { aggregatedData, totalAmount: calculatedTotalAmount } = useMemo(() => preprocessData(fees), [fees]);
+
+  useEffect(() => {
+    setTotalAmount(calculatedTotalAmount);
+  }, [calculatedTotalAmount]);
 
   const formatTooltipValue = (value) => {
-    return `${value}k`;
+    return `Rs.${value}`;
   };
 
   const formatYAxisLabel = (value) => {
-    return `${value}k`;
+    return `Rs.${value}`;
   };
 
   const formatLegendValue = (value) => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="bar-chart">
       <div className="bar-chart-info">
         <h5 className="bar-chart-title">Total Revenue From Class Fees</h5>
         <div className="chart-info-data">
-          <div className="info-data-value">Rs.2 157 6000.00</div>
+          <div className="info-data-value">{`Rs.${totalAmount.toLocaleString()}`}</div>
         </div>
       </div>
       <div className="bar-chart-wrapper">
@@ -89,7 +97,7 @@ const AreaBarChart = () => {
           <BarChart
             width={500}
             height={200}
-            data={data}
+            data={aggregatedData}
             margin={{
               top: 5,
               right: 5,
@@ -98,7 +106,6 @@ const AreaBarChart = () => {
             }}
           >
             <XAxis
-              padding={{ left: 10 }}
               dataKey="month"
               tickSize={0}
               axisLine={false}
@@ -108,7 +115,6 @@ const AreaBarChart = () => {
               }}
             />
             <YAxis
-              padding={{ bottom: 10, top: 10 }}
               tickFormatter={formatYAxisLabel}
               tickCount={6}
               axisLine={false}
@@ -129,14 +135,11 @@ const AreaBarChart = () => {
               formatter={formatLegendValue}
             />
             <Bar
-              dataKey="profit"
+              dataKey="amount"
               fill="#475be8"
-              activeBar={false}
-              isAnimationActive={false}
               barSize={24}
               radius={[4, 4, 4, 4]}
             />
-            
           </BarChart>
         </ResponsiveContainer>
       </div>

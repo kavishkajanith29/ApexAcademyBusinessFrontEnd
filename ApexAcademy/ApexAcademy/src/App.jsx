@@ -4,7 +4,7 @@ import { ThemeContext } from "./context/ThemeContext";
 import { DARK_THEME, LIGHT_THEME } from "./constants/themeConstants";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BaseLayout from "./layout/BaseLayout";
-import { Dashboard, GenerateQR, GetStudentsAttendance, MessageScreen, PageNotFound, Payments, StudentEnroll } from "./screens";
+import { Dashboard, GenerateQR, GetStudentsAttendance, MessageScreen, PageNotFound, Payments, ReportScreen, StudentEnroll } from "./screens";
 import Teachers from "./screens/teachers/TeachersScreen";
 import Students from "./screens/students/StudentsScreen";
 import Classes from "./screens/classes/ClassesScreen";
@@ -13,6 +13,8 @@ import PrivateRoutes from "./PrivateRoutes";
 import StudentDetails from "./pages/StudentDetails";
 import TeacherDetails from "./pages/TeacherDetails";
 import ClassesDetails from "./pages/ClassesDetails";
+import { MonthlyReport, Report } from "./components";
+import Profile from "./pages/Profile";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -43,6 +45,10 @@ function App() {
             <Route path="/payment" element={<Payments />} />
             <Route path="/attendance" element={<GetStudentsAttendance />} />
             <Route path="/qrgenerate" element={<GenerateQR />} />
+            <Route path="/report" element={<ReportScreen />} />
+            <Route path="/report/reportgenerate" element={<Report/>} />
+            <Route path="/report/monthlyreportgenerate" element={<MonthlyReport/>} />
+            <Route path="/profile" element={<Profile/>} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Route>

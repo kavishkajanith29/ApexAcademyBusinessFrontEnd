@@ -1,0 +1,82 @@
+.revenue-report-print {
+    font-family: Arial, sans-serif;
+  
+    .report-title {
+      text-align: center;
+      color: #333;
+    }
+  
+    .report-content {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+  
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+  
+        h2 {
+          color: #333;
+        }
+  
+        h3 {
+          color: #007bff;
+        }
+  
+        p {
+          color: #333;
+        }
+      }
+  
+      .report-table {
+        width: 100%;
+        border-collapse: collapse;
+  
+        th, td {
+          padding: 12px;
+          text-align: left;
+          border: 1px solid #ccc;
+        }
+  
+        th {
+          background-color: #007bff;
+          color: #fff;
+        }
+  
+        tbody {
+          tr:nth-child(even) {
+            background-color: #f2f2f2;
+          }
+        }
+  
+        tfoot {
+          background-color: #007bff;
+          color: #fff;
+  
+          th {
+            border-top: 2px solid #fff;
+          }
+        }
+      }
+    }
+  
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+  
+      .revenue-report-print, .revenue-report-print * {
+        visibility: visible;
+      }
+  
+      .revenue-report-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
+  

@@ -48,7 +48,7 @@ const AreaTop = () => {
         >
           <MdOutlineMenu size={24} />
         </button>
-        <h2 className="area-top-title">QR Generator</h2>
+        <h2 className="area-top-title">Student Identity Card</h2>
       </div>
       <div className="area-top-r">
         <div

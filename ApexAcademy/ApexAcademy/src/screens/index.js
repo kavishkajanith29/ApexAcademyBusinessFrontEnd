@@ -7,3 +7,4 @@ export { default as Payments} from "./payment/PaymentScreen";
 export { default as GenerateQR} from "./qr/GenerateQR";
 export { default as GetStudentsAttendance} from "./qrscanner/AttendanceScreen";
 export { default as StudentEnroll} from "./enroll/StudentEnrollScreen";
+export { default as ReportScreen} from "./report/ReportScreen";

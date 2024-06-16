@@ -118,8 +118,8 @@ const EnrollTable = () => {
             {getVisibleSubjects().map((dataItem) => (
               <tr key={dataItem.enrollmentId}>
                 <td>{dataItem.student ? dataItem.student.studentid : ''}</td>
-                <td>{dataItem.student ? dataItem.student.studentname : ''}</td>
-                <td>{dataItem.subject ? dataItem.subject.subjectname : ''}</td>
+                <td>{dataItem.subject ? dataItem.subject.subjectid : ''}</td>
+                <td>{dataItem.subject ? dataItem.subject.medium : ''}</td>
                 <td>{dataItem.subject.teacher ? dataItem.subject.teacher.teachername : ''}</td>
                 <td>
                   <div className="dt-status">

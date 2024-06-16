@@ -35,3 +35,11 @@ export { default as StudentEnrollTop } from "./studentEnroll/areaTop/AreaTop";
 export { default as StudentsEnrollTable } from "./studentEnroll/areaTable/AreaTable";
 export { default as StudentEnrollForm } from "./studentEnroll/studentForm/studentsEnrollForm";
 export { default as EnrollTable } from "./studentEnroll/areaTable/EnrollTable";
+
+export { default as AreaReportCards } from "./financialReport/areaCards/AreaCards";
+export { default as AreaReportCharts } from "./financialReport/areaCharts/AreaCharts";
+export { default as AreaRportTable } from "./financialReport/areaTable/AreaTable";
+export { default as AreaReportTop } from "./financialReport/areaTop/AreaTop";
+export { default as Report } from "./financialReport/report/Report";
+export { default as MonthlyReport } from "./financialReport/report/MonthlyReport";
+

@@ -6,6 +6,7 @@ import './StudentDetailsStyles.css';
 
 const StudentDetails = () => {
   const [studentDetails, setStudentDetails] = useState({});
+  const [fee, setFee] = useState(null);
   const { id } = useParams(); 
   const navigate = useNavigate(); 
 
@@ -19,7 +20,19 @@ const StudentDetails = () => {
       }
     };
 
+    const fetchClassFees = async () => {
+      try {
+        const response = await axios.get('http://localhost:8085/classfee/all');
+        const classFees = response.data;
+        const allFee = classFees.find(fee => fee.medium === 'ALL' && fee.grade === 'ALL');
+        setFee(allFee.fee);
+      } catch (error) {
+        console.error("Error fetching class fees:", error);
+      }
+    };
+
     fetchStudentDetails();
+    fetchClassFees();
   }, [id]); 
 
   const handleApprove = async () => {
@@ -33,18 +46,26 @@ const StudentDetails = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.put(`http://localhost:8085/api/v1/student/${id}/approve`);
+          // Approve student
+          await axios.put(`http://localhost:8085/api/v1/student/${id}/approve`);
           setStudentDetails({ ...studentDetails, approved: true });
+
+          // Add payment
+          await axios.post('http://localhost:8085/api/v1/payment/add', {
+            studentId: studentDetails.studentid,
+            amount: fee
+          });
+
           Swal.fire(
             'Approved!',
-            'The student has been approved.',
+            'The student has been approved and payment has been added.',
             'success'
           );
         } catch (error) {
           console.error("Error approving student:", error);
           Swal.fire(
             'Error!',
-            'There was an error approving the student.',
+            'There was an error approving the student or adding the payment.',
             'error'
           );
         }
@@ -83,7 +104,6 @@ const StudentDetails = () => {
   };
 
   return (
-    <>
     <div className="student-details-container">
       <h2>Student Details</h2>
       <div className="student-details-card">
@@ -153,7 +173,6 @@ const StudentDetails = () => {
         </span>
       </div>
     </div>
-    </>
   );
 };
 

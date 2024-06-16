@@ -38,8 +38,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.setItem('isAuthenticated', false);
-    setAction("dashboard");
+    localStorage.clear();
   };
 
   useEffect(() => {
@@ -152,14 +151,25 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <SiGoogleclassroom size={20} />
                 </span>
-                <span className="menu-link-text">Issue ID</span>
+                <span className="menu-link-text">Issue Student ID</span>
               </Link>
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu sidebar-menu2">
-          <ul className="menu-list">
+            <li className="menu-item">
+              <Link to="/report" className={action==="report"?"menu-link active":"menu-link"} onClick={ () => setAction("report")}>
+                <span className="menu-link-icon">
+                  <SiGoogleclassroom size={20} />
+                </span>
+                <span className="menu-link-text">Reports</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/profile" className={action==="profile"?"menu-link active":"menu-link"} onClick={ () => setAction("profile")}>
+                <span className="menu-link-icon">
+                  <SiGoogleclassroom size={20} />
+                </span>
+                <span className="menu-link-text">Change Password</span>
+              </Link>
+            </li>
             <li className="menu-item">
               <Link to="/" className="menu-link" onClick={handleLogout}>
                 <span className="menu-link-icon">
@@ -168,6 +178,12 @@ const Sidebar = () => {
                 <span className="menu-link-text">Logout</span>
               </Link>
             </li>
+          </ul>
+        </div>
+
+        <div className="sidebar-menu sidebar-menu2">
+          <ul className="menu-list" >
+          
           </ul>
         </div>
       </div>

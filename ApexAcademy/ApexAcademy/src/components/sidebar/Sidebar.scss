@@ -49,7 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 28px;
+    margin-bottom: 5px;
     padding-bottom: 4px;
     border-bottom: 1px solid var(--border-color-inverted);
   }
@@ -98,7 +98,7 @@
   }
 
   .menu-item{
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 
     &:last-child{
         margin-bottom: 0;
