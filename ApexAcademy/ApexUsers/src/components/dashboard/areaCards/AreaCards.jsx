@@ -1,7 +1,38 @@
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"; 
+
 
 const AreaCards = () => {
+  const [studentCount, setStudentCount] = useState(null);
+  const [enrollments, setEnrollments] = useState([]);
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
+  const teacherId = localStorage.getItem('teacherId');
+
+  useEffect(() => {
+    const fetchStudentCount = async () => {
+      try {
+        const response = await fetch(`http://localhost:8085/api/v1/enrollment/recent`);
+        if (response.ok) {
+          const data = await response.json();
+          //setStudentCount(data);
+          //console.log(data);
+          const filteredEnrollments = data.filter(enrollment => 
+            enrollment.subject.teacher.teacherid === teacherId
+          );
+          setEnrollments(filteredEnrollments.length);
+          console.log(filteredEnrollments);
+        } else {
+          console.error("Failed to fetch student count");
+        }
+      } catch (error) {
+        console.error("Error fetching student count:", error);
+      }
+    };
+    fetchStudentCount();
+  }, []);
   return (
     <section className="content-area-cards">
       <AreaCard
@@ -27,7 +58,7 @@ const AreaCards = () => {
         //percentFillValue={40}
         cardInfo={{
           title: "Number of Classes",
-          value: "08",
+          value: `${enrollments ? enrollments.toLocaleString() : "Loading..."}`,
           //text: "Available to payout",
         }}
       />

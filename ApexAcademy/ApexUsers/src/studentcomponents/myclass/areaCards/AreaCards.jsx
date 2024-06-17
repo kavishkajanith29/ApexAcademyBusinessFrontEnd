@@ -27,21 +27,14 @@ const AreaCards = () => {
     fetchEnrollments();
   }, [studentId]);
 
-  const handleCardClick = (subjectId) => {
-    console.log("Here1")
-    localStorage.setItem('subjectId', subjectId);
-    console.log("Here2")
-  };
 
   
 
   return (
     <section className="content-area-cards">
     {enrollments.map((enrollment) => (
-      <Link to="/student/class"
-      key={enrollment.subject.subjectid} 
-          onClick={() => handleCardClick(enrollment.subject.subjectid)}>
-        
+      <Link to={`/student/class/${enrollment.subject.subjectid}`} 
+      key={enrollment.subjectid}>
         <AreaCard
           colors={["#e4e8ef", "#475be8"]} // You can customize colors based on the class or status
           //percentFillValue={Math.random() * 100} // Replace with actual data if available

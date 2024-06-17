@@ -3,6 +3,7 @@ import './LoginPage.css'
 import { PiStudentLight } from "react-icons/pi";
 import { GiTeacher } from "react-icons/gi";
 import { Link} from 'react-router-dom';
+//import Img1 from '../assets/images/img1.jpg'
 
 const LoginPage = () => {
   return (

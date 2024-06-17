@@ -1,217 +1,219 @@
 .loginImage {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 80%;
+  padding: 0;
+  z-index: -1; /* Ensure the image is behind other content */
+  object-fit: cover; /* Ensure the image covers the entire area without stretching */
+  filter: blur(2px);
+}
+.password-toggle-icon {
+  position: absolute;
+  right: 70px;
+  top: 62%;
+  transform: translateY(-50%);
+  width: 30px; /* Adjust icon width */
+  height: 30px;
+  
+}
+
+.maincontainerlogin {
+  flex: 1;
+}
+
+.Logincontainer {
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 600px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.Signcontainer {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 600px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.Signheader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.Signtext {
+  color: #222;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.Signunderline {
+  width: 61px;
+  height: 6px;
+  background: #222;
+  border-radius: 9px;
+}
+
+.Signinputs {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.SigninputSelect {
+  height: 50px;
+  width: 400px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #797979;
+  font-size: 19px;
+}
+
+.Signinput {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 480px;
+  height: 60px;
+  background: #eaeaea;
+  border-radius: 6px;
+}
+
+.Signinput img {
+  margin: 0px 30px;
+  width: 20px;
+  height: 20px;
+}
+
+.Signinput input {
+  height: 50px;
+  width: 400px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #797979;
+  font-size: 19px;
+}
+
+.forgot-password {
+  padding-left: 62px;
+  margin-top: 27px;
+  color: #222;
+  font-size: 18px;
+}
+
+.forgot-password span {
+  color: #3c009d;
+  cursor: pointer;
+}
+
+.Signsubmit-container {
+  text-align: center;
+  display: flex;
+  gap: 30px;
+  margin: 20px auto;
+  padding-bottom: 1rem;
+}
+
+.Signsubmit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 59px;
+  color: #fff;
+  background: #222;
+  border-radius: 10px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.Signsubmit:hover {
+  color: #fff;
+  background: #3b4dc9;
+}
+
+.gray {
+  background: #EAEAEA;
+  color: #676767;
+}
+
+@media screen and (max-width: 768px) {
+  .Logincontainer, .Signcontainer {
+    width: 90%;
+    left: 50%;
+  }
+
+  .Signsubmit-container{
+    width: 100%;
+  }
+
+  .Signinput, .SigninputSelect {
+    width: 100%;
+  }
+
+  .Signinput input {
+    width: 90%;
+  }
+
+  .Signheader {
+    margin-top: 20px;
+  }
+
+  .Signtext {
+    font-size: 36px;
+  }
+
+  .Signunderline {
+    width: 40px;
+    height: 4px;
+  }
+
+  .Signsubmit {
+    width: 180px;
+    height: 50px;
+    font-size: 16px;
+  }
+  .Signsubmit-container{
     width: 80%;
+  }
+  .password-toggle-icon {
+    top: 61%;
+  }
+
+  .loginImage {
+    height: 100%;
+    width: 100%;
     padding: 0;
     z-index: -1; /* Ensure the image is behind other content */
     object-fit: cover; /* Ensure the image covers the entire area without stretching */
     filter: blur(2px);
   }
-  .password-toggle-icon {
-    position: absolute;
-    right: 70px;
-    top: 73%;
-    transform: translateY(-50%);
-    width: 30px; /* Adjust icon width */
-    height: 30px; 
-  }
-  
-  .maincontainerlogin {
-    flex: 1;
-  }
-  
-  .Logincontainer {
-    position: absolute;
-    top: 50%;
-    left: 75%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    width: 600px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  }
-  
-  .Signcontainer {
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    width: 600px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  }
-  
-  .Signheader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 9px;
-    width: 100%;
-    margin-top: 30px;
-  }
-  
-  .Signtext {
-    color: #222;
-    font-size: 48px;
-    font-weight: 700;
-  }
-  
-  .Signunderline {
-    width: 61px;
-    height: 6px;
-    background: #222;
-    border-radius: 9px;
-  }
-  
-  .Signinputs {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
-  
-  .SigninputSelect {
-    height: 50px;
-    width: 400px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #797979;
-    font-size: 19px;
-  }
-  
-  .Signinput {
-    display: flex;
-    align-items: center;
-    margin: auto;
-    width: 480px;
-    height: 60px;
-    background: #eaeaea;
-    border-radius: 6px;
-  }
-  
-  .Signinput img {
-    margin: 0px 30px;
-    width: 20px;
-    height: 20px;
-  }
-  
-  .Signinput input {
-    height: 50px;
-    width: 400px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #797979;
-    font-size: 19px;
-  }
-  
-  .forgot-password {
-    padding-left: 62px;
-    margin-top: 27px;
-    color: #222;
-    font-size: 18px;
-  }
-  
-  .forgot-password span {
-    color: #3c009d;
-    cursor: pointer;
-  }
-  
-  .Signsubmit-container {
-    text-align: center;
-    display: flex;
-    gap: 30px;
-    margin: 20px auto;
-  }
-  
-  .Signsubmit {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 220px;
-    height: 59px;
-    color: #fff;
-    background: #222;
-    border-radius: 10px;
-    font-size: 19px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  
-  .Signsubmit:hover {
-    color: #fff;
-    background: #3b4dc9;
-  }
-  
-  .gray {
-    background: #EAEAEA;
-    color: #676767;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .Logincontainer, .Signcontainer {
-      width: 90%;
-      left: 50%;
-    }
-  
-    .Signsubmit-container{
-      width: 100%;
-    }
-  
-    .Signinput, .SigninputSelect {
-      width: 100%;
-    }
-  
-    .Signinput input {
-      width: 90%;
-    }
-  
-    .Signheader {
-      margin-top: 20px;
-    }
-  
-    .Signtext {
-      font-size: 36px;
-    }
-  
-    .Signunderline {
-      width: 40px;
-      height: 4px;
-    }
-  
-    .Signsubmit {
-      width: 180px;
-      height: 50px;
-      font-size: 16px;
-    }
-    .Signsubmit-container{
-      width: 80%;
-    }
-    .password-toggle-icon {
-      top: 61%;
-    }
-  
-    .loginImage {
-      height: 100%;
-      width: 100%;
-      padding: 0;
-      z-index: -1; /* Ensure the image is behind other content */
-      object-fit: cover; /* Ensure the image covers the entire area without stretching */
-      filter: blur(2px);
-    }
-  }
+}

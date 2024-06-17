@@ -35,6 +35,7 @@ function LoginTeacher() {
       if (response.status === 200 && response.data.message === "Login Success") {
         let path = `dashboard`; 
         localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('teacherId', userId);
         navigate(path);
       } else {
         Swal.fire({

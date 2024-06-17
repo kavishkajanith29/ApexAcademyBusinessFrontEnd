@@ -99,20 +99,20 @@ function LoginStudent() {
                   {passwordVisible ? (
                     <MdVisibilityOff
                       onClick={togglePasswordVisibility}
-                      className="password-toggle-icon"
+                      className="password-toggle-icon-student"
                       style={{ cursor: 'pointer' }}
                     />
                   ) : (
                     <MdVisibility
                       onClick={togglePasswordVisibility}
-                      className="password-toggle-icon"
+                      className="password-toggle-icon-student"
                       style={{ cursor: 'pointer' }}
                     />
                   )}
                 </div>
               </div>
 
-              <div className="Signsubmit-container">
+              <div className="Signsubmit-container-student">
                 <button 
                   className="Signsubmit" 
                   onClick={handleLogin} 
@@ -122,7 +122,7 @@ function LoginStudent() {
                 </button>
               </div>
 
-              <div className="Registersubmit-container">
+              <div className="Registersubmit-container-student">
                 <button 
                   className ='Registersubmit' 
                   onClick={handleRegister}

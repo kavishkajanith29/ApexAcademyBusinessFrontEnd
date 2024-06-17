@@ -1,45 +1,62 @@
-
-.maincontainer{
+.maincontainer {
     height: 100vh; /* Full viewport height */
     display: flex; /* Enables flexbox */
     justify-content: center; /* Horizontally centers the content */
     align-items: center; /* Vertically centers the content */
     margin: 0; /* Removes default margin */
-    justify-content: center;
-    align-items: center;
+    background-size: cover; /* Ensures the image covers the entire container */
+    background-position: center; /* Centers the background image */
+    position: relative; /* Enables the use of ::before pseudo-element */
+    overflow: hidden; /* Ensures the pseudo-element doesn't overflow */
 }
-.teacher{
+
+.maincontainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/images/img1.jpg'); /* Set background image */
+    background-size: cover; /* Ensures the image covers the entire pseudo-element */
+    background-position: center; /* Centers the background image */
+    filter: blur(3px); /* Applies the blur effect */
+    z-index: -1; /* Places the pseudo-element behind other content */
+}
+
+.teacher, .student {
     flex: 1;
-    padding: 0;
     padding: 20px;
+    background-color: azure;
+    position: relative; /* Ensure it is above the blurred background */
+    z-index: 1; /* Ensure it is above the blurred background */
 }
-.student{
-    flex: 1;
-    padding: 0;
-    padding: 20px;
-}
-.btnname{
+
+.btnname {
     font-weight: bold;
     font-size: 2rem;
     padding-top: 1rem;
 }
-.btndecription{
+
+.btndecription {
     font-size: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
-.btnicon{
+
+.btnicon {
     font-size: 2rem;
 }
-.btn{
+
+.btn {
     padding-top: 1rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     border: none;
     color: #E5F8EC;
-    background-color: #475be8 ;
-}
-.btn:hover{
-    background-color: #EEF6B8;
 }
 
+.btn:hover {
+    box-shadow: 10px 10px 5px rgb(11, 12, 12);
+    background-color: rgba(238, 246, 184, 0.8);
+}

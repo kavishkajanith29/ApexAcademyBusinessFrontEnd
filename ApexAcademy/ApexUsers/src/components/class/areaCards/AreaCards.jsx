@@ -1,7 +1,60 @@
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"; 
 
 const AreaCards = () => {
+
+  const [studentCount, setStudentCount] = useState(null);
+  const [monthlyStudentCount, setMonthlyStudentCount] = useState(null);
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    const fetchStudentCount = async () => {
+      try {
+        const response = await fetch(`http://localhost:8085/api/v1/enrollment/subject/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setStudentCount(data);
+          console.log(data);
+          const uniqueStudentIds = new Set(data.map(student => student.studentId));
+          setStudentCount(uniqueStudentIds.size);
+          console.log(uniqueStudentIds.size);
+          console.log("herecount");
+                   // Filter students who registered in the current month
+                   const currentMonth = new Date().getMonth();
+                   const currentYear = new Date().getFullYear();
+                   const monthlyRegisteredStudents = data.filter(student => {
+                    try {
+                      const registrationDate = new Date(student.registrationdate); // assuming there is a registrationDate field
+                      if (isNaN(registrationDate)) {
+                        throw new Error(`Invalid date format for registrationDate: ${student.registrationdate}`);
+                      }
+                      console.log("Registration Date: ", registrationDate);
+                      return (
+                        registrationDate.getMonth() === currentMonth && 
+                        registrationDate.getFullYear() === currentYear
+                      );
+                    } catch (error) {
+                      console.error(error.message);
+                      return false; // Filter out students with invalid dates
+                    }
+                   });
+         
+                   setMonthlyStudentCount(monthlyRegisteredStudents.length);
+                   console.log("Monthly Registered Students: ", monthlyRegisteredStudents.length);
+         
+        } else {
+          console.error("Failed to fetch student count");
+        }
+      } catch (error) {
+        console.error("Error fetching student count:", error);
+      }
+    };
+    fetchStudentCount();
+  }, []);
+
   return (
     <section className="content-area-cards">
       <AreaCard
@@ -17,8 +70,8 @@ const AreaCards = () => {
         colors={["#e4e8ef", "#4ce13f"]}
         //percentFillValue={50}
         cardInfo={{
-          title: "This Month New Students",
-          value: "05",
+          title: "This Month New Students(Filter Student)",
+          value: `${monthlyStudentCount ? monthlyStudentCount.toLocaleString() : "Loading..."}`,
           //text: "Available to payout",
         }}
       />
@@ -27,7 +80,7 @@ const AreaCards = () => {
         //percentFillValue={40}
         cardInfo={{
           title: "Number of Student",
-          value: "123",
+          value: `${studentCount ? studentCount.toLocaleString() : "Loading..."}`,
           //text: "Available to payout",
         }}
       />

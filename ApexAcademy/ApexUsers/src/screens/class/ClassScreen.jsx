@@ -1,4 +1,4 @@
-import { ClassForm, ClassTable, ClassTableMarks, ClassTop, PieChartMarks } from "../../components";
+import { Attendance, ClassForm, ClassTable, ClassTableMarks, ClassTop, PieChartMarks } from "../../components";
 
 
 const Class = () => {
@@ -9,6 +9,7 @@ const Class = () => {
       <ClassTable/>
       <ClassTableMarks/>
       <PieChartMarks/>
+      <Attendance/>
     </div>
   );
 };

@@ -40,14 +40,14 @@ function App() {
           <Route element={<BaseLayout />}>
             <Route path="/LoginPage/teacher/dashboard" element={<Dashboard />} />
             <Route path="/teacher/myclass" element={<TeachersClass />} />
-            <Route path="/teacher/class" element={<Class />} />
+            <Route path="/teacher/class/:id" element={<Class />} />
             <Route path="/teacher/examUpdate" element={<ExamUpdate />} />
             <Route path="/teacher/message" element={<MessageUpdate />} />
           </Route>
           <Route element={<StudentBaseLayout />}>
             <Route path="/LoginPage/student/dashboard" element={<Myclass/>} />
             <Route path="/student/pfofile" element={<StudentsMyProfile/>} />
-            <Route path="/student/class" element={<StudentsClass/>} />
+            <Route path="/student/class/:id" element={<StudentsClass/>} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

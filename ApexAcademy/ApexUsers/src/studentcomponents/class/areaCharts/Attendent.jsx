@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import moment from 'moment';
 import { PieChart } from '@mui/x-charts/PieChart';
 
 const TABLE_HEADS = [
-  "Student ID",
-  "Student Name",
   "Attendance Date",
+  "Status",
+  
+  
 ];
 
 const Attendent = () => {
   const [attendent, setAttendent] = useState([]);
   const studentId = localStorage.getItem('studentId');
-  const subjectId = localStorage.getItem('subjectId');
+  const { id } = useParams(); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [filter, setFilter] = useState("all"); 
   const itemsPerPage = 5; // Number of students per page
@@ -24,7 +25,7 @@ const Attendent = () => {
   useEffect(() => {
     const fetchEnrollments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8085/api/v1/attendance/student/${studentId}/subject/${subjectId}`);
+        const response = await axios.get(`http://localhost:8085/api/v1/attendance/student/${studentId}/subject/${id}`);
         setAttendent(response.data);
         console.log(response.data);
       } catch (error) {
@@ -33,7 +34,7 @@ const Attendent = () => {
     };
 
     fetchEnrollments();
-  }, [studentId, subjectId]);
+  }, [studentId, id]);
 
   const getFilteredStudents = () => {
     return attendent.filter((student) => {
@@ -118,9 +119,9 @@ const Attendent = () => {
             <tbody>
               {visibleStudents.map((dataItem) => (
                 <tr key={dataItem.attendanceId}>
-                  <td>{dataItem.student.studentid}</td>
-                  <td>{dataItem.student.studentname}</td>
                   <td>{moment(dataItem.attendanceDate).format('YYYY-MM-DD')}</td>
+                  <td>{dataItem.status ? 'Present' : 'Absent'}</td>
+
                 </tr>
               ))}
             </tbody>
@@ -153,9 +154,8 @@ const Attendent = () => {
           )}
         </div>
       </section>
-      <div className="pie-chart-section flex flex-col mt-4 md:flex-row items-center md:items-start">
-        <div style={{marginLeft:20}}>
-        <PieChart 
+      <div className="pie-chart-section">
+        <PieChart
           series={[
             {
               data,
@@ -164,12 +164,10 @@ const Attendent = () => {
             },
           ]}
           height={200}
-          width={350}
         />
+        <div className="attendance-percentage">
+          <p>Attendance Percentage: {attendancePercentage}%</p>
         </div>
-        <span className="attendance-percentage mt-6 md:mt-10 md:ml-4 items-center w-full text-center">
-          <p>Attendance Percentage: {attendancePercentage !==  'NaN' ? attendancePercentage : 0}%</p>
-        </span>
       </div>
     </div>
   );

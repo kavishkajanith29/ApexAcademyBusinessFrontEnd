@@ -6,38 +6,64 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { addDays } from "date-fns";
 import { DateRange } from "react-date-range";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom"; 
+import axios from "axios";
 
 const AreaTop = () => {
   const { openSidebar } = useContext(SidebarContext);
+  const [subjectDetails, setSubjectDetails] = useState({});
+  const { id } = useParams(); 
+  const navigate = useNavigate();
 
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ]);
+  // const [state, setState] = useState([
+  //   {
+  //     startDate: new Date(),
+  //     endDate: addDays(new Date(), 7),
+  //     key: "selection",
+  //   },
+  // ]);
 
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const dateRangeRef = useRef(null);
+  // const [showDatePicker, setShowDatePicker] = useState(false);
+  // const dateRangeRef = useRef(null);
 
-  const handleInputClick = () => {
-    setShowDatePicker(true);
-  };
+  // const handleInputClick = () => {
+  //   setShowDatePicker(true);
+  // };
 
-  const handleClickOutside = (event) => {
-    if (dateRangeRef.current && !dateRangeRef.current.contains(event.target)) {
-      setShowDatePicker(false);
-    }
-  };
+  // const handleClickOutside = (event) => {
+  //   if (dateRangeRef.current && !dateRangeRef.current.contains(event.target)) {
+  //     setShowDatePicker(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+    const fetchEnrollments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8085/api/v1/enrollment/subject/${id}`);
+         setSubjectDetails(response.data);
+         console.log(response.data)
+        // console.log("Here")
+        //  const filteredEnrollments = response.data.filter(enrollment => 
+        //    enrollment.teacher.teacherid === teacherId
+        //  );
+        //  setEnrollments(filteredEnrollments);
+        //  console.log(filteredEnrollments);
+        console.log("Here11")
+      } catch (error) {
+        console.error('Error fetching enrollments', error);
+      }
     };
-  }, []);
 
+    fetchEnrollments();
+  }, [id]);
   return (
     <section className="content-area-top">
       <div className="area-top-l">
@@ -48,7 +74,7 @@ const AreaTop = () => {
         >
           <MdOutlineMenu size={24} />
         </button>
-        <h2 className="area-top-title">Grade 6 - English</h2>
+        <h2 className="area-top-title">{id}</h2>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-.loginImage{
+/* .loginImage{
     padding: 0%;
     height: 42rem;
     width: 50rem;
@@ -67,4 +67,107 @@
   padding: 0;
   margin-top: 0;
   font-weight: bold;
+} */
+
+.home{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 50px 8% 0;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+.home-content{
+  max-width: 630px;
+}
+.home-content h1{
+  font-size: 75px;
+  line-height: 1.2;
+  opacity: 0;
+  animation: slideBottom 1s ease forwards;
+  animation-delay: 1s;
+}
+.home-content p{
+  font-size: 16px;
+  padding: 15px 0 30px;
+  opacity: 0;
+  animation: slideLeft 1s ease forwards;
+  animation-delay: 1.6s;
+}
+.home-img{
+  position: relative;
+  width:450px;
+  height: 450px;
+  transform: rotate(45deg);
+  right: -7%;
+}
+.home-img .rhombus{
+  position: absolute;
+  width:100%;
+  height: 100%;
+  background: #eaeaea;
+  border: 25px solid #1743e3;
+  box-shadow: -15px 15px 15px rgba(0, 0, 0, .2);
+  opacity: 0;
+  animation: zoomOut 1s ease forwards;
+  animation-delay: 1.6s;
+  overflow: hidden;
+}
+.home-img .rhombus img{
+  position: absolute;
+  top:0;
+  left: -150px;
+  bottom: 300px;
+  max-width: 680px;
+  max-height: 1500px;
+  transform: rotate(-45deg);
+  object-fit: cover;
+}
+.home .rhombus2{
+  position: absolute;
+  top: -25%;
+  right: -25%;
+  width: 700px;
+  height: 700px;
+  background: #1743e3;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+
+
+
+
+/* Animation */
+
+@keyframes slideBottom {
+  0%{
+    transform: translateY(-100px);
+    opacity: 0;
+  }100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  0%{
+    transform: translateX(100px);
+    opacity: 0;
+  }100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomOut {
+  0%{
+    transform: scale(1.1);
+    opacity: 0;
+  }100%{
+    transform: scale(1);
+    opacity: 1;
+  }
 }

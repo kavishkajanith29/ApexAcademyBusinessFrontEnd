@@ -20,6 +20,7 @@ export { default as ClassForm } from "./class/areaCards/AreaCards";
 export { default as ClassTable } from "./class/areaTable/AreaTable";
 export { default as ClassTableMarks } from "./class/areaTableMarks/AreaTable";
 export { default as PieChartMarks } from "./class/pieChart/PieChart";
+export { default as Attendance } from "./class/Attendance/Attendent";
 
 export { default as ExamUpdateTop } from "./examUpdate/areaTop/AreaTop";
 export { default as ExamForm } from "./examUpdate/examForm/ExamUpdateForm";
