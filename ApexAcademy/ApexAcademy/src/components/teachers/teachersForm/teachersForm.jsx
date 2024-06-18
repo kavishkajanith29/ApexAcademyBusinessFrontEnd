@@ -5,6 +5,7 @@ import './form.css';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate} from "react-router-dom";
+import emailjs from '@emailjs/browser';
 
 
 function TeachersForm() {
@@ -72,6 +73,31 @@ function TeachersForm() {
     });
   };
 
+  const sendApprovalEmail = async ({email,teacherid,teachername}) => {
+    try {
+      await emailjs.send(
+        'service_oooguqt',
+        'template_a96rsdb',
+        { email,
+          teacherid,
+          teachername
+         },
+      
+         {publicKey: '33tz_Atm_cauQqQil',}
+         
+      );
+      console.log("heremail");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      Swal.fire(
+        'Error!',
+        'There was an error sending the approval email.',
+        'error'
+      );
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -87,6 +113,11 @@ function TeachersForm() {
       };
 
       const response = await axios.post('http://localhost:8085/api/v1/teacher/add', dataToSend);
+      //console.log(response.data)
+      await sendApprovalEmail({
+        email: formData.email,
+        teacherid: response.data.teacherid,
+        teachername: formData.teachername});
 
       // Show success message
       Swal.fire({

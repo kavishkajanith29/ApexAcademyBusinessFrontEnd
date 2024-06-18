@@ -3,10 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import './StudentDetailsStyles.css';
+import emailjs from '@emailjs/browser';
 
 const StudentDetails = () => {
   const [studentDetails, setStudentDetails] = useState({});
-  const [fee, setFee] = useState(null);
   const { id } = useParams(); 
   const navigate = useNavigate(); 
 
@@ -20,20 +20,32 @@ const StudentDetails = () => {
       }
     };
 
-    const fetchClassFees = async () => {
-      try {
-        const response = await axios.get('http://localhost:8085/classfee/all');
-        const classFees = response.data;
-        const allFee = classFees.find(fee => fee.medium === 'ALL' && fee.grade === 'ALL');
-        setFee(allFee.fee);
-      } catch (error) {
-        console.error("Error fetching class fees:", error);
-      }
-    };
-
     fetchStudentDetails();
-    fetchClassFees();
   }, [id]); 
+
+  const sendApprovalEmail = async ({email,studentid,studentname}) => {
+    try {
+      await emailjs.send(
+        'service_oooguqt',
+        'template_uh13ep5',
+        { email,
+          studentid,
+          studentname
+         },
+      
+         {publicKey: '33tz_Atm_cauQqQil',}
+         
+      );
+      console.log("heremail");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      Swal.fire(
+        'Error!',
+        'There was an error sending the approval email.',
+        'error'
+      );
+    }
+  };
 
   const handleApprove = async () => {
     Swal.fire({
@@ -46,26 +58,23 @@ const StudentDetails = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Approve student
-          await axios.put(`http://localhost:8085/api/v1/student/${id}/approve`);
+          const response = await axios.put(`http://localhost:8085/api/v1/student/${id}/approve`);
           setStudentDetails({ ...studentDetails, approved: true });
-
-          // Add payment
-          await axios.post('http://localhost:8085/api/v1/payment/add', {
-            studentId: studentDetails.studentid,
-            amount: fee
-          });
-
+          await sendApprovalEmail({
+            email: studentDetails.email,
+            studentid: studentDetails.studentid,
+            studentname: studentDetails.studentname});
+          
           Swal.fire(
             'Approved!',
-            'The student has been approved and payment has been added.',
+            'The student has been approved.',
             'success'
           );
         } catch (error) {
           console.error("Error approving student:", error);
           Swal.fire(
             'Error!',
-            'There was an error approving the student or adding the payment.',
+            'There was an error approving the student.',
             'error'
           );
         }
@@ -104,16 +113,17 @@ const StudentDetails = () => {
   };
 
   return (
+    <>
     <div className="student-details-container">
       <h2>Student Details</h2>
       <div className="student-details-card">
         <div className="detail-item">
           <span className="detail-label">Student ID:</span>
-          <span className="detail-value">{studentDetails.studentid}</span>
+          <span className="detail-value" name="studentid">{studentDetails.studentid}</span>
         </div>
         <div className="detail-item">
           <span className="detail-label">Student Name:</span>
-          <span className="detail-value">{studentDetails.studentname}</span>
+          <span className="detail-value" name="studentname">{studentDetails.studentname}</span>
         </div>
         <div className="detail-item">
           <span className="detail-label">Address:</span>
@@ -137,7 +147,7 @@ const StudentDetails = () => {
         </div>
         <div className="detail-item">
           <span className="detail-label">Email:</span>
-          <span className="detail-value">{studentDetails.email}</span>
+          <span className="detail-value" name="email">{studentDetails.email}</span>
         </div>
         <div className="detail-item">
           <span className="detail-label">Phone Number:</span>
@@ -173,6 +183,7 @@ const StudentDetails = () => {
         </span>
       </div>
     </div>
+    </>
   );
 };
 
