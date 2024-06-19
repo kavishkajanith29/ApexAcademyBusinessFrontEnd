@@ -1,14 +1,21 @@
+/* LoginPage.css */
+
 .maincontainer {
-    height: 100vh; /* Full viewport height */
-    display: flex; /* Enables flexbox */
-    justify-content: center; /* Horizontally centers the content */
-    align-items: center; /* Vertically centers the content */
-    margin: 0; /* Removes default margin */
-    background-size: cover; /* Ensures the image covers the entire container */
-    background-position: center; /* Centers the background image */
-    position: relative; /* Enables the use of ::before pseudo-element */
-    overflow: hidden; /* Ensures the pseudo-element doesn't overflow */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    margin-right: 20%;
 }
+
+.maincontainerlogins {
+    flex: 1;
+  }
 
 .maincontainer::before {
     content: '';
@@ -17,46 +24,59 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../assets/images/img1.jpg'); /* Set background image */
-    background-size: cover; /* Ensures the image covers the entire pseudo-element */
-    background-position: center; /* Centers the background image */
-    filter: blur(3px); /* Applies the blur effect */
-    z-index: -1; /* Places the pseudo-element behind other content */
+    background-image: url('../assets/images/img1.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px);
+    z-index: -1;
 }
 
 .teacher, .student {
+    margin-top: 250px;
     flex: 1;
+    margin-left: 50px;
     padding: 20px;
-    background-color: azure;
-    position: relative; /* Ensure it is above the blurred background */
-    z-index: 1; /* Ensure it is above the blurred background */
+    background-color: rgba(255, 255, 255, 0.8); /* Adjusted background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center; /* Center align text */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
+    overflow: hidden; /* Hide overflow */
+}
+
+.teacher:hover, .student:hover {
+    transform: translateY(-5px); /* Move up on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
 }
 
 .btnname {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.5rem; /* Adjusted font size */
     padding-top: 1rem;
 }
 
 .btndecription {
     font-size: 1rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem; /* Reduced padding */
     padding-bottom: 1rem;
+    color: #555; /* Adjusted text color */
 }
 
 .btnicon {
-    font-size: 2rem;
+    font-size: 2.5rem; /* Adjusted icon size */
+    margin-bottom: 0.5rem; /* Adjusted margin */
 }
 
 .btn {
-    padding-top: 1rem;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding: 1rem 2.5rem; /* Adjusted padding */
     border: none;
-    color: #E5F8EC;
+    color: #444; /* Adjusted text color */
+    background-color: #fff; /* White background */
+    cursor: pointer; /* Pointer cursor */
 }
 
 .btn:hover {
-    box-shadow: 10px 10px 5px rgb(11, 12, 12);
-    background-color: rgba(238, 246, 184, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+    background-color: rgba(238, 246, 184, 0.8); /* Light background on hover */
+    color: #333; /* Darker text on hover */
 }

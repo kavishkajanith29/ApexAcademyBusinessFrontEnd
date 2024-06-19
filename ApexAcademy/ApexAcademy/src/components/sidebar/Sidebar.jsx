@@ -70,7 +70,7 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
+          <img style={{borderRadius:20}} src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
           <span className="sidebar-brand-text">Apex Business Academy</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>

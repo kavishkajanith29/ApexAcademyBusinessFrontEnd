@@ -1,13 +1,16 @@
-import React from 'react'
 import './LoginPage.css'
 import { PiStudentLight } from "react-icons/pi";
 import { GiTeacher } from "react-icons/gi";
 import { Link} from 'react-router-dom';
+import Img1 from '../assets/images/img1.jpg';
 //import Img1 from '../assets/images/img1.jpg'
 
 const LoginPage = () => {
   return (
     <div className='maincontainer'>
+      <div className='maincontainerlogins'>
+            <img src={Img1} alt='Image' className='loginImage' />
+            </div>
       <Link to='/LoginPage/teacher' className='link-class'>
       <div className='teacher'>
       <button className='btn'>

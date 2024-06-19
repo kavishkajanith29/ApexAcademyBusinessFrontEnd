@@ -9,6 +9,7 @@
   object-fit: cover; /* Ensure the image covers the entire area without stretching */
   filter: blur(2px);
 }
+
 .password-toggle-icon-student {
   position: absolute;
   right: 70px;

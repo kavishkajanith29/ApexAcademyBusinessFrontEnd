@@ -14,6 +14,7 @@ import LoginStudent from "./pages/LoginStudent";
 import StudentBaseLayout from "./layout/BaseLayoutStudent";
 import { Myclass, StudentsClass, StudentsMyProfile } from "./studentscreen";
 import StudentForm from "./pages/studentsForm";
+import RegistrationSuccsusful from "./pages/RegistrationSuccsusful";
 
 
 function App() {
@@ -37,7 +38,9 @@ function App() {
         <Route path="/LoginPage/teacher" element={<LoginTeacher />} />
         <Route path="/LoginPage/student" element={<LoginStudent />}/>
         <Route path="/LoginPage/student/register" element={<StudentForm />}/>
-          <Route element={<BaseLayout />}>
+        <Route path="*" element={<PageNotFound />} />
+        <Route path="/student/:id" element={<RegistrationSuccsusful />} />
+        <Route element={<BaseLayout />}>
             <Route path="/LoginPage/teacher/dashboard" element={<Dashboard />} />
             <Route path="/teacher/myclass" element={<TeachersClass />} />
             <Route path="/teacher/class/:id" element={<Class />} />
@@ -49,10 +52,9 @@ function App() {
             <Route path="/student/pfofile" element={<StudentsMyProfile/>} />
             <Route path="/student/class/:id" element={<StudentsClass/>} />
           </Route>
-          <Route path="*" element={<PageNotFound />} />
         </Routes>
 
-        <button
+        {/* <button
           type="button"
           className="theme-toggle-btn"
           onClick={toggleTheme}
@@ -61,7 +63,7 @@ function App() {
             className="theme-icon"
             src={theme === LIGHT_THEME ? SunIcon : MoonIcon}
           />
-        </button>
+        </button> */}
         
       </Router>
     </>

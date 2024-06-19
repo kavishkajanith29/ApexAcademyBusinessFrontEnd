@@ -1,11 +1,76 @@
-.phone-numbers-list li,
-.grades-list li,
-.working-places-list li {
-  color: var(--lg-text-color);
-  margin-right: 10px; /* Keeping the margin-right for spacing */
+/* TeacherDetailsStyles.css */
+
+.teacher-details-container {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.teacher-details-container h2{
-  color: var(--lg-text-color);
-  margin-bottom: 10px; 
+.teacher-details-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item {
+  margin-bottom: 15px;
+}
+
+.detail-label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #333;
+}
+
+.detail-value {
+  color: #666;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.phone-numbers-list li, .grades-list li, .working-places-list li {
+  background-color: #e1f5fe;
+  color: #0277bd;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.detail-item ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 600px) {
+  .teacher-details-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .phone-numbers-list, .grades-list, .working-places-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+.delete-button {
+  background-color: #e57373;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.delete-button:hover {
+  background-color: #ef5350;
 }

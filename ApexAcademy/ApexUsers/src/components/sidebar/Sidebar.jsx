@@ -6,14 +6,11 @@ import LogoWhite from "../../assets/images/logo_white.svg";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import {
   MdOutlineClose,
-  MdOutlineCurrencyExchange,
   MdOutlineGridView,
   MdOutlineLogout,
   MdOutlineMessage,
-  MdOutlineSettings,
 } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
-import { SiGoogleclassroom } from "react-icons/si";
 
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
@@ -50,7 +47,7 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
+          <img style={{borderRadius:20}} src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
           <span className="sidebar-brand-text">Apex Business Academy</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>

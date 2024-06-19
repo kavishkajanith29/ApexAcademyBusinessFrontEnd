@@ -1,73 +1,4 @@
-/* .loginImage{
-    padding: 0%;
-    height: 42rem;
-    width: 50rem;
-}
 
-.maincontainerlogin {
-    flex: 1;
-  }
-  
-  .secondcontainer {
-    flex: 1;
-    padding-top: 4rem;
-    text-align: center;
-    align-items: center;
-   
-  }
-  
-  .container {
-    display: flex;
-    
-  }
-  .nameofacadamy{
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  .nameofwelcome{
-    padding-top: 2rem;
-    padding: 2rem;
-  }
-  .btnLogin{
-    height: 2rem;
-    width: 4rem;
-    font-size: 1rem;
-    font-weight: bold;
-    font-style: inherit;
-    font-family: sans-serif;
-    color: #475be8;
-    background-color: #E1F6FB ;
-    border-radius: 0.5rem;
-    border: none;
-  }
-  
-.btnLogin:hover{
- background-color:#475be8;
- color: white;
-}
-
-.btn_log{
-  text-align: center;
-  align-items: center;
-  background-color: #475be8;
-  color: #E1F6FB;
-  padding: 0.5rem;
-  margin-left: 10px;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 1rem;
-}
-.btn_log:hover{
-  background-color: #92cbf9;
-  color: black;
-}
-.Register{
-  font-size: 2rem;
-  padding: 0;
-  margin-top: 0;
-  font-weight: bold;
-} */
 
 .home{
   width: 100%;
@@ -82,20 +13,49 @@
 .home-content{
   max-width: 630px;
 }
-.home-content h1{
+
+/* Blue-themed Text Styles */
+
+.home-content h1 {
   font-size: 75px;
   line-height: 1.2;
   opacity: 0;
+  padding-bottom: 50px;
   animation: slideBottom 1s ease forwards;
   animation-delay: 1s;
+  background: linear-gradient(45deg, #1e3c72, #2a5298);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
 }
-.home-content p{
+
+.home-content p {
   font-size: 16px;
   padding: 15px 0 30px;
   opacity: 0;
   animation: slideLeft 1s ease forwards;
   animation-delay: 1.6s;
+  color: #1e3c72;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(45deg, #1e3c72, #2a5298);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
+
+.home-content p span {
+  background: linear-gradient(45deg, #2a5298, #1e3c72);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+/* Importing Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+
 .home-img{
   position: relative;
   width:450px;

@@ -1,0 +1,162 @@
+/* PaymentGuidance.css */
+
+.payment-guidance-container {
+    background-color: rgba(72, 92, 231, 0.3); /* Lighter shade for background */
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+    box-shadow: 0px 4px 8px rgba(72, 92, 231, 0.1); /* Soft shadow */
+  }
+  
+  .payment-guidance-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #485ce7; /* Main color for heading */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow */
+  }
+  
+  .payment-guidance-paragraph {
+    margin-bottom: 1.5rem;
+    color: #333; /* Darker text color */
+    line-height: 1.6;
+  }
+  
+  .payment-guidance-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-bottom: 1.5rem;
+    color: #485ce7; /* Main color for list items */
+  }
+  
+  .payment-guidance-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 0.5rem;
+    color: #333; /* Darker text color */
+  }
+  
+  .payment-guidance-list li::before {
+    content: "\2022";
+    position: absolute;
+    left: 0;
+    color: #485ce7; /* Main color for bullet point */
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
+  
+  .payment-guidance-details {
+    margin-left: 150px;
+    color: #1e3c72; /* Main color for bold details */
+    margin-bottom: 1.5rem;
+  }
+  
+  .payment-guidance-details .font-bold {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: #333; /* Darker text color */
+  }
+  
+  .payment-guidance-details .font-bold {
+    color: #1e3c72; /* Main color for bold details */
+  }
+  
+  .payment-guidance-cta {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .payment-guidance-cta a {
+    display: inline-block;
+    background-color: #485ce7; /* Main color for button background */
+    color: #fff; /* Text color */
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-guidance-cta a:hover {
+    background-color: #3546b9; /* Darker shade on hover */
+  }
+  
+  @media (max-width: 768px) {
+    .payment-guidance-heading {
+      font-size: 1.8rem;
+    }
+  
+    .payment-guidance-list li {
+      padding-left: 25px;
+    }
+  }
+  
+/* styles.css */
+
+.card-container {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 2%;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card .detail-label {
+  font-weight: bold;
+  color: #485ce7;
+}
+
+.card .detail-value {
+  color: #333;
+  margin-top: 5px;
+}
+
+
+
+
+.important-notice {
+  background-color: transparent;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.important-notice h1 {
+  color: green;
+  font-size: 36px;
+  margin-bottom: 10px;
+  animation: slideIn 1s ease-in-out;
+}
+
+.important-notice p {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
