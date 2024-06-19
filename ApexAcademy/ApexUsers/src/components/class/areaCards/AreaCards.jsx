@@ -18,7 +18,7 @@ const AreaCards = () => {
           const data = await response.json();
           setStudentCount(data);
           console.log(data);
-          const uniqueStudentIds = new Set(data.map(student => student.studentId));
+          const uniqueStudentIds = new Set(data.map(data => data.enrollmentId));
           setStudentCount(uniqueStudentIds.size);
           console.log(uniqueStudentIds.size);
           console.log("herecount");
