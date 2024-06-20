@@ -10,7 +10,6 @@
     background-position: center;
     position: relative;
     overflow: hidden;
-    margin-right: 20%;
 }
 
 .maincontainerlogins {
@@ -33,8 +32,9 @@
 
 .teacher, .student {
     margin-top: 250px;
+    width: 500px;
     flex: 1;
-    margin-left: 50px;
+    margin-left: 100px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.8); /* Adjusted background color */
     border-radius: 10px; /* Rounded corners */
@@ -47,6 +47,8 @@
 .teacher:hover, .student:hover {
     transform: translateY(-5px); /* Move up on hover */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
+    color: white; /* Change text color to white on hover */
+    background-color: #485ce7; /* Change background color to #485ce7 on hover */
 }
 
 .btnname {
@@ -55,11 +57,10 @@
     padding-top: 1rem;
 }
 
-.btndecription {
-    font-size: 1rem;
-    padding-top: 0.5rem; /* Reduced padding */
-    padding-bottom: 1rem;
-    color: #555; /* Adjusted text color */
+.btnname p{
+    font-weight:500;
+    font-size: 1rem; /* Adjusted font size */
+    padding-top: 1rem;
 }
 
 .btnicon {
@@ -69,8 +70,7 @@
 
 .btn {
     padding: 1rem 2.5rem; /* Adjusted padding */
-    border: none;
-    color: #444; /* Adjusted text color */
+    border: none;/* Adjusted text color */
     background-color: #fff; /* White background */
     cursor: pointer; /* Pointer cursor */
 }
@@ -78,5 +78,5 @@
 .btn:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
     background-color: rgba(238, 246, 184, 0.8); /* Light background on hover */
-    color: #333; /* Darker text on hover */
+    color: white; /* Darker text on hover */
 }

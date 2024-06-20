@@ -22,14 +22,16 @@ function ClassesForm() {
 
   const navigate = useNavigate();
 
+  const [validationErrors, setValidationErrors] = useState({});
+
   const [formData, setFormData] = useState(initialFormData);
   const [years, setYears] = useState([]);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
+    const { id, value, name } = e.target;
     setFormData({
       ...formData,
-      [id]: value,
+      [name || id]: value
     });
   };
 
@@ -44,17 +46,28 @@ function ClassesForm() {
   const fetchClassFee = async (medium, exam) => {
     try {
       const grade = exam === "OL" ? "O/L" : "A/L";
+      
       const response = await axios.get('http://localhost:8085/classfee/all');
       const fees = response.data;
-      const fee = fees.find(fee => fee.medium === medium  && fee.grade === grade)?.fee || '';
+      
+      // Filter the fees to include only those with the specified grades "O/L" and "A/L"
+      const relevantFees = fees.filter(fee => fee.grade === "O/L" || fee.grade === "A/L");
+      
+      // Find the fee for the specific grade and medium
+      const feeEntry = relevantFees.find(fee => fee.medium === medium && fee.grade === grade);
+      
+      const fee = feeEntry ? feeEntry.fee : '';
+      
       setFormData((prevFormData) => ({
         ...prevFormData,
         classfee: fee,
       }));
+      
     } catch (error) {
       console.error('Error fetching class fees:', error);
     }
   };
+  
 
   const handleExamChange = (e) => {
     const { value } = e.target;
@@ -80,18 +93,32 @@ function ClassesForm() {
     return '';
   };
 
+  const validateSelections = () => {
+    const errors = {};
+    if (!formData.medium) {
+      errors.medium = 'Medium is required.';
+    }
+    if (!formData.day) {
+      errors.day = 'Day is required.';
+    }
+    if (!formData.exam) {
+      errors.exam = 'Exam is required.';
+    }
+    if (!formData.examYear) {
+      errors.examYear = 'Exam Year is required.';
+    }
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const subjectid = generateSubjectId();
-    if (!subjectid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation Error',
-        text: 'Please ensure all required fields are filled and exam year is selected.',
-      });
+    if (!validateSelections()) {
       return;
     }
+
+    const subjectid = generateSubjectId();
 
     const timeRange = `${formData.startTime} - ${formData.endTime}`;
 
@@ -132,7 +159,11 @@ function ClassesForm() {
   };
 
   return (
-    <div className="classregister">
+    <div className="clssregister  ">
+      <div>
+        <h2 style={{textAlign:"center",marginBottom:50}}>New Class Registration</h2>
+      </div>
+      <div style={{widows:"80%",marginBottom:50}}>
       <Form onSubmit={handleSubmit}>
         <fieldset>
           <Form.Group className="mb-3">
@@ -157,14 +188,34 @@ function ClassesForm() {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="medium">Medium *</Form.Label>
-            <Form.Select id="medium" aria-label="Medium" onChange={handleChange} value={formData.medium} required>
-              <option>Select the medium</option>
-              <option value="SINHALA">Sinhala</option>
-              <option value="ENGLISH">English</option>
-            </Form.Select>
-          </Form.Group>
+          <Form.Group className="mb-3 medium-group">
+          <Form.Label htmlFor="medium">Medium</Form.Label>
+          <div className="radio-group">
+            <div className="radio-button" style={{marginLeft:60}}>
+              <input 
+              type="radio" 
+              id="mediumSinhala" 
+              name="medium" 
+              value="SINHALA" 
+              checked={formData.medium === "SINHALA"} 
+              onChange={handleChange} 
+              />
+              <label htmlFor="mediumSinhala">Sinhala</label>
+              </div>
+              <div className="radio-button">
+                <input 
+                type="radio" 
+                id="mediumEnglish" 
+                name="medium" 
+                value="ENGLISH" 
+                checked={formData.medium === "ENGLISH"} 
+                onChange={handleChange} 
+                />
+                <label htmlFor="mediumEnglish">English</label>
+                </div>
+                </div>
+                {validationErrors.medium && <div className="error" style={{color:"red"}}>{validationErrors.medium}</div>}
+                </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label htmlFor="day">Day *</Form.Label>
@@ -178,6 +229,7 @@ function ClassesForm() {
               <option value="Saturday">Saturday</option>
               <option value="Sunday">Sunday</option>
             </Form.Select>
+            {validationErrors.day && <div className="error" style={{color:"red"}}>{validationErrors.day}</div>}
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -209,6 +261,7 @@ function ClassesForm() {
               <option value="AL">A/L</option>
               <option value="OL">O/L</option>
             </Form.Select>
+            {validationErrors.exam && <div className="error" style={{color:"red"}}>{validationErrors.exam}</div>}
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -219,6 +272,7 @@ function ClassesForm() {
                 <option key={year} value={year}>{year}</option>
               ))}
             </Form.Select>
+            {validationErrors.examYear && <div className="error" style={{color:"red"}}>{validationErrors.examYear}</div>}
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -231,9 +285,10 @@ function ClassesForm() {
             />
           </Form.Group>
 
-          <Button type="submit">Register</Button>
+          <Button style={{width:"50%", height:"45px",marginTop:30,fontSize:18}} type="submit">Register</Button>
         </fieldset>
       </Form>
+      </div>
     </div>
   );
 }

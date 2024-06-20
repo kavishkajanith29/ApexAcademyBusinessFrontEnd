@@ -1,50 +1,174 @@
-.headerOfregister{
-  text-align: center;
+/* form.css */
+
+/* General form styling */
+
+.loginImages {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 80%;
+  padding: 0;
+  z-index: -1; /* Ensure the image is behind other content */
+  object-fit: cover; /* Ensure the image covers the entire area without stretching */
+  filter: blur(8px);
 }
 
-.checkbox-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; 
+.clssregister {
+  max-width: 98%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.headerOfregister {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.headerOfregister h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #485ce7;
+  margin-bottom: 5px;
+}
+
+.headerOfregister h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #485ce7;
+  margin-top: 0;
+}
+
+form fieldset {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+form fieldset .mb-3 {
+  flex: 1 1 calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+form fieldset .mb-3 label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+form fieldset .mb-3 input,
+form fieldset .mb-3 select {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+}
+
+form fieldset .mb-3 input[type="date"] {
+  padding: 9px;
+}
+
+form fieldset .mb-3 input[type="datetime-local"] {
+  background-color: #e9ecef;
+}
+
+form fieldset .mb-3 input:read-only {
+  background-color: #e9ecef;
+}
+
+.studentbtn {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 50px;
+  width: 49%;
+  margin-top: 20px;
+  font-size: 200px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.studentbtn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.studentbtn:active {
+  background-color: #004494;
+  transform: translateY(0);
+}
+
+.medium-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.radio-button {
+  display: flex;
+  align-items: center;
+}
+
+.radio-button input[type="radio"] {
+  display: none;
+}
+
+.radio-button input[type="radio"] + label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.radio-button input[type="radio"] + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.radio-button input[type="radio"]:checked + label:before {
+  background: #007bff;
+  border-color: #007bff;
+}
+
+.radio-button input[type="radio"]:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  form fieldset .mb-3 {
+    flex: 1 1 100%;
   }
 
-  
-  @media (max-width: 767px) {
-    .checkbox-container {
-      flex-direction: column;
-    }
+  .radio-group {
+    flex-direction: column;
+    gap: 10px;
   }
-
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .column {
-    flex: 1;
-    min-width: 200px;
-    margin: 10px;
-  }
-  
-  .years {
-    flex-basis: 100%;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .years label {
-    flex: 1;
-    min-width: 100px;
-    margin: 5px;
-  }
-  
-  @media (max-width: 600px) {
-    .column {
-      flex-basis: 100%;
-    }
-  }
-  
-  label {
-    color: var(--xl-text-color);
-  }
-  
+}

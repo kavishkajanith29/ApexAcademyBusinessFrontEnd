@@ -4,28 +4,36 @@
   margin-bottom: 20px;
 }
 
-.student-details-card {
-  flex-wrap: wrap;
-  gap: 10px;
+.card-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  background-color: #ffffff;
+  margin-bottom: 2%;
 }
 
-.detail-item {
-  background-color: var(--secondary-color);
-  border: 1px solid var(--border-color-inverted);
-  border-radius: 5px;
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.detail-label {
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card .detail-label {
   font-weight: bold;
-  color: var(--base-text-color);
+  color: #485ce7;
 }
 
-.detail-value {
-  margin-left: 10px;
-  color: var(--base-text-color);
+.card .detail-value {
+  color: #333;
+  margin-top: 5px;
 }
 
 .approve-button {

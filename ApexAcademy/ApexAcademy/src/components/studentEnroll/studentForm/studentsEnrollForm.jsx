@@ -53,6 +53,9 @@ function StudentsEnrollForm() {
 
   return (
     <div className="clssregister">
+      <div>
+        <h2 style={{textAlign:"center",marginBottom:50}}>New Student Enrollment</h2>
+      </div>
       <Form onSubmit={handleSubmit}>
         <fieldset>
           <Form.Group className="mb-3">

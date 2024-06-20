@@ -1,6 +1,4 @@
-
-
-.home{
+.home {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -10,7 +8,28 @@
   overflow: hidden;
   position: relative;
 }
-.home-content{
+
+.logo-container {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  border-radius: 20px;
+  width: 150px;
+  height: 150px;
+  animation: logoAnimation 1.5s ease forwards; /* Apply animation */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Add opacity transition */
+}
+
+.logo:hover {
+  transform: scale(1.1);
+  opacity: 0.8; /* Add hover opacity change */
+}
+
+.home-content {
   max-width: 630px;
 }
 
@@ -28,6 +47,7 @@
   -webkit-text-fill-color: transparent;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   font-family: 'Poppins', sans-serif;
+  transition: opacity 0.5s ease; /* Add transition to h1 */
 }
 
 .home-content p {
@@ -42,6 +62,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease; /* Add transition to paragraph */
 }
 
 .home-content p span {
@@ -52,32 +73,33 @@
   font-weight: bold;
 }
 
-/* Importing Poppins font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-
-.home-img{
+.home-img {
   position: relative;
-  width:450px;
+  width: 450px;
   height: 450px;
   transform: rotate(45deg);
   right: -7%;
 }
-.home-img .rhombus{
+
+.home-img .rhombus {
   position: absolute;
-  width:100%;
+  width: 100%;
   height: 100%;
   background: #eaeaea;
-  border: 25px solid #1743e3;
+  border: 25px solid #485ce7;
   box-shadow: -15px 15px 15px rgba(0, 0, 0, .2);
   opacity: 0;
   animation: zoomOut 1s ease forwards;
   animation-delay: 1.6s;
   overflow: hidden;
+  transition: opacity 0.5s ease; /* Add transition to rhombus */
 }
-.home-img .rhombus img{
+
+.home-img .rhombus img {
   position: absolute;
-  top:0;
+  top: 0;
   left: -150px;
   bottom: 300px;
   max-width: 680px;
@@ -85,48 +107,61 @@
   transform: rotate(-45deg);
   object-fit: cover;
 }
-.home .rhombus2{
+
+.home .rhombus2 {
   position: absolute;
   top: -25%;
   right: -25%;
   width: 700px;
   height: 700px;
-  background: #1743e3;
+  background: #485ce7;
   transform: rotate(45deg);
   z-index: -1;
+  transition: background 0.5s ease; /* Add transition to rhombus2 */
 }
-
-
-
-
 
 /* Animation */
 
 @keyframes slideBottom {
-  0%{
+  0% {
     transform: translateY(-100px);
     opacity: 0;
-  }100%{
+  }
+  100% {
     transform: translateY(0);
     opacity: 1;
   }
 }
 
 @keyframes slideLeft {
-  0%{
+  0% {
     transform: translateX(100px);
     opacity: 0;
-  }100%{
+  }
+  100% {
     transform: translateX(0);
     opacity: 1;
   }
 }
 
 @keyframes zoomOut {
-  0%{
+  0% {
     transform: scale(1.1);
     opacity: 0;
-  }100%{
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Logo Animation */
+@keyframes logoAnimation {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
     transform: scale(1);
     opacity: 1;
   }

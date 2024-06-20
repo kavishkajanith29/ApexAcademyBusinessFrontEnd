@@ -47,7 +47,7 @@ const AreaTop = () => {
         >
           <MdOutlineMenu size={24} />
         </button>
-        <h2 className="area-top-title">Students Enrollment for Classes</h2>
+        <h2 className="area-top-title">Student Enrollments </h2>
       </div>
     </section>
   );

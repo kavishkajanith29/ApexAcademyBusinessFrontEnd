@@ -42,7 +42,7 @@ function PaymentGuidance() {
       </p>
       <ol className="payment-guidance-list" start={3}>
         <li>After making the deposit, please take a clear photo of the deposit receipt.</li>
-        <li>Send the deposit receipt photo along with your full name and registration details to our WhatsApp number: 0123456789.</li>
+        <li>Send the deposit receipt photo along with your full name and student number to our WhatsApp number: 0123456789.</li>
       </ol>
       <p className="payment-guidance-paragraph">
         Once we receive your deposit receipt, we will process your registration and send you a confirmation via Email.

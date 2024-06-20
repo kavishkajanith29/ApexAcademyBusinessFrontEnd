@@ -116,56 +116,60 @@ const StudentDetails = () => {
     <>
     <div className="student-details-container">
       <h2>Student Details</h2>
-      <div className="student-details-card">
-        <div className="detail-item">
-          <span className="detail-label">Student ID:</span>
-          <span className="detail-value" name="studentid">{studentDetails.studentid}</span>
+      <div className="card-container">
+      <div className="card detail-item">
+        <span className="detail-label">Student Number:</span>
+        <span className="detail-value">{studentDetails.studentid}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Student Name:</span>
           <span className="detail-value" name="studentname">{studentDetails.studentname}</span>
         </div>
-        <div className="detail-item">
-          <span className="detail-label">Address:</span>
-          <span className="detail-value">{studentDetails.address}</span>
-        </div>
-        <div className="detail-item">
-          <span className="detail-label">School:</span>
-          <span className="detail-value">{studentDetails.school}</span>
-        </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Date of Birth:</span>
           <span className="detail-value">{studentDetails.dob}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
+          <span className="detail-label">Gender:</span>
+          <span className="detail-value">{studentDetails.gender}</span>
+        </div>
+        <div className="card detail-item">
+          <span className="detail-label">Address:</span>
+          <span className="detail-value">{studentDetails.address}</span>
+        </div>
+        <div className="card detail-item">
+          <span className="detail-label">School:</span>
+          <span className="detail-value">{studentDetails.school}</span>
+        </div>
+        <div className="card detail-item">
           <span className="detail-label">Parent's Name:</span>
           <span className="detail-value">{studentDetails.parentsname}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Parent's Occupation:</span>
           <span className="detail-value">{studentDetails.parentsoccupation}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Email:</span>
           <span className="detail-value" name="email">{studentDetails.email}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Phone Number:</span>
           <span className="detail-value">{studentDetails.phonenumber}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Medium:</span>
           <span className="detail-value">{studentDetails.medium}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Registered Grade:</span>
           <span className="detail-value">{studentDetails.grade}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Registration Date:</span>
           <span className="detail-value">{studentDetails.registrationdate}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Approved:</span>
           <span className="detail-value">
             {studentDetails.approved ? "Yes" : "No"}

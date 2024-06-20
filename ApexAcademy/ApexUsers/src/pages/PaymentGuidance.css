@@ -1,7 +1,7 @@
 /* PaymentGuidance.css */
 
 .payment-guidance-container {
-    background-color: rgba(72, 92, 231, 0.3); /* Lighter shade for background */
+  background-color: rgba(255, 255, 255, 0.5);/* Lighter shade for background */
     padding: 20px;
     border-radius: 8px;
     margin: 20px;

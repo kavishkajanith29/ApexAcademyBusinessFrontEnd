@@ -55,32 +55,32 @@ const TeacherDetails = () => {
   return (
     <div className="teacher-details-container">
       <h2>Teacher Details</h2>
-      <div className="teacher-details-card">
-        <div className="detail-item">
+      <div className="card-container">
+        <div className="card detail-item">
           <span className="detail-label">Teacher ID:</span>
           <span className="detail-value">{teacherDetails.teacherid}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Teacher Name:</span>
           <span className="detail-value">{teacherDetails.teachername}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Address:</span>
           <span className="detail-value">{teacherDetails.address}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Subject:</span>
           <span className="detail-value">{teacherDetails.subject}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Date of Birth:</span>
           <span className="detail-value">{teacherDetails.dob}</span>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Email:</span>
           <span className="detail-value">{teacherDetails.email}</span>
         </div>
-        <div className="detail-item" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="card detail-item" style={{ display: 'flex' }}>
           <span className="detail-label" style={{ marginRight: '10px' }}>Phone Numbers:</span>
           <ul className="phone-numbers-list">
             {teacherDetails.phoneNumbers && teacherDetails.phoneNumbers.map((number, index) => (
@@ -88,11 +88,11 @@ const TeacherDetails = () => {
             ))}
           </ul>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Medium:</span>
           <span className="detail-value">{teacherDetails.medium}</span>
         </div>
-        <div className="detail-item" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="card detail-item" style={{ display: 'flex' }}>
           <span className="detail-label" style={{ marginRight: '10px' }}>Grades:</span>
           <ul className="grades-list">
             {teacherDetails.grade && teacherDetails.grade.map((grade, index) => (
@@ -100,7 +100,7 @@ const TeacherDetails = () => {
             ))}
           </ul>
         </div>
-        <div className="detail-item" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="card detail-item" style={{ display: 'flex' }}>
           <span className="detail-label" style={{ marginRight: '10px' }}>Working Places:</span>
           <ul className="working-places-list">
             {teacherDetails.workingPlaces && teacherDetails.workingPlaces.map((place, index) => (
@@ -108,7 +108,7 @@ const TeacherDetails = () => {
             ))}
           </ul>
         </div>
-        <div className="detail-item">
+        <div className="card detail-item">
           <span className="detail-label">Registration Date:</span>
           <span className="detail-value">{new Date(teacherDetails.registrationdate).toLocaleString()}</span>
         </div>

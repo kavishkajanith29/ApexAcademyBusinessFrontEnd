@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 const TABLE_HEADS = [
   "Subject ID",
   "Subject",
+  "Teacher ID",
   "Teacher Name",
-  "Medium",
   "Schedule Time",
   " ",
   " ",
@@ -140,8 +140,8 @@ const ClassesAreaTable = () => {
               <tr key={dataItem.subjectid}>
                 <td>{dataItem.subjectid}</td>
                 <td>{dataItem.subjectname}</td>
+                <td>{dataItem.teacher ? dataItem.teacher.teacherid : ''}</td>
                 <td>{dataItem.teacher ? dataItem.teacher.teachername : ''}</td>
-                <td>{dataItem.medium}</td>
                 <td>
                   <div className="dt-status">
                     <span className="dt-status-text">{dataItem.day}  {dataItem.timeRange}</span>

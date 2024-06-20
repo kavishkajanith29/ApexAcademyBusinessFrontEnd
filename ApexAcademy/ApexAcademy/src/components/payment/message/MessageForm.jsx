@@ -104,11 +104,12 @@ function MessageForm() {
   };
 
   return (
-    <div className="classregister">
+    <div className="classregister" style={{marginTop:30}}>
+      <div>
       <Form onSubmit={handleSubmit}>
         <fieldset>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Form.Group className="mb-3" style={{ marginBottom: 0, marginRight: '10px' }}>
+          <div style={{ display: 'flex' }}>
+            <Form.Group className="mb-3" style={{ width:"500px",marginRight: '10px' }}>
               <Form.Control
                 id="studentId"
                 placeholder="Enter Student ID"
@@ -117,11 +118,12 @@ function MessageForm() {
                 required
               />
             </Form.Group>
-            <Button type="submit" className="mb-3" style={{ marginTop: 0, marginRight: '10px' }}>Search</Button>
-            <Button type="button" className="mb-3" onClick={resetForm} style={{ marginTop: 0 }}>Reset</Button>
+            <Button type="submit" className="mb-3" style={{ marginTop: 0, marginRight: '10px',fontSize:18,textAlign:"center",alignItems:"center" }}>Search</Button>
+            <Button type="button" className="mb-3" onClick={resetForm} style={{ marginTop: 0, marginRight: '10px',fontSize:18,textAlign:"center",alignItems:"center" }}>Reset</Button>
           </div>
         </fieldset>
       </Form>
+      </div>
       {enrollments.length > 0 && (
         <Table striped bordered hover responsive>
         <thead>
@@ -152,8 +154,9 @@ function MessageForm() {
       </Table>
       )}
       {paymentFormVisible && (
-        <Form onSubmit={handlePaymentSubmit}>
-          <Form.Group className="mb-3">
+        <div style={{ display: 'flex' }}>
+          <Form onSubmit={handlePaymentSubmit}>
+          <Form.Group className="mb-3" style={{display:"inline-block", width: "300px"}}>
             <Form.Label>Month</Form.Label>
             <Form.Control
               id="month"
@@ -163,16 +166,17 @@ function MessageForm() {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Total Amount Rs.</Form.Label>
+          <Form.Group className="mb-3" style={{display:"inline-block", width: "300px",marginLeft:10,marginRight:10}}>
+            <Form.Label>Total Amount <b>Rs.</b></Form.Label>
             <Form.Control
               id="amount"
               value={paymentData.amount}
               readOnly
             />
           </Form.Group>
-          <Button type="submit" className="mb-3">Pay Fee</Button>
+          <Button type="submit" className="mb-3" style={{marginTop:10}}>Confirm Payment</Button>
         </Form>
+        </div>
       )}
     </div>
   );
