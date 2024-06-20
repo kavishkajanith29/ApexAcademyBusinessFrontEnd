@@ -81,7 +81,14 @@ const Sidebar = () => {
                 <span className="menu-link-text">Exam Result Upload</span>
               </Link>
             </li>
-            
+            <li className="menu-item">
+              <Link to="/teacher/examCreate" className={action==="examCreate"?"menu-link active":"menu-link"} onClick={ () => setAction("examCreate")}>
+                <span className="menu-link-icon">
+                  <PiStudentBold size={20} />
+                </span>
+                <span className="menu-link-text">Create Exam Date</span>
+              </Link>
+            </li>
             <li className="menu-item">
               <Link to="/teacher/message" className={action==="message"?"menu-link active":"menu-link"} onClick={ () => setAction("message")}>
                 <span className="menu-link-icon">

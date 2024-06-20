@@ -15,6 +15,7 @@ import StudentBaseLayout from "./layout/BaseLayoutStudent";
 import { Myclass, StudentsClass, StudentsMyProfile } from "./studentscreen";
 import StudentForm from "./pages/studentsForm";
 import RegistrationSuccsusful from "./pages/RegistrationSuccsusful";
+import ExamCreate from "./screens/examCreate/ExamCreate";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/teacher/myclass" element={<TeachersClass />} />
             <Route path="/teacher/class/:id" element={<Class />} />
             <Route path="/teacher/examUpdate" element={<ExamUpdate />} />
+            <Route path="/teacher/examCreate" element={<ExamCreate />} />
             <Route path="/teacher/message" element={<MessageUpdate />} />
           </Route>
           <Route element={<StudentBaseLayout />}>

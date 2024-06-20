@@ -25,6 +25,10 @@ export { default as Attendance } from "./class/Attendance/Attendent";
 export { default as ExamUpdateTop } from "./examUpdate/areaTop/AreaTop";
 export { default as ExamForm } from "./examUpdate/examForm/ExamUpdateForm";
 
+
+export { default as ExamCreateTop } from "./examCreate/areaTop/AreaTop";
+export { default as ExamCreateForm } from "./examCreate/examCreate/ExamCreateForm";
+
 export { default as MessageTop } from "./message/areaTop/AreaTop";
 export { default as MessageForm } from "./message/message/MessageForm";
 
