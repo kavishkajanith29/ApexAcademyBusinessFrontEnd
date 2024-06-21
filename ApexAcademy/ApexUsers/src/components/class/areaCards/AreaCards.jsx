@@ -22,28 +22,32 @@ const AreaCards = () => {
           setStudentCount(uniqueStudentIds.size);
           console.log(uniqueStudentIds.size);
           console.log("herecount");
-                   // Filter students who registered in the current month
-                   const currentMonth = new Date().getMonth();
-                   const currentYear = new Date().getFullYear();
-                   const monthlyRegisteredStudents = data.filter(student => {
-                    try {
-                      const registrationDate = new Date(student.registrationdate); // assuming there is a registrationDate field
-                      if (isNaN(registrationDate)) {
-                        throw new Error(`Invalid date format for registrationDate: ${student.registrationdate}`);
-                      }
-                      console.log("Registration Date: ", registrationDate);
-                      return (
-                        registrationDate.getMonth() === currentMonth && 
-                        registrationDate.getFullYear() === currentYear
-                      );
-                    } catch (error) {
-                      console.error(error.message);
-                      return false; // Filter out students with invalid dates
-                    }
-                   });
-         
-                   setMonthlyStudentCount(monthlyRegisteredStudents.length);
-                   console.log("Monthly Registered Students: ", monthlyRegisteredStudents.length);
+
+          // Current month and year
+          const currentMonth = new Date().getMonth();
+          const currentYear = new Date().getFullYear();
+
+          // Filter students who registered in the current month
+          const monthlyRegisteredStudents = data.filter(student => {
+            try {
+              const registrationDate = new Date(student.enrollmentDate); // Ensure this field name matches the API response
+              if (isNaN(registrationDate)) {
+                throw new Error(`Invalid date format for registrationDate: ${student.registrationdate}`);
+                
+              }
+              console.log("herecount1");
+              return (
+                registrationDate.getMonth() === currentMonth &&
+                registrationDate.getFullYear() === currentYear
+              );
+            } catch (error) {
+              console.error(error.message);
+              return false; // Filter out students with invalid dates
+            }
+          });
+
+            setMonthlyStudentCount(monthlyRegisteredStudents.length);
+            console.log("herecount3");
          
         } else {
           console.error("Failed to fetch student count");
@@ -70,7 +74,7 @@ const AreaCards = () => {
         colors={["#e4e8ef", "#4ce13f"]}
         //percentFillValue={50}
         cardInfo={{
-          title: "This Month New Students(Filter Student)",
+          title: "This Month New Students",
           value: `${monthlyStudentCount ? monthlyStudentCount.toLocaleString() : "Loading..."}`,
           //text: "Available to payout",
         }}
