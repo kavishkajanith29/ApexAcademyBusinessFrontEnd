@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const AreaCards = () => {
   const [studentCount, setStudentCount] = useState(null);
+  const [monthlyStudentCount, setMonthlyStudentCount] = useState(null);
   const [enrollments, setEnrollments] = useState([]);
   const { id } = useParams(); 
   const navigate = useNavigate(); 
@@ -24,6 +25,36 @@ const AreaCards = () => {
           );
           setEnrollments(filteredEnrollments.length);
           console.log(filteredEnrollments);
+          // Current month and year
+          const currentMonth = new Date().getMonth();
+          const currentYear = new Date().getFullYear();
+
+          // Filter students who registered in the current month
+          const monthlyRegisteredStudents = filteredEnrollments.filter(student => {
+            try {
+              const registrationDate = new Date(student.enrollmentDate); // Ensure this field name matches the API response
+              if (isNaN(registrationDate)) {
+                throw new Error(`Invalid date format for registrationDate: ${student.registrationdate}`);
+                const filteredEnrollments = data.filter(enrollment => 
+                  enrollment.subject.teacher.teacherid === teacherId
+                );
+                
+              }
+              console.log("herecount1");
+              return (
+                registrationDate.getMonth() === currentMonth &&
+                registrationDate.getFullYear() === currentYear
+              );
+            } catch (error) {
+              console.error(error.message);
+              return false; // Filter out students with invalid dates
+            }
+          });
+
+            setMonthlyStudentCount(monthlyRegisteredStudents.length);
+            console.log(monthlyRegisteredStudents);
+            console.log("herecount3");
+         
         } else {
           console.error("Failed to fetch student count");
         }
@@ -49,7 +80,7 @@ const AreaCards = () => {
         //percentFillValue={50}
         cardInfo={{
           title: "This Month New Students",
-          value: "35",
+          value: `${monthlyStudentCount ? monthlyStudentCount.toLocaleString() : "Loading..."}`,
           //text: "Available to payout",
         }}
       />
