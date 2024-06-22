@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const TABLE_HEADS = [
   "Student ID",
@@ -86,6 +87,36 @@ const EnrollTable = () => {
     return [...new Set(subjects.map((subject) => subject[key]))];
   };
 
+  const handleUnenroll = async (enrollmentId) => {
+    try {
+      await axios.delete(`http://localhost:8085/api/v1/enrollment/${enrollmentId}`);
+      setSubjects(subjects.filter((subject) => subject.enrollmentId !== enrollmentId));
+    } catch (error) {
+      console.error("Error unenrolling student:", error);
+    }
+  };
+
+  const confirmUnenroll = (enrollmentId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, unenroll!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleUnenroll(enrollmentId);
+        Swal.fire(
+          'Unenrolled!',
+          'The student has been unenrolled.',
+          'success'
+        );
+      }
+    });
+  };
+
   return (
     <section className="content-area-table" style={{ marginTop: '20px' }}>
       <div className="data-table-info">
@@ -127,7 +158,7 @@ const EnrollTable = () => {
                   </div>
                 </td>
                 <td className="dt-cell-action">
-                  <Button onClick={() => navigate(`/classes/${dataItem.subjectid}`)}>
+                  <Button onClick={() => confirmUnenroll(dataItem.enrollmentId)}>
                     UnEnroll
                   </Button>
                 </td>

@@ -9,6 +9,7 @@ const StudentDetails = () => {
   const [studentDetails, setStudentDetails] = useState({});
   const { id } = useParams(); 
   const navigate = useNavigate(); 
+  const [fee, setFee] = useState(null);
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
@@ -20,7 +21,19 @@ const StudentDetails = () => {
       }
     };
 
+    const fetchClassFees = async () => {
+      try {
+        const response = await axios.get('http://localhost:8085/classfee/all');
+        const classFees = response.data;
+        const allFee = classFees.find(fee => fee.medium === 'ALL' && fee.grade === 'ALL');
+        setFee(allFee.fee);
+      } catch (error) {
+        console.error("Error fetching class fees:", error);
+      }
+    };
+
     fetchStudentDetails();
+    fetchClassFees();
   }, [id]); 
 
   const sendApprovalEmail = async ({email,studentid,studentname}) => {
@@ -60,6 +73,12 @@ const StudentDetails = () => {
         try {
           const response = await axios.put(`http://localhost:8085/api/v1/student/${id}/approve`);
           setStudentDetails({ ...studentDetails, approved: true });
+          // Add payment
+          await axios.post('http://localhost:8085/api/v1/payment/add', {
+            studentId: studentDetails.studentid,
+            amount: fee
+          });
+          
           await sendApprovalEmail({
             email: studentDetails.email,
             studentid: studentDetails.studentid,

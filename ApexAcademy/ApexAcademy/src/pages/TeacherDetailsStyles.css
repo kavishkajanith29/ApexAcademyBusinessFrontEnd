@@ -73,3 +73,77 @@ ul {
 .delete-button:hover {
   background-color: #ef5350;
 }
+
+/* Edit, Cancel, and Save Buttons */
+/* Edit Button */
+.clsedit-button {
+  background-color: #475be8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.clsedit-button:hover {
+  opacity: 0.9;
+}
+
+/* Cancel Button */
+.clscancel-button {
+  background-color: #f05d5e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.clscancel-button:hover {
+  opacity: 0.9;
+}
+
+/* Save Button */
+.clssave-button {
+  background-color: #475be8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.clssave-button:hover {
+  opacity: 0.9;
+}
+
+
+.clsselect-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.clsselect-dropdown select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Time input styles */
+.clstime-input {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.clstime-input input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
