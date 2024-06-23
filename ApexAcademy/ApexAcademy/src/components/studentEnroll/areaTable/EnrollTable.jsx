@@ -150,7 +150,7 @@ const EnrollTable = () => {
               <tr key={dataItem.enrollmentId}>
                 <td>{dataItem.student ? dataItem.student.studentid : ''}</td>
                 <td>{dataItem.subject ? dataItem.subject.subjectid : ''}</td>
-                <td>{dataItem.subject ? dataItem.subject.medium : ''}</td>
+                <td style={{ textTransform: 'capitalize' }}>{dataItem.subject ? dataItem.subject.medium : ''}</td>
                 <td>{dataItem.subject.teacher ? dataItem.subject.teacher.teachername : ''}</td>
                 <td>
                   <div className="dt-status">

@@ -132,7 +132,7 @@ const AreaTable = () => {
                 <td>{dataItem.medium}</td>
                 <td>
                   <div className="dt-status">
-                    <span className="dt-status-text">{dataItem.email}</span>
+                    <span className="dt-status-text" style={{ textTransform: 'lowercase' }}>{dataItem.email}</span>
                   </div>
                 </td>
                 <td className="dt-cell-action">
