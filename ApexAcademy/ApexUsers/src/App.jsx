@@ -16,6 +16,7 @@ import { Myclass, StudentsClass, StudentsMyProfile } from "./studentscreen";
 import StudentForm from "./pages/studentsForm";
 import RegistrationSuccsusful from "./pages/RegistrationSuccsusful";
 import ExamCreate from "./screens/examCreate/ExamCreate";
+import PrivateRoutes from "./PrivateRoutes";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/LoginPage/student/register" element={<StudentForm />}/>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/student/:id" element={<RegistrationSuccsusful />} />
+        <Route element={<PrivateRoutes />}>
         <Route element={<BaseLayout />}>
             <Route path="/LoginPage/teacher/dashboard" element={<Dashboard />} />
             <Route path="/teacher/myclass" element={<TeachersClass />} />
@@ -53,6 +55,7 @@ function App() {
             <Route path="/LoginPage/student/dashboard" element={<Myclass/>} />
             <Route path="/student/pfofile" element={<StudentsMyProfile/>} />
             <Route path="/student/class/:id" element={<StudentsClass/>} />
+          </Route>
           </Route>
         </Routes>
 

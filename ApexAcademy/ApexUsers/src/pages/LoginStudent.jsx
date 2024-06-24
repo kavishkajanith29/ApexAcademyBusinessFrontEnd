@@ -36,12 +36,11 @@ function LoginStudent() {
         let path = `dashboard`; 
         localStorage.setItem('isAuthenticated', true);
         localStorage.setItem('studentId', userId); // Save studentId
-        //navigate('/student/enrollments'); // Navigate to enrollments page
         navigate(path);
       } else {
         Swal.fire({
           title: 'Login Failed',
-          text: 'Invalid user ID or password',
+          text: 'Invalid Student ID or password Student ID not Approved',
           icon: 'error',
           confirmButtonText: 'OK'
         });

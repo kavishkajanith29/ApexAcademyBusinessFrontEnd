@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import axios from 'axios';
-import Student from '../../../assets/images/student.png';
+import StudentMale from '../../../assets/images/StudentMale.png';
+import StudentFemale from '../../../assets/images/StudentFemale.png';
 import Swal from 'sweetalert2';
 import {
   MDBCol,
@@ -14,6 +15,7 @@ import {
   MDBBtn,
   MDBRadio,
 } from 'mdb-react-ui-kit';
+import PasswordChange from './PasswordChange';
 
 export default function ProfilePage() {
   const [enrollments, setEnrollments] = useState({});
@@ -125,16 +127,27 @@ export default function ProfilePage() {
           <MDBCol lg="4">
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
+                <>
+                {enrollments.gender === "Male" ? 
                 <MDBCardImage
-                  src={Student}
+                src={StudentMale}
+                alt="avatar"
+                className="rounded-circle"
+                style={{ width: '150px' }}
+                fluid />
+                : 
+                <MDBCardImage
+                  src={StudentFemale}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <p className="text-muted mb-1">{enrollments.studentname}</p>
-                <p className="text-muted mb-4">{enrollments.gender}</p>
+                }
+                </>
+                <p style={{marginTop:10}} className="text-muted mb-1">{enrollments.studentname}</p>
               </MDBCardBody>
             </MDBCard>
+            <PasswordChange/>
           </MDBCol>
           <MDBCol lg="8">
             <MDBCard className="mb-4">

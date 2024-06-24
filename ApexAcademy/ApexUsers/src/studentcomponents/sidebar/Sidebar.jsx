@@ -39,6 +39,10 @@ const Sidebar = () => {
     };
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <nav
     className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
@@ -78,7 +82,7 @@ const Sidebar = () => {
             </Link>
           </li> 
           <li className="menu-item">
-            <Link to="/" className="menu-link">
+            <Link to="/LoginPage/student" className="menu-link" onClick={handleLogout}>
               <span className="menu-link-icon">
                 <MdOutlineLogout size={20} />
               </span>
