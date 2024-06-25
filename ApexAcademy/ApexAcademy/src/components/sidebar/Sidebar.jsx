@@ -4,14 +4,18 @@ import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { FaRegIdBadge } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { MdOutlineCreditScore } from "react-icons/md";
 import {
   MdOutlineClose,
   MdOutlineCurrencyExchange,
   MdOutlineGridView,
   MdOutlineLogout,
   MdOutlineMessage,
-  MdOutlineSettings,
 } from "react-icons/md";
+import { HiOutlineDocumentReport } from "react-icons/hi";
+import { FaAddressBook } from "react-icons/fa6";
 import { PiStudentBold } from "react-icons/pi";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -124,7 +128,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/enroll" className={action==="enroll"?"menu-link active":"menu-link"} onClick={ () => setAction("enroll")}>
                 <span className="menu-link-icon">
-                  <SiGoogleclassroom size={20} />
+                  <FaAddressBook size={20} />
                 </span>
                 <span className="menu-link-text">Enroll Students</span>
               </Link>
@@ -141,7 +145,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/attendance" className={action==="attendance"?"menu-link active":"menu-link"} onClick={ () => setAction("attendance")}>
                 <span className="menu-link-icon">
-                  <SiGoogleclassroom size={20} />
+                  <MdOutlineCreditScore size={20} />
                 </span>
                 <span className="menu-link-text">Attendance</span>
               </Link>
@@ -149,7 +153,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/qrgenerate" className={action==="qrgenerate"?"menu-link active":"menu-link"} onClick={ () => setAction("qrgenerate")}>
                 <span className="menu-link-icon">
-                  <SiGoogleclassroom size={20} />
+                  < FaRegIdBadge size={20} />
                 </span>
                 <span className="menu-link-text">Issue Student ID</span>
               </Link>
@@ -157,7 +161,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/report" className={action==="report"?"menu-link active":"menu-link"} onClick={ () => setAction("report")}>
                 <span className="menu-link-icon">
-                  <SiGoogleclassroom size={20} />
+                  <HiOutlineDocumentReport size={20} />
                 </span>
                 <span className="menu-link-text">Reports</span>
               </Link>
@@ -165,7 +169,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/profile" className={action==="profile"?"menu-link active":"menu-link"} onClick={ () => setAction("profile")}>
                 <span className="menu-link-icon">
-                  <SiGoogleclassroom size={20} />
+                  < RiLockPasswordFill size={20} />
                 </span>
                 <span className="menu-link-text">Change Password</span>
               </Link>

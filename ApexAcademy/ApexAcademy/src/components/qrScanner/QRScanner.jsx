@@ -199,6 +199,55 @@ const Attendance = () => {
         setQrMessage(''); // Clear QR message if attendance method changes
         stopScanner(); // Stop the scanner if the attendance method changes
     };
+    
+    
+    const handleAbsence = async () => {
+        const absenceData = {
+            subjectId: formData.subjectId,
+            date: formData.date,
+        };
+    
+        // Show a warning message before sending the request
+        const warningResult = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to mark absences. This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, mark absences',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        });
+    
+        if (warningResult.isConfirmed) {
+            try {
+                const response = await axios.post('http://localhost:8085/api/v1/attendance/mark-absents', absenceData);
+    
+                // Show a confirmation message after successfully marking absences
+                await Swal.fire({
+                    title: 'Absences Marked!',
+                    text: 'Absences have been marked successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#3085d6',
+                });
+    
+                // Optionally, you can handle the response here if needed
+                console.log('Response:', response.data);
+            } catch (error) {
+                // Handle and display error message
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to mark absences. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#d33',
+                });
+                console.error('Error marking absences:', error);
+            }
+        }
+    };
+    
 
     return (
         <>
@@ -242,6 +291,7 @@ const Attendance = () => {
                         <div className="method-selection">
                             <button className="button-custom" onClick={() => handleAttendanceMethod('studentId')}>Attendance by Student ID</button>
                             <button className="button-custom" onClick={() => handleAttendanceMethod('qr')}>Attendance by QR Code</button>
+                            <button className="button-custom" style={{backgroundColor:"#d9544e"}} onClick={handleAbsence}>Mark Absence</button>
                             <button className="button-custom button-secondary" onClick={resetForm}>Reset</button>
                         </div>
 

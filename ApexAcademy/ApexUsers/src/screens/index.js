@@ -7,3 +7,6 @@ export { default as ExamUpdate } from "./examUpdate/ExamScreen";
 export { default as ExamCreate } from "./examCreate/ExamCreate";
 export { default as MessageUpdate } from "./message/MessageScreen";
 export { default as TeachersProfile } from "./profile/TeachersProfile";
+
+export { default as StudentClass } from "./studentsclass/StudentsClass";
+

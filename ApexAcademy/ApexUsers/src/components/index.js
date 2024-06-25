@@ -5,11 +5,6 @@ export { default as AreaCharts } from "./dashboard/areaCharts/AreaCharts";
 export { default as AreaTable } from "./dashboard/areaTable/AreaTable";
 export { default as AreaTop } from "./dashboard/areaTop/AreaTop";
 
-
-// export { default as TeacherTable } from "./teachers/areaTable/AreaTable";
-// export { default as TeacherTop } from "./teachers/areaTop/AreaTop";
-//export { default as RegistrationForm } from "./teachers/areaCards/AreaCards";
-
 export { default as TeacherClassTable } from "./myclass/areaTable/AreaTable";
 export { default as TeacherClassTop } from "./myclass/areaTop/AreaTop";
 export { default as MyclassForm } from "./myclass/areaCards/AreaCards";
@@ -34,4 +29,8 @@ export { default as MessageForm } from "./message/message/MessageForm";
 
 export { default as TeacherProfileTop } from "./profile/areaTop/AreaTop";
 export { default as TeacherProfileForm } from "./profile/areaCards/AreaCards";
+
+
+export { default as StudentClassTop } from "./studentsclass/areaTop/AreaTop";
+export { default as StudentClassAreaCharts } from "./studentsclass/areaCharts/AreaCharts";
 

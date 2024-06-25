@@ -4,13 +4,15 @@ import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { SiGoogleclassroom } from "react-icons/si";
 import {
   MdOutlineClose,
   MdOutlineGridView,
   MdOutlineLogout,
   MdOutlineMessage,
 } from "react-icons/md";
-import { PiStudentBold } from "react-icons/pi";
+import { CgProfile } from "react-icons/cg";
+import { PiExamBold } from "react-icons/pi";
 
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
@@ -95,7 +97,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/teacher/examUpdate" className={action==="examUpdate"?"menu-link active":"menu-link"} onClick={ () => setAction("examUpdate")}>
                 <span className="menu-link-icon">
-                  <PiStudentBold size={20} />
+                  <PiExamBold size={20} />
                 </span>
                 <span className="menu-link-text">Exam Result Upload</span>
               </Link>
@@ -103,7 +105,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/teacher/examCreate" className={action==="examCreate"?"menu-link active":"menu-link"} onClick={ () => setAction("examCreate")}>
                 <span className="menu-link-icon">
-                  <PiStudentBold size={20} />
+                  <SiGoogleclassroom size={20} />
                 </span>
                 <span className="menu-link-text">Create Exam Date</span>
               </Link>
@@ -124,7 +126,7 @@ const Sidebar = () => {
           <li className="menu-item" >
               <Link to="/teacher/profile"  className={action==="Profile"?"menu-link active":"menu-link"} onClick={ () => setAction("Profile")} >
                 <span className="menu-link-icon" >
-                  <MdOutlineLogout size={20} />
+                  <CgProfile size={20} />
                 </span>
                 <span className="menu-link-text">Profile</span>
               </Link>

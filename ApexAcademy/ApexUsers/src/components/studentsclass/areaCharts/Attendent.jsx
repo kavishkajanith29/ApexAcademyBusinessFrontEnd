@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate,useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import moment from 'moment';
 import { PieChart } from '@mui/x-charts/PieChart';
 
 const TABLE_HEADS = [
-  "Student ID",
-  "Student Name",
   "Attendance Date",
   "Status",
   
@@ -16,18 +14,16 @@ const TABLE_HEADS = [
 
 const Attendent = () => {
   const [attendent, setAttendent] = useState([]);
-  const { id } = useParams(); 
-  const subjectId = localStorage.getItem('subjectId');
+  const { subjectId,studentId } = useParams(); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [filter, setFilter] = useState("all"); 
   const itemsPerPage = 5; // Number of students per page
-  const navigate = useNavigate();
   const [monthFilter, setMonthFilter] = useState(moment().format("YYYY-MM")); 
 
   useEffect(() => {
     const fetchEnrollments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8085/api/v1/attendance/subject/${id}`);
+        const response = await axios.get(`http://localhost:8085/api/v1/attendance/student/${studentId}/subject/${subjectId}`);
         setAttendent(response.data);
         console.log(response.data);
       } catch (error) {
@@ -36,7 +32,7 @@ const Attendent = () => {
     };
 
     fetchEnrollments();
-  }, [id]);
+  }, [studentId, subjectId]);
 
   const getFilteredStudents = () => {
     return attendent.filter((student) => {
@@ -91,7 +87,7 @@ const Attendent = () => {
 
   return (
     <div>
-      <section className="content-area-table">
+      <section className="content-area-table" >
         <div className="data-table-info">
           <h3 className="data-table-title">Attendance Dates</h3>
           <div className="filter-options">
@@ -121,8 +117,6 @@ const Attendent = () => {
             <tbody>
               {visibleStudents.map((dataItem) => (
                 <tr key={dataItem.attendanceId}>
-                  <td>{dataItem.student.studentid}</td>
-                  <td>{dataItem.student.studentname}</td>
                   <td>{moment(dataItem.attendanceDate).format('YYYY-MM-DD')}</td>
                   <td>{dataItem.status ? 'Present' : 'Absent'}</td>
 
@@ -158,7 +152,8 @@ const Attendent = () => {
           )}
         </div>
       </section>
-      <div className="pie-chart-section">
+      <div className="pie-chart-section"
+      style={{marginTop:10}}>
         <PieChart
           series={[
             {
@@ -170,7 +165,7 @@ const Attendent = () => {
           height={200}
         />
         <div className="attendance-percentage">
-          <p>Attendance Percentage: {totalFilteredAttendance === 0 ? 0 : attendancePercentage}%</p>
+          <p  >Attendance Percentage: {totalFilteredAttendance === 0 ? 0 :attendancePercentage}%</p>
         </div>
       </div>
     </div>

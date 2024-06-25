@@ -8,7 +8,7 @@ const Class = () => {
       <ClassForm/>
       <ClassTable/>
       <ClassTableMarks/>
-      <PieChartMarks/>
+      {/* <PieChartMarks/> */}
       <Attendance/>
     </div>
   );

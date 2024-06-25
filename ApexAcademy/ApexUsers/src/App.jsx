@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
-import { Class, Dashboard, ExamUpdate, MessageUpdate, PageNotFound, TeachersClass, TeachersProfile } from "./screens";
+import { Class, Dashboard, ExamUpdate, MessageUpdate, PageNotFound, StudentClass, TeachersClass, TeachersProfile } from "./screens";
 import LoginPageHome from "./pages/LoginPageHome"
 import LoginPage from "./pages/LoginPage";
 import LoginTeacher from "./pages/LoginTeacher";
@@ -52,8 +52,10 @@ function App() {
             <Route path="/teacher/examCreate" element={<ExamCreate />} />
             <Route path="/teacher/message" element={<MessageUpdate />} />
             <Route path="/teacher/profile" element={<TeachersProfile />} />
+            <Route path="/subject/:studentId/:subjectId" element={<StudentClass />} />
           </Route>
           </Route>
+          {/* ${dataItem.studentid}/${id} */}
 
           <Route element={<ProtectedRoutes />}>
           <Route element={<StudentBaseLayout />}>

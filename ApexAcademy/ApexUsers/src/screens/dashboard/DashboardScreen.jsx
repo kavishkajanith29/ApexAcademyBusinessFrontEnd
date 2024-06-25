@@ -6,7 +6,7 @@ const Dashboard = () => {
       <AreaTop />
       <AreaCards />
       <AreaCharts />
-      <AreaTable />
+      {/* <AreaTable /> */}
     </div>
   );
 };
