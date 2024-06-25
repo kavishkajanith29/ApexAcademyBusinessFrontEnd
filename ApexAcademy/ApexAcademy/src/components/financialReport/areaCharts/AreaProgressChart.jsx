@@ -91,7 +91,6 @@ const AreaProgressChart = () => {
             onChange={e => setNewFee(e.target.value)}
             style={{ 
               display: 'inline-block', 
-              width: 'auto', 
               marginLeft: '5px',
               fontWeight: '500',
               fontSize: '25px' ,

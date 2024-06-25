@@ -34,7 +34,7 @@ function LoginStudent() {
       const response = await axios.post('http://localhost:8085/api/v1/student/login', { userId, password });
       if (response.status === 200 && response.data.message === "Login Success") {
         let path = `dashboard`; 
-        localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('isAuthenticatedStudent', true);
         localStorage.setItem('studentId', userId); // Save studentId
         navigate(path);
       } else {

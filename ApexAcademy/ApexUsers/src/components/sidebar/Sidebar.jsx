@@ -20,7 +20,7 @@ const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
-  const [action,setAction] = useState("dashboard")
+  const [action, setActionState] = useState("dashboard");
 
   // closing the navbar when clicked outside the sidebar area
   const handleClickOutside = (event) => {
@@ -34,11 +34,30 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
+    const storedAction = localStorage.getItem('activeMenuItemTeacher');
+  if (storedAction) {
+    setAction(storedAction);
+  } else {
+    setAction("dashboard"); 
+  }
+
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const setAction = (action) => {
+    localStorage.setItem('activeMenuItemTeacher', action);
+    setActionState(action);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticatedTeacher');
+    localStorage.removeItem('teacherId');
+    localStorage.removeItem('activeMenuItemTeacher');
+  };
 
   return (
     <nav
@@ -102,9 +121,17 @@ const Sidebar = () => {
 
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
+          <li className="menu-item" >
+              <Link to="/teacher/profile"  className={action==="Profile"?"menu-link active":"menu-link"} onClick={ () => setAction("Profile")} >
+                <span className="menu-link-icon" >
+                  <MdOutlineLogout size={20} />
+                </span>
+                <span className="menu-link-text">Profile</span>
+              </Link>
+            </li>
+            <li className="menu-item"  onClick={handleLogout}>
+              <Link to="/LoginPage/teacher" className="menu-link" >
+                <span className="menu-link-icon" >
                   <MdOutlineLogout size={20} />
                 </span>
                 <span className="menu-link-text">Logout</span>

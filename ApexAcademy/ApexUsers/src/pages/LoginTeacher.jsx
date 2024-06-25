@@ -34,7 +34,7 @@ function LoginTeacher() {
       const response = await axios.post('http://localhost:8085/api/v1/teacher/login', { userId, password });
       if (response.status === 200 && response.data.message === "Login Success") {
         let path = `dashboard`; 
-        localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('isAuthenticatedTeacher', true);
         localStorage.setItem('teacherId', userId);
         navigate(path);
       } else {

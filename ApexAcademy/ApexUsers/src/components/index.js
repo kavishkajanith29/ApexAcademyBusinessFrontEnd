@@ -32,3 +32,6 @@ export { default as ExamCreateForm } from "./examCreate/examCreate/ExamCreateFor
 export { default as MessageTop } from "./message/areaTop/AreaTop";
 export { default as MessageForm } from "./message/message/MessageForm";
 
+export { default as TeacherProfileTop } from "./profile/areaTop/AreaTop";
+export { default as TeacherProfileForm } from "./profile/areaCards/AreaCards";
+

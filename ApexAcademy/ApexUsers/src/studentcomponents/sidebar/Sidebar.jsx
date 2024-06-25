@@ -20,7 +20,7 @@ const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
-  const [action,setAction] = useState("myclass")
+  const [action, setActionState] = useState("myclass");
 
   const handleClickOutside = (event) => {
     if (
@@ -33,14 +33,30 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
+    const storedAction = localStorage.getItem('activeMenuItemStudent');
+  if (storedAction) {
+    setAction(storedAction);
+  } else {
+    setAction("myclass"); 
+  }
+
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
+  const setAction = (action) => {
+    localStorage.setItem('activeMenuItemStudent', action);
+    setActionState(action);
+  };
+
+
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem('isAuthenticatedStudent');
+    localStorage.removeItem('studentId');
+    localStorage.removeItem('activeMenuItemStudent');
   };
 
   return (
@@ -81,8 +97,8 @@ const Sidebar = () => {
               <span className="menu-link-text">My Profile</span>
             </Link>
           </li> 
-          <li className="menu-item">
-            <Link to="/LoginPage/student" className="menu-link" onClick={handleLogout}>
+          <li className="menu-item"  onClick={handleLogout}>
+            <Link to="/LoginPage/student" className="menu-link" >
               <span className="menu-link-icon">
                 <MdOutlineLogout size={20} />
               </span>

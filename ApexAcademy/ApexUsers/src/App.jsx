@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
-import { Class, Dashboard, ExamUpdate, MessageUpdate, PageNotFound, TeachersClass } from "./screens";
+import { Class, Dashboard, ExamUpdate, MessageUpdate, PageNotFound, TeachersClass, TeachersProfile } from "./screens";
 import LoginPageHome from "./pages/LoginPageHome"
 import LoginPage from "./pages/LoginPage";
 import LoginTeacher from "./pages/LoginTeacher";
@@ -17,6 +17,7 @@ import StudentForm from "./pages/studentsForm";
 import RegistrationSuccsusful from "./pages/RegistrationSuccsusful";
 import ExamCreate from "./screens/examCreate/ExamCreate";
 import PrivateRoutes from "./PrivateRoutes";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 
 function App() {
@@ -50,7 +51,11 @@ function App() {
             <Route path="/teacher/examUpdate" element={<ExamUpdate />} />
             <Route path="/teacher/examCreate" element={<ExamCreate />} />
             <Route path="/teacher/message" element={<MessageUpdate />} />
+            <Route path="/teacher/profile" element={<TeachersProfile />} />
           </Route>
+          </Route>
+
+          <Route element={<ProtectedRoutes />}>
           <Route element={<StudentBaseLayout />}>
             <Route path="/LoginPage/student/dashboard" element={<Myclass/>} />
             <Route path="/student/pfofile" element={<StudentsMyProfile/>} />

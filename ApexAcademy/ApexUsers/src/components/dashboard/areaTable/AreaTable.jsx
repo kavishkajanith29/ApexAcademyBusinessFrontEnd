@@ -19,7 +19,6 @@ const AreaTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { id } = useParams(); 
   const navigate = useNavigate(); 
-  const [filter, setFilter] = useState("all"); // Track filter selection
   const itemsPerPage = 5
   const teacherId = localStorage.getItem('teacherId');
 
@@ -93,18 +92,15 @@ const AreaTable = () => {
                   <td>{dataItem.student.studentid}</td>
                   <td>{dataItem.student.studentname}</td>
                   <td>{dataItem.student.grade}</td>
-                  <td>{dataItem.student.address}</td>
+                  <td>{dataItem.student.gender}</td>
                   <td>
                     <div className="dt-status">
-                      {/* <span
-                        className={`dt-status-dot dot-${dataItem.email}`}
-                      ></span> */}
                       <span className="dt-status-text">{dataItem.student.email}</span>
                     </div>
                   </td>
                   <td>{dataItem.student.phonenumber}</td>
                   <td className="dt-cell-action">
-                    <Button onClick={() => navigate(`/student/${dataItem.studentid}`)}>
+                    <Button style={{backgroundColor:"#007bff"}} onClick={() => navigate(`/student/${dataItem.studentid}`)}>
                     View
                   </Button>
                   </td>

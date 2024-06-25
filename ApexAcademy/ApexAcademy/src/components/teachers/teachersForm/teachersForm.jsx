@@ -253,7 +253,7 @@ function TeachersForm() {
                   type="tel"
                   placeholder="Enter Phone Number"
                   value={phone}
-                  onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}  maxlength="10"
+                  onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}  maxLength="10"
                   onChange={(e) => handleFieldChange('phoneNumbers', index, e.target.value)}
                   required
                 />

@@ -87,7 +87,7 @@ const AreaBarChart = () => {
   return (
     <div className="bar-chart">
       <div className="bar-chart-info">
-        <h5 className="bar-chart-title">Total Revenue From Class Fees</h5>
+        <h5 className="bar-chart-title">Total Revenue From Class Fees this year</h5>
         <div className="chart-info-data">
           <div className="info-data-value">{`Rs.${totalAmount.toLocaleString()}`}</div>
         </div>
@@ -110,7 +110,7 @@ const AreaBarChart = () => {
               tickSize={0}
               axisLine={false}
               tick={{
-                fill: `${theme === LIGHT_THEME ? "#676767" : "#f3f3f3"}`,
+                fill: "#676767",
                 fontSize: 14,
               }}
             />
@@ -120,7 +120,7 @@ const AreaBarChart = () => {
               axisLine={false}
               tickSize={0}
               tick={{
-                fill: `${theme === LIGHT_THEME ? "#676767" : "#f3f3f3"}`,
+                fill: "#676767",
               }}
             />
             <Tooltip

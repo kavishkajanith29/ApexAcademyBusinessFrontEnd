@@ -88,7 +88,6 @@ export default function ProfilePage() {
       showCancelButton: true,
       confirmButtonText: 'Yes, save it!',
       cancelButtonText: 'No, cancel!',
-      reverseButtons: true
     });
 
     if (result.isConfirmed) {
@@ -287,11 +286,11 @@ export default function ProfilePage() {
                 </MDBRow>
                 <hr />
                 {!isEditing ? (
-                  <MDBBtn color="primary" onClick={handleEditClick}>Edit</MDBBtn>
+                  <MDBBtn style={{backgroundColor:"#007bff",fontSize:14}} onClick={handleEditClick}>Edit</MDBBtn>
                 ) : (
                   <>
-                    <MDBBtn color="success" onClick={handleSaveClick}>Save</MDBBtn>
-                    <MDBBtn style={{marginLeft:10}} color="danger" onClick={handleCancelClick}>Cancel</MDBBtn>
+                    <MDBBtn style={{backgroundColor:"#28a745"}} onClick={handleSaveClick}>Save</MDBBtn>
+                    <MDBBtn style={{marginLeft:10,backgroundColor:"#d9544f"}} color="danger" onClick={handleCancelClick}>Cancel</MDBBtn>
                   </>
                 )}
               </MDBCardBody>

@@ -161,7 +161,7 @@ const AreaBarChart = () => {
               tickSize={0}
               axisLine={false}
               tick={{
-                fill: `${theme === LIGHT_THEME ? "#676767" : "#f3f3f3"}`,
+                fill: "#676767",
                 fontSize: 14,
               }}
             />
@@ -171,7 +171,7 @@ const AreaBarChart = () => {
               axisLine={false}
               tickSize={0}
               tick={{
-                fill: `${theme === LIGHT_THEME ? "#676767" : "#f3f3f3"}`,
+                fill: "#676767",
               }}
             />
             <Tooltip
