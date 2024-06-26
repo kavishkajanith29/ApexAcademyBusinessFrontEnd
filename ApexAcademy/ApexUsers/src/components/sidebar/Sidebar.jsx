@@ -99,7 +99,7 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <PiExamBold size={20} />
                 </span>
-                <span className="menu-link-text">Exam Result Upload</span>
+                <span className="menu-link-text">Exam Result</span>
               </Link>
             </li>
             <li className="menu-item">
@@ -107,7 +107,7 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <SiGoogleclassroom size={20} />
                 </span>
-                <span className="menu-link-text">Create Exam Date</span>
+                <span className="menu-link-text">Schedule Exam</span>
               </Link>
             </li>
             <li className="menu-item">

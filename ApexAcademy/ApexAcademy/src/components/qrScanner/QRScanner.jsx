@@ -1,27 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import QrScanner from 'qr-scanner';
+
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import './QRScanner.css';
-QrScanner.WORKER_PATH = '/qr-scanner-worker.min.js';
+
+import QrScanner from 'react-qr-scanner';
+
 import StudentsEnrollTable from "../studentEnroll/areaTable/AreaTable";
 
 const Attendance = () => {
-    const videoRef = useRef(null);
+
     const [error, setError] = useState('');
-    const [scannerActive, setScannerActive] = useState(false);
+    
+    const [scanning, setScanning] = useState(false); 
+    const [apiResponse, setApiResponse] =  useState('');
+    const [isRequesting, setIsRequesting] = useState(false);
+
     const [isReady, setIsReady] = useState(false);
     const [attendanceMethod, setAttendanceMethod] = useState('');
-    const [qrMessage, setQrMessage] = useState('');
+
     const initialFormData = {
         subjectId: '',
         studentId: '',
         date: new Date().toISOString().split('T')[0],
     };
     const [formData, setFormData] = useState(initialFormData);
-    const [qrScanner, setQrScanner] = useState(null);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -36,8 +41,10 @@ const Attendance = () => {
         setIsReady(false);
         setAttendanceMethod('');
         setError('');
-        setQrMessage('');
-        stopScanner(); // Stop the scanner if it's running
+        setApiResponse('');
+        setIsRequesting(false);
+        setScanning(false);
+
     };
 
     const handleReadyClick = async () => {
@@ -96,108 +103,8 @@ const Attendance = () => {
         }
     };
 
-    const handleQrResult = async (result) => {
-        if (result) {
-            const studentId = result.data;
-            setFormData((prevData) => ({
-                ...prevData,
-                studentId,
-            }));
-
-            try {
-                const dataToSend = {
-                    subjectId: formData.subjectId,
-                    studentId,
-                    date: formData.date,
-                    status: true,
-                };
-
-                const response = await axios.post('http://localhost:8085/api/v1/attendance/mark', dataToSend);
-
-                if (response.data.statusCodeValue === 200) {
-                    setQrMessage('Attendance Marked Successfully for student ID: ' + studentId);
-                } else {
-                    setQrMessage('Failed to mark Attendance for student ID: ' + studentId);
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                setQrMessage('Error: Failed to mark attendance. Please try again later.');
-            }
-        } else {
-            setQrMessage('No QR code found.');
-        }
-    };
-
-    const startScanner = () => {
-        if (videoRef.current) {
-            const constraints = { video: { width: 1280, height: 720, facingMode: "environment" } };
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then(stream => {
-                    videoRef.current.srcObject = stream;
-                    const scanner = new QrScanner(videoRef.current, handleQrResult, (error) => {
-                        console.error(error);
-                        setError('Failed to scan QR code');
-                    });
-
-                    setQrScanner(scanner);
-
-                    // Start scanning when an object is within 0-20cm distance
-                    const checkDistance = () => {
-                        const videoTrack = stream.getVideoTracks()[0];
-                        if (videoTrack && videoTrack.getCapabilities && videoTrack.getSettings) {
-                            const capabilities = videoTrack.getCapabilities();
-                            if (capabilities.focusDistance) {
-                                const range = capabilities.focusDistance;
-                                const objectDistance = range.max;
-                                if (objectDistance >= 0 && objectDistance <= 0.2) {
-                                    scanner.start().then(() => {
-                                        setScannerActive(true);
-                                    }).catch(err => {
-                                        console.error(err);
-                                        setError('Unable to access the camera or QR scanner.');
-                                    });
-                                } else {
-                                    setScannerActive(false);
-                                }
-                            } else {
-                                // Handle case where focusDistance is not supported
-                                console.warn('focusDistance capability is not supported.');
-                                setScannerActive(false);
-                            }
-                        } else {
-                            console.warn('Video track capabilities or settings are not available.');
-                            setScannerActive(false);
-                        }
-                        requestAnimationFrame(checkDistance);
-                    };
-                    checkDistance();
-                })
-                .catch(error => {
-                    console.error('Error accessing media devices:', error);
-                    setError('Unable to access the camera or QR scanner.');
-                });
-        }
-    };
-
-    const stopScanner = () => {
-        if (qrScanner) {
-            qrScanner.stop();
-            setScannerActive(false);
-        }
-    };
-
-    useEffect(() => {
-        return () => {
-            if (qrScanner) {
-                qrScanner.destroy();
-            }
-        };
-    }, [qrScanner]);
-
     const handleAttendanceMethod = (method) => {
         setAttendanceMethod(method);
-        setQrMessage(''); // Clear QR message if attendance method changes
-        stopScanner(); // Stop the scanner if the attendance method changes
     };
     
     
@@ -247,6 +154,47 @@ const Attendance = () => {
             }
         }
     };
+
+    const handleScan = async (data) => {
+        if (data && !isRequesting) {
+            setIsRequesting(true);
+            
+            const dataToSend = {
+            subjectId: formData.subjectId,
+            studentId: data.text,
+            date:  formData.date,
+            status: true,
+          };
+    
+          try {
+            const response = await axios.post('http://localhost:8085/api/v1/attendance/mark', dataToSend);
+            if(response.data.body.attendanceId){
+              setApiResponse(data.text)
+            }else{
+              setApiResponse(data.text + " "+ response.data.body)
+            }
+          } catch (error) {
+            console.error('Error marking attendance:', error);
+          }finally {
+
+            setIsRequesting(false);
+          }
+        }
+      };
+    
+      const handleError = (err) => {
+        console.error(err);
+      };
+    
+      const previewStyle = {
+        height: "255px",
+        width: "255pxpx",
+      };
+    
+      const videoConstraints = {
+        facingMode: 'environment', // Use the back camera for better QR scanning
+        frameRate: { ideal: 240 }, // Increase the frame rate for smoother scanning
+      };
     
 
     return (
@@ -316,15 +264,35 @@ const Attendance = () => {
 
                         {attendanceMethod === 'qr' && (
                             <div className="qr-scanner-container">
-                                <h2>Scan QR Code (0cm - 20cm Distance)</h2>
-                                <video ref={videoRef} className="qr-video" />
-                                {scannerActive ? (
-                                    <button className="button-custom button-danger" onClick={stopScanner}>Stop Scanner</button>
-                                ) : (
-                                    <button className="button-custom" onClick={startScanner}>Start Scanner</button>
-                                )}
-                                {error && <p className="error">{error}</p>}
-                                {qrMessage && <p className="message">{qrMessage}</p>}
+                                <h2>Scan QR Code </h2>
+                                {scanning !== true ? <button className="button-custom" onClick={() => setScanning(true) }>Start Scanning</button>
+                                         : <button className="button-custom " style={{backgroundColor:"#d9544e"}}  onClick={() => {
+                                            setScanning(false);
+                                            setApiResponse('');
+                                          }}>
+                                            Stop Scanning</button>
+                                    }
+                                    {
+                                        scanning === true ? 
+                                        <div >
+                                        <QrScanner
+                                        className="qr-video"
+                                        delay={100} // Reduce delay for faster scanning
+                                        style={previewStyle}
+                                        onError={handleError}
+                                        onScan={handleScan}
+                                        constraints={{ video: videoConstraints }} // Apply video constraints
+                                        />
+                                        </div>
+                                        :
+                                        <div></div>
+                                    }
+                                    {apiResponse.length > 9 ?
+                                        <p className='error'>{apiResponse}</p>
+                                     : 
+                                        <p className='message'>{apiResponse}</p>
+                                     }
+                                    
                             </div>
                         )}
                     </>
