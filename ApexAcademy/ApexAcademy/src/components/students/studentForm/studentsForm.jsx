@@ -223,7 +223,7 @@ function StudentForm() {
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="phonenumber">Phone Number</Form.Label>
-          <Form.Control id="phonenumber" onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}  maxlength="10" type="tel" placeholder="Enter Phone Number" onChange={handleChange} value={formData.phonenumber} required/>
+          <Form.Control id="phonenumber" onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}  maxLength="10" type="tel" placeholder="Enter Phone Number" onChange={handleChange} value={formData.phonenumber} required/>
           {validationErrors.phonenumber && (<div className="error" style={{ color: 'red' }}>{validationErrors.phonenumber}</div>)}
         </Form.Group>
 

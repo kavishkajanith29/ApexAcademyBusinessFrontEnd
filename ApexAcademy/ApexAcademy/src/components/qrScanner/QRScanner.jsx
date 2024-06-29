@@ -176,8 +176,8 @@ const Attendance = () => {
           } catch (error) {
             console.error('Error marking attendance:', error);
           }finally {
-
             setIsRequesting(false);
+            clearStudentId(); // Clear studentId after each scan
           }
         }
       };
@@ -194,6 +194,10 @@ const Attendance = () => {
       const videoConstraints = {
         facingMode: 'environment', // Use the back camera for better QR scanning
         frameRate: { ideal: 240 }, // Increase the frame rate for smoother scanning
+      };
+      const clearStudentId = () => {
+        // Clear the studentId field
+        setFormData({ ...formData, studentId: '' });
       };
     
 

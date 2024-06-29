@@ -19,6 +19,7 @@ const AreaTable = () => {
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
+  const [teacherIdFilter, setTeacherIdFilter] = useState("");
   const [subjectFilter, setSubjectFilter] = useState("");
   const [mediumFilter, setMediumFilter] = useState("");
   const [gradeFilter, setGradeFilter] = useState("");
@@ -68,6 +69,7 @@ const AreaTable = () => {
   const getFilteredTeachers = () => {
     return teachers.filter((teacher) => {
       return (
+        (teacherIdFilter === "" || teacher.teacherid.toString().includes(teacherIdFilter)) &&
         (subjectFilter === "" || teacher.subject.toLowerCase().includes(subjectFilter.toLowerCase())) &&
         (mediumFilter === "" || teacher.medium.includes(mediumFilter)) &&
         (gradeFilter === "" || 
@@ -94,6 +96,12 @@ const AreaTable = () => {
         <h4 className="data-table-title">Recently Registered Teachers</h4>
       </div>
       <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Filter by Teacher ID"
+          value={teacherIdFilter}
+          onChange={(e) => setTeacherIdFilter(e.target.value.toUpperCase())}
+        />
         <input
           type="text"
           placeholder="Filter by subject"
