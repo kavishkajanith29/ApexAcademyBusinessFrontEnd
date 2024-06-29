@@ -134,14 +134,14 @@ const Sidebar = () => {
               </Link>
             </li>
             
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <Link to="/message" className={action==="message"?"menu-link active":"menu-link"} onClick={ () => setAction("message")}>
                 <span className="menu-link-icon">
                   <MdOutlineMessage size={18} />
                 </span>
                 <span className="menu-link-text">Messages</span>
               </Link>
-            </li>
+            </li> */}
             <li className="menu-item">
               <Link to="/attendance" className={action==="attendance"?"menu-link active":"menu-link"} onClick={ () => setAction("attendance")}>
                 <span className="menu-link-icon">
@@ -174,7 +174,12 @@ const Sidebar = () => {
                 <span className="menu-link-text">Change Password</span>
               </Link>
             </li>
-            <li className="menu-item">
+          </ul>
+        </div>
+
+        <div className="sidebar-menu sidebar-menu2">
+          <ul className="menu-list" >
+          <li className="menu-item">
               <Link to="/" className="menu-link" onClick={handleLogout}>
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
@@ -182,12 +187,6 @@ const Sidebar = () => {
                 <span className="menu-link-text">Logout</span>
               </Link>
             </li>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu sidebar-menu2">
-          <ul className="menu-list" >
-          
           </ul>
         </div>
       </div>

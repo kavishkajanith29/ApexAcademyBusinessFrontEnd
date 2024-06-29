@@ -143,7 +143,7 @@ export default function ProfilePage() {
                   fluid />
                 }
                 </>
-                <p style={{marginTop:10}} className="text-muted mb-1">{enrollments.studentname}</p>
+                <p style={{marginTop:10}} className="text-muted mb-1">{enrollments.studentid}</p>
               </MDBCardBody>
             </MDBCard>
             <PasswordChange/>

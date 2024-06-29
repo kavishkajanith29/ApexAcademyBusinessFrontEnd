@@ -1,11 +1,33 @@
-import  { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import AreaTable from './AreaTable';
+import { useNavigate } from "react-router-dom";
 
 const MessageForm = () => {
   const [subjectId, setSubjectId] = useState('');
   const [message, setMessage] = useState('');
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
+  const teacherId = localStorage.getItem('teacherId');
+  const [subjects, setSubjects] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8085/api/v1/subject/all`);
+        const filteredSubjects = response.data.filter(subject => 
+          subject.teacher.teacherid === teacherId
+        );
+        setSubjects(filteredSubjects);
+      } catch (error) {
+        console.error('Error fetching subjects', error);
+      }
+    };
+
+    fetchSubjects();
+  }, [teacherId]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -17,6 +39,17 @@ const MessageForm = () => {
       });
       setResponse(res.data);
       setError(null);
+      
+
+      // Show success message using SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Message Sent!',
+        text: 'Your message has been sent successfully.',
+        confirmButtonText: 'OK',
+      }).then(() => {
+        window.location.reload(); // Refresh the page
+      });
     } catch (err) {
       setError(err.response ? err.response.data : 'Error sending message');
       setResponse(null);
@@ -24,33 +57,36 @@ const MessageForm = () => {
   };
 
   return (
-    <div>
-      <h2>Send Message</h2>
+    <section className="msgsend">
       <form onSubmit={handleSendMessage}>
-        <div>
-          <label htmlFor="subjectId">Subject ID:</label>
-          <input
-            type="text"
-            id="subjectId"
+        <div className='flex'>
+          <select
             value={subjectId}
             onChange={(e) => setSubjectId(e.target.value)}
             required
-          />
-        </div>
-        <div>
-          <label htmlFor="message">Message:</label>
+          >
+            <option value="">Select a Subject</option>
+            {subjects.map(subject => (
+              <option key={subject.subjectid} value={subject.subjectid}>
+                {subject.subjectname} ({subject.subjectid})
+              </option>
+            ))}
+          </select>
           <textarea
+  
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
+            placeholder='Enter message here...'
           ></textarea>
         </div>
-        <button type="submit">Send</button>
+        <button className='msgbtn' type="submit">Send</button>
       </form>
-      {response && <div>Message sent successfully: {JSON.stringify(response)}</div>}
-      {error && <div>Error: {error}</div>}
-    </div>
+      <div style={{marginTop:50}}>
+      <AreaTable/>
+      </div>
+    </section>
   );
 };
 

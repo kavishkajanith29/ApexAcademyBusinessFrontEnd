@@ -1,62 +1,73 @@
-const data = [
-    {
-      id: 1,
-      name: "Today Class Cancled",
-      date_time: "03-02-24,08.00h",
-    },
-    {
-      id: 2,
-      name: "Exam Result Uploaded",
-      date_time: "03-02-24,08.00h",
-    },
-    {
-      id: 3,
-      name: "Today Class Postponend",
-      date_time: "03-02-24,08.00h",
-    },
-    {
-      id: 4,
-      name: "Tomorrow has a Your Exam",
-      date_time: "03-02-24,08.00h",
-    },
-    {
-      id: 5,
-      name: "Good Luck for Exam",
-      date_time: "03-02-24,08.00h",
-    },
-  ];
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {useParams } from "react-router-dom";
+
+const AreaProgressChart = () => {
+  const [messages, setMessages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [messagesPerPage] = useState(5);
+  const { id:subjectId } = useParams(); 
   
-  const AreaProgressChart = () => {
-    return (
-      <div className="progress-bar">
-        <div className="progress-bar-info">
-          <h4 className="progress-bar-title">Notification about the Class</h4>
-        </div>
-        <div className="progress-bar-list">
-          {data?.map((progressbar) => {
-            return (
-              <div className="progress-bar-item" key={progressbar.id}>
-                <div className="bar-item-info">
-                  <p className="bar-item-info-name-class">{progressbar.name}</p>
-                  <p className="bar-item-info-value-class">
-                    {progressbar.date_time }
-                  </p>
-                </div>
-                <div className="bar-item-full">
-                  {/* <div
-                    // className="bar-item-filled"
-                    // style={{
-                    // //   width: `${progressbar.percentValues}%`,
-                    // }}
-                  ></div> */}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+  useEffect(() => {
+    
+    if (subjectId) {
+      // Fetch messages from the API
+      axios.get('http://localhost:8085/api/v1/message/all')
+        .then(response => {
+          // Filter and sort messages by messageDate in descending order
+          const filteredMessages = response.data
+            .filter(message => message.subject.subjectid === subjectId)
+            .sort((a, b) => new Date(b.messageDate) - new Date(a.messageDate));
+          
+          setMessages(filteredMessages);
+        })
+        .catch(error => {
+          console.error('Error fetching messages:', error);
+        });
+    }
+  }, []);
+  
+  // Pagination logic
+  const indexOfLastMessage = currentPage * messagesPerPage;
+  const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+  const currentMessages = messages.slice(indexOfFirstMessage, indexOfLastMessage);
+  
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
+  return (
+    <div className="progress-bar">
+      <div className="progress-bar-info">
+        <h4 className="progress-bar-title">Notification about the Class</h4>
       </div>
-    );
-  };
-  
-  export default AreaProgressChart;
-  
+      <div className="progress-bar-list">
+        {currentMessages.map((message) => (
+          <div className="progress-bar-item" key={message.messageId}>
+            <div className="bar-item-info" style={{borderBottom:"solid"}}>
+              <p className="bar-item-info-name-class">{message.message}({message.subject.day})</p>
+              <p className="bar-item-info-value-class">
+                {new Date(message.messageDate).toLocaleString()}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Pagination navigation */}
+      {messages.length > messagesPerPage && (
+        <nav>
+          <ul className="pagination">
+            {Array.from({ length: Math.ceil(messages.length / messagesPerPage) }, (_, index) => (
+              <li key={index} className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}>
+                <button onClick={() => paginate(index + 1)} className="page-link">
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
+  );
+};
+
+export default AreaProgressChart;

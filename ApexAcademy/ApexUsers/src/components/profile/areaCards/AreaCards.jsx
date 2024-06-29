@@ -207,7 +207,7 @@ export default function TeacherProfilePage() {
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <p style={{marginTop:10}} className="text-muted mb-1">{teacherDetails.teachername}</p>
+                <p style={{marginTop:10}} className="text-muted mb-1">{teacherDetails.teacherid}</p>
               </MDBCardBody>
             </MDBCard>
             <PasswordChange/>
