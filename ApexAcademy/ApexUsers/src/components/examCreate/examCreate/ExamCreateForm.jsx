@@ -8,11 +8,8 @@ import axios from 'axios';
 function ExamCreateForm() {
 
   const [subject, setSubject] = useState([]);
-  const [exam, setExam] = useState([]);
   const [description, setDescription] = useState('');
   const [subjectId, setSubjectId] = useState('');
-  const [examId, setExamId] = useState('');
-  const [studentId, setStudentId] = useState('');
   const [examDate, setExamDate] = useState('');
   const teacherId = localStorage.getItem('teacherId');
 
@@ -20,15 +17,10 @@ function ExamCreateForm() {
     const fetchSubject = async () => {
       try {
         const response = await axios.get(`http://localhost:8085/api/v1/subject/all`);
-        // setEnrollments(response.data);
-         console.log(response.data)
-         console.log("Here")
          const filteredEnrollments = response.data.filter(enrollment => 
            enrollment.teacher.teacherid === teacherId
          );
          setSubject(filteredEnrollments);
-         console.log(filteredEnrollments);
-        console.log("Here11")
       } catch (error) {
         console.error('Error fetching enrollments', error);
       }
@@ -47,7 +39,6 @@ function ExamCreateForm() {
         examDate,
         description
       });
-      console.log('Exam assigned successfully', response.data);
       setSubjectId('');
       setExamDate('');
       setDescription('');
@@ -62,8 +53,7 @@ function ExamCreateForm() {
       <fieldset>
         <Form.Group className="mb-3">
           <Form.Label htmlFor="disabledTextInput">Select Subject</Form.Label>
-          {/* <Form.Control id="disabledTextInput" placeholder="Select Subject" /> */}
-          <Form.Select aria-label="Default select example" value={subjectId}
+          <Form.Select aria-label="Default select example" value={subjectId} required
             onChange={(e) => setSubjectId(e.target.value)} >
               <option >Select the Subject</option>
               {
@@ -77,6 +67,7 @@ function ExamCreateForm() {
           <Form.Label htmlFor="disabledSelect">Enter Date</Form.Label>
           <Form.Control id="disabledNumberInput" 
                 type="Date"
+                required
                 placeholder="Enter Date" value={examDate} 
                 onChange={(e) => setExamDate(e.target.value)} />
                 
@@ -87,6 +78,7 @@ function ExamCreateForm() {
           <Form.Label htmlFor="disabledSelect">Enter Exam Name</Form.Label>
           <Form.Control id="disabledNumberInput" 
                 type="text"
+                required
                 placeholder="Enter Exam Name" value={description} 
                 onChange={(e) => setDescription(e.target.value)}/>
         </Form.Group>

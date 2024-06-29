@@ -104,7 +104,7 @@ const Attendent = () => {
               }}
               style={{ fontSize: '16px', marginLeft: '10px', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: '#fff', color: '#333' }}
             />
-            <Button onClick={() => setMonthFilter("")} style={{ marginLeft: '20px' ,marginBottom: '15px'}}>All Attendance</Button>
+            <Button onClick={() => setMonthFilter("")} style={{backgroundColor: "#007bff", marginLeft: '20px',padding:8 ,marginBottom: '15px'}}>All Attendance</Button>
           </div>
         </div>
         <div className="data-table-diagram">

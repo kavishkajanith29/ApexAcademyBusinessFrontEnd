@@ -1,12 +1,11 @@
+import { useEffect, useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import Select from 'react-select';
 
 function ExamUpdateForm() {
-
   const [subject, setSubject] = useState([]);
   const [exam, setExam] = useState([]);
   const [student, setStudent] = useState([]);
@@ -14,21 +13,20 @@ function ExamUpdateForm() {
   const [examId, setExamId] = useState('');
   const [studentId, setStudentId] = useState('');
   const [mark, setMark] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
   const teacherId = localStorage.getItem('teacherId');
+
+  // Create a reference for the Select component
+  const studentSelectRef = useRef(null);
 
   useEffect(() => {
     const fetchSubject = async () => {
       try {
-        const response = await axios.get(`http://localhost:8085/api/v1/subject/all`);
-        // setEnrollments(response.data);
-         console.log(response.data)
-         console.log("Here")
-         const filteredEnrollments = response.data.filter(enrollment => 
-           enrollment.teacher.teacherid === teacherId
-         );
-         setSubject(filteredEnrollments);
-         console.log(filteredEnrollments);
-        console.log("Here11")
+        const response = await axios.get('http://localhost:8085/api/v1/subject/all');
+        const filteredEnrollments = response.data.filter(enrollment => 
+          enrollment.teacher.teacherid === teacherId
+        );
+        setSubject(filteredEnrollments);
       } catch (error) {
         console.error('Error fetching enrollments', error);
       }
@@ -37,25 +35,16 @@ function ExamUpdateForm() {
     fetchSubject();
   }, [teacherId]);
 
-
   useEffect(() => {
     const fetchExam = async () => {
       if (subjectId) {
-      try {
-        const response = await axios.get(`http://localhost:8085/api/v1/exam/subject/${subjectId}`);
-         setExam(response.data);
-         console.log(response.data)
-         console.log("Here")
-        //  const filteredEnrollments = response.data.filter(enrollment => 
-        //    enrollment.teacher.teacherid === teacherId
-        //  );
-        //  setSubject(filteredEnrollments);
-        //  console.log(filteredEnrollments);
-        // console.log("Here11")
-      } catch (error) {
-        console.error('Error fetching enrollments', error);
+        try {
+          const response = await axios.get(`http://localhost:8085/api/v1/exam/subject/${subjectId}`);
+          setExam(response.data);
+        } catch (error) {
+          console.error('Error fetching enrollments', error);
+        }
       }
-    }
     };
 
     fetchExam();
@@ -64,26 +53,18 @@ function ExamUpdateForm() {
   useEffect(() => {
     const fetchStudent = async () => {
       if (subjectId) {
-      try {
-        const response = await axios.get(`http://localhost:8085/api/v1/enrollment/subject/${subjectId}`);
-        setStudent(response.data);
-         console.log(response.data)
-         console.log("Here")
-        //  const filteredEnrollments = response.data.filter(enrollment => 
-        //    enrollment.teacher.teacherid === teacherId
-        //  );
-        //  setSubject(filteredEnrollments);
-        //  console.log(filteredEnrollments);
-        // console.log("Here11")
-      } catch (error) {
-        console.error('Error fetching enrollments', error);
+        try {
+          const response = await axios.get(`http://localhost:8085/api/v1/enrollment/subject/${subjectId}`);
+          setStudent(response.data);
+        } catch (error) {
+          console.error('Error fetching enrollments', error);
+        }
       }
-    }
     };
 
     fetchStudent();
   }, [subjectId]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -92,11 +73,18 @@ function ExamUpdateForm() {
         examId,
         mark
       });
-      console.log('Mark assigned successfully', response.data);
-      setStudentId('');
-      setMark('');
+      if(response.data === "Mark already assigned for this exam."){
+        setResponseMessage(`${studentId}  Mark already assigned.`);
+      }else if(response.data.exam){
+        setResponseMessage(`Student ${studentId} marks ${mark}%  Mark assigned successfully.`);
+        setStudentId('');
+        setMark('');
+        if (studentSelectRef.current) {
+          studentSelectRef.current.clearValue();
+        }
+      }
     } catch (error) {
-      console.error('Error assigning mark', error);
+      setResponseMessage('Error assigning mark');
     }
   };
 
@@ -109,8 +97,9 @@ function ExamUpdateForm() {
   const handleExamChange = (e) => {
     setExamId(e.target.value);
   };
-  const handleStudentChange = (e) => {
-    setStudentId(e.target.value);
+
+  const handleStudentChange = (selectedOption) => {
+    setStudentId(selectedOption ? selectedOption.value : '');
   };
 
   const handleMarksChange = (e) => {
@@ -120,65 +109,68 @@ function ExamUpdateForm() {
     }
   };
 
+  const handleInputChange = (inputValue, { action }) => {
+    if (action === 'input-change') {
+      return inputValue.toUpperCase();
+    }
+    return inputValue;
+  };
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <fieldset>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Select Subject</Form.Label>
-          {/* <Form.Control id="disabledTextInput" placeholder="Select Subject" /> */}
-          <Form.Select aria-label="Default select example" onChange={handleSubjectChange}>
-              <option >Select the Subject</option>
-              {
-                subject.map((item)=>{
-                  return (<option key={item.subjectid} value={item.subjectid}>{item.subjectid}</option>)
-                })
-              }
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Select Exam</Form.Label>
-          <Form.Select aria-label="Default select example" onChange={handleExamChange} disabled={!subjectId}>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <fieldset>
+          <Form.Group className="mb-3">
+            <Form.Label>Select Subject</Form.Label>
+            <Form.Select aria-label="Default select example" onChange={handleSubjectChange}>
+              <option>Select the Subject</option>
+              {subject.map((item) => (
+                <option key={item.subjectid} value={item.subjectid}>{item.subjectid}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Select Exam</Form.Label>
+            <Form.Select aria-label="Default select example" onChange={handleExamChange} disabled={!subjectId}>
               <option>Select the Exam</option>
-              {
-                exam.map((item)=>{
-                  return (<option key={item.examId} value={item.examId}>{item.description}</option>)
-                })
-              }
-          </Form.Select>
-        </Form.Group>
-
-
-        {subjectId && examId && (
-          <>
-        <Form.Group className="mb-3">
-        
-          <Form.Label htmlFor="disabledTextInput">Select Student ID</Form.Label>
-          {/* <Form.Control id="disabledTextInput" placeholder="Select Subject" /> */}
-          <Form.Select aria-label="Default select example" 
-          value={studentId}
-          onChange={handleStudentChange}>
-              <option>Select the Student ID</option>
-              {
-                student.map((item)=>{
-                  return (<option key={item.student.studentid} value={item.student.studentid}>{item.student.studentid}</option>)
-                })
-              }
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Enter Marks</Form.Label>
-          <Form.Control id="disabledNumberInput" 
-                type="number"
-                min="0"
-                max="100" placeholder="Enter Marks" value={mark} onChange={handleMarksChange}/>
-        </Form.Group>
-        </>
-        )}
-        
-        <br/>
-        <Button type="submit">Submit</Button>
-      </fieldset>
-    </Form>
+              {exam.map((item) => (
+                <option key={item.examId} value={item.examId}>{item.description}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          {subjectId && examId && (
+            <>
+              <Form.Group className="mb-3">
+                <Form.Label>Select Student ID</Form.Label>
+                <Select 
+                  ref={studentSelectRef}
+                  options={student.map((item) => ({ value: item.student.studentid, label: item.student.studentid }))}
+                  onChange={handleStudentChange}
+                  onInputChange={handleInputChange}
+                  isClearable
+                  required
+                  placeholder="Select or type to search"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Enter Marks</Form.Label>
+                <Form.Control 
+                  type="number"
+                  min="0"
+                  max="100" 
+                  required
+                  placeholder="Enter Marks" 
+                  value={mark} 
+                  onChange={handleMarksChange}
+                />
+              </Form.Group>
+            </>
+          )}
+          <Button type="submit">Submit</Button>
+        </fieldset>
+      </Form>
+      {responseMessage && <div style={{textAlign:"center", color:"red",fontSize:"24px"}} className="mt-3">{responseMessage}</div>}
+    </div>
   );
 }
 
