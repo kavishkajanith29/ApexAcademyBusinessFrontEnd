@@ -28,6 +28,7 @@ const AreaTable = () => {
   const [marksRangeFilter, setMarksRangeFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [markFilter, setMarkFilter] = useState([]);
+  const [editedMark, setEditedMark] = useState({ markId: null, newMark: null });
 
   useEffect(() => {
     const fetchMarksDetails = async () => {
@@ -39,6 +40,7 @@ const AreaTable = () => {
         setMarkFilter(filteredMarksDetails);
         const descriptions = Array.from(new Set(filteredMarksDetails.map(mark => mark.exam.description)));
         setExamDescriptions(descriptions);
+        console.log(response.data)
       } catch (error) {
         console.error("Error fetching marks details:", error);
       }
@@ -115,10 +117,49 @@ const AreaTable = () => {
     return filteredMarks.slice(startIndex, endIndex);
   };
 
-  const handleButtonClick = (studentId, subjectId) => {
-    navigate(`/subject/${studentId}/${subjectId}`);
+  const handleEdit = (markId, currentMark) => {
+    setEditedMark({ markId, newMark: currentMark });
   };
 
+  // Function to handle save button click
+  const handleSave = async (markId) => {
+    try {
+      if (editedMark.newMark < 0 || editedMark.newMark > 100) {
+        setError("Mark value must be between 0 and 100.");
+        return;
+      }
+  
+      await axios.put(`http://localhost:8085/api/v1/mark/update/${markId}`, {
+        marks: editedMark.newMark,
+      });
+      // Optionally, update state or UI to reflect the change
+      const updatedMarks = markFilter.map(mark => {
+        if (mark.markId === markId) {
+          return { ...mark, mark: editedMark.newMark };
+        }
+        return mark;
+      });
+
+      setMarkFilter(updatedMarks);
+      console.log(`Mark ${markId} updated successfully!`);
+      setEditedMark({ markId: null, newMark: null });
+      setError(null);
+      
+    } catch (error) {
+      console.error("Error updating mark:", error);
+    }
+    // Clear the editedMark state
+    setEditedMark({ markId: null, newMark: null });
+  };
+
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value);
+    // Ensure the input value is within the range of 0 to 100
+    if (value >= 0 && value <= 100) {
+      setEditedMark({ ...editedMark, newMark: value });
+    }
+  };
+ 
   return (
     <section className="content-area-table">
       <div className="data-table-info">
@@ -162,22 +203,48 @@ const AreaTable = () => {
             </tr>
           </thead>
           <tbody>
-            {getVisibleMarks().map((dataItem) => (
-              <tr key={dataItem.student.studentid}>
-                <td>{dataItem.student.studentid}</td>
-                <td>{dataItem.student.studentname}</td>
-                <td>{dataItem.exam.examDate}</td>
-                <td>{dataItem.student.email}</td>
-                <td>{dataItem.student.phonenumber}</td>
-                <td>{dataItem.mark}</td>
-                <td className="dt-cell-action">
-                <Button style={{ backgroundColor: "#007bff" }} onClick={() => handleButtonClick(dataItem.student.studentid, id)}>
-                  View
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+      {getVisibleMarks().map((dataItem) => (
+        <tr key={dataItem.student.studentid}>
+          <td>{dataItem.student.studentid}</td>
+          <td>{dataItem.student.studentname}</td>
+          <td>{dataItem.exam.examDate}</td>
+          <td>{dataItem.student.email}</td>
+          <td>{dataItem.student.phonenumber}</td>
+          <td>
+            {editedMark.markId === dataItem.markId ? (
+              <input
+                type="number"
+                value={editedMark.newMark}
+                min="0"
+                max="100"
+                onChange={handleInputChange}
+                
+              />
+            ) : (
+              dataItem.mark
+            )}
+          </td>
+          <td className="dt-cell-action">
+            {editedMark.markId === dataItem.markId ? (
+              <Button
+                style={{ backgroundColor: "#28a745" }}
+                onClick={() => handleSave(dataItem.markId)}
+              >
+                Save
+              </Button>
+            ) : (
+              <Button
+                style={{ backgroundColor: "#007bff" }}
+                onClick={() => handleEdit(dataItem.markId, dataItem.mark)}
+              >
+                Edit
+              </Button>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+
         </table>
         {totalPages > 1 && (
           <div className="data-table-navigation">

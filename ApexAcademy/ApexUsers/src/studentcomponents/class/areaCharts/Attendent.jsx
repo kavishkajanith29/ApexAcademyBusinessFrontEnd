@@ -166,7 +166,7 @@ const Attendent = () => {
           height={200}
         />
         <div className="attendance-percentage">
-          <p>Attendance Percentage: {totalFilteredAttendance === 0 ? 0 :attendancePercentage}%%</p>
+          <p>Attendance Percentage: {totalFilteredAttendance === 0 ? 0 :attendancePercentage}%</p>
         </div>
       </div>
     </div>

@@ -42,7 +42,8 @@ const AreaCards = () => {
             title: `${enrollment.subject.subjectname}`,
             //value: `${enrollment.subject.subjectid}`,
             
-            text: `Mr: ${enrollment.subject.teacher.teachername}`,
+            text: `${enrollment.subject.teacher.gender === 'Male' ? 'Mr' : 'Ms'}: ${enrollment.subject.teacher.teachername}`,
+            text1: `${enrollment.subject.day} ${enrollment.subject.timeRange}`,
           }}
         />
       </Link>

@@ -90,6 +90,20 @@ ul {
   opacity: 0.9;
 }
 
+.clsdelete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.clsdelete-button:hover {
+  opacity: 0.9;
+}
+
 /* Cancel Button */
 .clscancel-button {
   background-color: #f05d5e;

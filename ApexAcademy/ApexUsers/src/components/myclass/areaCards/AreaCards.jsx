@@ -53,6 +53,7 @@ const AreaCards = () => {
             //value: `${enrollment.subject.subjectid}`,
             
             text: `${enrollment.subjectid}`,
+            text1: `${enrollment.day} ${enrollment.timeRange}`,
           }}
         />
       </Link>

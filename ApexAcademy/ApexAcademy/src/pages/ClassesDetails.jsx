@@ -61,6 +61,30 @@ const ClassesDetails = () => {
     }
   };
 
+
+  const handleDelete = async () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://localhost:8085/api/v1/subject/${id}`);
+          Swal.fire("Deleted!", "Class has been deleted.", "success");
+          navigate("/"); // Navigate to the home page or another relevant page after deletion
+        } catch (error) {
+          console.error("Error deleting class:", error);
+          Swal.fire("Error", "Failed to delete class", "error");
+        }
+      }
+    });
+  };
+
   return (
     <>
       <div className="student-details-container">
@@ -133,7 +157,11 @@ const ClassesDetails = () => {
                 <button className="clscancel-button" onClick={handleCancel}>Cancel</button>
               </>
             ) : (
+              <>
               <button className="clsedit-button" onClick={handleEdit}>Edit</button>
+              <button className="clsdelete-button" onClick={handleDelete}>Delete</button>
+              </>
+              
             )}
           </div>
         </div>
